@@ -17,7 +17,7 @@
 }
 .head {
     background-color: #000000;
-    padding: 5px 0;
+    padding: 3px 0;
 }
 .head1 {
     list-style: none;
