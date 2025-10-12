@@ -5,7 +5,7 @@ body {
 }
 .head {
     background-color: #000000;
-    padding: 10px 0;
+    padding: 5px 0;
 }
 .head1 {
     list-style: none;
@@ -19,5 +19,7 @@ body {
     font-size: 18px;
 }
 .head1 a:hover {
-    color: #ff6600;
+    color: black;
+    background-color: black;
+    transition: 0.3s ease-in-out;
 }
