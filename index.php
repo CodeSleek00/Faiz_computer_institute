@@ -28,6 +28,7 @@
 .head1 a {
     text-decoration: none;
     color: white;
+    font-size: smaller;
 }
 .head1 a:hover {
     color: black;
