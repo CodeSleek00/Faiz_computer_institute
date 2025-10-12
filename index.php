@@ -39,7 +39,7 @@ body {
     border-radius: 5px;
 }
 @media (max-width: 480px) {
-    header{
+    .head{
         display: none;
     }
     
