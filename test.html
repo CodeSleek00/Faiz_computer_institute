@@ -3,17 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faiz Computer Institute</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
+    <title>Faiz Computer Institute</title>
+   <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+    }
+body {
+   
+    margin: 0;
+    padding: 0;
+}
+.head {
+    background-color: #000000;
+    padding: 1px 0; /* thinner strip */
+}
+.head1 {
+    list-style: none;
+    display: flex;
+    justify-content: left;
+    gap: 30px;
+    margin: 0;
+    padding: 6px 20px; }
+.head1 a {
+    text-decoration: none;
+    color: white;
+    font-size: smaller;
+}
+.head1 a:hover {
+    color: black;
+    background-color: white;
+    transition: 0.3s ease-in-out;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+@media (max-width: 480px) {
+    .head{
+        display: none;
+    }
+    
+}
 
         nav {
             background-color: #ffffff;
@@ -399,10 +436,21 @@
                 flex-direction: column;
             }
         }
-    </style>
+</style>
+ 
 </head>
 <body>
-    <nav>
+    <header>
+        <div class="head">
+            <ul class="head1">
+                <a href=""><li>For Individual</li></a>
+                <a href=""><li>For University Courses</li></a>
+                <a href=""><li>For High School & Intermediate Courses</li></a>
+                <a href=""><li>For Free Courses</li></a>
+            </ul>
+        </div>
+    </header>
+     <nav>
         <div class="nav-left">
            
             Faiz Computer Institute
@@ -534,9 +582,9 @@
             <span>Free Courses</span>
         </div>
     </div>
-
-    <script>
-        // Mobile menu toggle
+    <h1>hii</h1>
+        <script>
+             // Mobile menu toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileClose = document.getElementById('mobileClose');
@@ -607,6 +655,6 @@
         mobileMenu.addEventListener('click', (e) => {
             e.stopPropagation();
         });
-    </script>
+        </script>
 </body>
 </html>
