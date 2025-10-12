@@ -4,6 +4,21 @@ body {
     padding: 0;
 }
 .head {
-    background-color: #333;
+    background-color: #000000;
     padding: 10px 0;
+}
+.head1 {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+.head1 a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+.head1 a:hover {
+    color: #ff6600;
 }
