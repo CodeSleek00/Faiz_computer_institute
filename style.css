@@ -16,7 +16,6 @@ body {
 .head1 a {
     text-decoration: none;
     color: white;
-    font-size: 18px;
 }
 .head1 a:hover {
     color: black;
