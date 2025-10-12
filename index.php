@@ -25,8 +25,7 @@ body {
     justify-content: left;
     gap: 30px;
     margin: 0;
-    padding: 6px 20px; /* adjust spacing if needed */
-}
+    padding: 6px 20px; }
 .head1 a {
     text-decoration: none;
     color: white;
@@ -38,6 +37,12 @@ body {
     transition: 0.3s ease-in-out;
     padding: 5px 10px;
     border-radius: 5px;
+}
+@media (max-width: 480px) {
+    header{
+        display: none;
+    }
+    
 }
 </style>
  
