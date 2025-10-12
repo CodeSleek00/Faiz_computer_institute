@@ -25,7 +25,7 @@ body {
     justify-content: left;
     gap: 30px;
     margin: 0;
-    padding: 3px 20px; /* adjust spacing if needed */
+    padding: 6px 20px; /* adjust spacing if needed */
 }
 .head1 a {
     text-decoration: none;
