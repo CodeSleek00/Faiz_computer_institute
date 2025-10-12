@@ -11,6 +11,15 @@
     <title>Faiz Computer Institute</title>
 </head>
 <body>
-    
+    <header>
+        <div class="head">
+            <ul class="head1">
+                <a href=""><li>For Individual</li></a>
+                <a href=""><li>For University Courses</li></a>
+                <a href=""><li>For High School & Intermediate Courses</li></a>
+                <a href=""><li>For Free Courses</li></a>
+            </ul>
+        </div>
+    </header>
 </body>
 </html>
