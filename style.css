@@ -10,7 +10,7 @@ body {
 .head1 {
     list-style: none;
     display: flex;
-   
+    justify-content: left;
     gap: 30px;
 }
 .head1 a {
