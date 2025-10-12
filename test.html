@@ -14,15 +14,10 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            min-height: 100vh;
-        }
 
         nav {
-            background-color: #1a1a2e;
-            color: white;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -34,14 +29,14 @@
         .nav-left {
             font-size: 22px;
             font-weight: 700;
-            color: #fff;
+            color: #0406ae;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .nav-left i {
-            color: #ffd700;
+            color: #0c0058;
         }
 
         .nav-center {
@@ -51,7 +46,7 @@
         .nav-center button {
             background: none;
             border: none;
-            color: white;
+            color: rgb(0, 0, 0);
             font-size: 16px;
             cursor: pointer;
             font-weight: 500;
@@ -83,14 +78,14 @@
             z-index: 100;
             grid-template-columns: repeat(4, 1fr);
             gap: 25px;
-            border-top: 4px solid #ffd700;
+            border-top: 4px solid #0033ff;
         }
 
         .dropdown-column h4 {
             margin-bottom: 15px;
             font-size: 16px;
             color: #1a1a2e;
-            border-bottom: 2px solid #ffd700;
+            border-bottom: 2px solid #c9d0ff;
             display: inline-block;
             padding-bottom: 5px;
         }
@@ -136,37 +131,27 @@
 
         .login-btn {
             background: transparent;
-            border: 1px solid #ffd700;
-            color: #ffd700;
+            border: 1px solid white;
+            color: #0026ff;
         }
 
         .login-btn:hover {
-            background-color: rgba(255, 215, 0, 0.1);
+            background-color:rgb(0, 0, 148);
+            color: white;
+            transition: 0.3s ease-in-out;
         }
 
         .signup-btn {
-            background-color: #ffd700;
-            border: 1px solid #ffd700;
+            background-color: white;
+            border: 1px solid #0004ff;
             color: #1a1a2e;
         }
 
         .signup-btn:hover {
-            background-color: #ffdf33;
+            background-color: #000d84;
+            color: white;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
-        }
-
-        .free-courses {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #ffd700;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
         }
 
         .free-courses:hover {
@@ -178,7 +163,7 @@
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: rgb(0, 0, 0);
             font-size: 24px;
             cursor: pointer;
             padding: 8px;
@@ -462,12 +447,9 @@
         <div class="nav-right">
             <div class="auth-buttons">
                 <button class="login-btn">Login</button>
-                <button class="signup-btn">Sign Up</button>
+                <button class="signup-btn">Free Courses</button>
             </div>
-            <div class="free-courses">
-                <i class="fas fa-gift"></i>
-                <span>Free Courses</span>
-            </div>
+            
         </div>
 
         <!-- Mobile Toggle Button -->
