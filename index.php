@@ -443,7 +443,7 @@ body {
     .carousel-wrapper {
       position: relative;
       overflow: hidden;
-      padding: 40px 10;
+      padding: 40px 0;
       margin: 0 auto;
     }
 
