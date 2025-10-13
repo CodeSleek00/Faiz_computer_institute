@@ -17,6 +17,204 @@
         padding: 0;
         font-family: 'Poppins', sans-serif;
     }
+    :root {
+    --primary-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --accent-color: #3b82f6;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+
+  .container-chip {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .chip {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--text-primary);
+    max-width: 600px;
+    padding: 0 20px;
+  }
+
+  /* Outer container */
+  .logo-strip-container {
+    position: relative;
+    width: 100%;
+    max-width: 1300px;
+    overflow: hidden;
+  }
+
+  /* Shadow fade edges */
+  .logo-strip-container::before,
+  .logo-strip-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .logo-strip-container::before {
+    left: 0;
+    background: linear-gradient(to right, var(--primary-bg) 0%, transparent 100%);
+  }
+
+  .logo-strip-container::after {
+    right: 0;
+    background: linear-gradient(to left, var(--primary-bg) 0%, transparent 100%);
+  }
+
+  /* Scrollable row */
+  .logo-strip {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 16px 40px;
+    scrollbar-width: none; /* Firefox */
+  }
+  .logo-strip::-webkit-scrollbar { display: none; } /* Chrome */
+
+  /* Each logo box */
+  .logo-box {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-light);
+    border-radius: 16px;
+    padding: 14px 22px;
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-box:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(59, 130, 246, 0.2);
+  }
+
+  .logo-box img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    transition: var(--transition);
+  }
+
+  .logo-box:hover img {
+    transform: scale(1.05);
+  }
+
+  .logo-box span {
+    font-weight: 500;
+    font-size: 15px;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    transition: var(--transition);
+  }
+
+  .logo-box:hover span {
+    color: var(--accent-color);
+  }
+
+  /* Navigation buttons */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: var(--transition);
+    color: var(--text-secondary);
+  }
+
+  .nav-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+  }
+
+  .nav-btn.prev {
+    left: 10px;
+  }
+
+  .nav-btn.next {
+    right: 10px;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+   
+    
+    h2 {
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
+    
+    .logo-strip {
+      gap: 16px;
+      padding: 12px 24px;
+    }
+    
+    .logo-box {
+      padding: 12px 18px;
+      border-radius: 12px;
+    }
+    
+    .logo-box img {
+      height: 28px;
+    }
+    
+    .nav-btn {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    
+    .logo-box {
+      padding: 10px 16px;
+      gap: 10px;
+    }
+    
+    .logo-box img {
+      height: 24px;
+    }
+    
+    .logo-box span {
+      font-size: 14px;
+    }
+  }
 body {
    
     margin: 0;
@@ -922,7 +1120,54 @@ body {
       <div class="indicator" data-index="3"></div>
     </div>
   </div>
+<div class="container-chip">
+  <h2 class="chip">Learn from leading universities and companies</h2>
 
+  <div class="logo-strip-container">
+    <div class="logo-strip" id="logoStrip">
+      <a href="https://example.com/rgcsm" class="logo-box" target="_blank">
+        <img src="images/rgcsm.png" alt="RGCSM">
+        <span>RGCSM</span>
+      </a>
+      <a href="https://example.com/bosse" class="logo-box" target="_blank">
+        <img src="images/bosse.png" alt="BOSSE">
+        <span>BOSSE</span>
+      </a>
+      <a href="https://paruluniversity.ac.in/" class="logo-box" target="_blank">
+        <img src="images/parul.jpg" alt="Parul University">
+        <span>Parul University</span>
+      </a>
+      <a href="https://example.com/integral" class="logo-box" target="_blank">
+        <img src="images/integral.avif" alt="Integral">
+       
+      </a>
+      <a href="https://example.com/manglayatan" class="logo-box" target="_blank">
+        <img src="images/manglayatan.jpg" alt="Manglayatan University">
+        <span>Manglayatan University</span>
+      </a>
+      <a href="https://example.com/edubridge" class="logo-box" target="_blank">
+        <img src="images/edubrige.avif" alt="EduBridge">
+       
+      </a>
+      <a href="https://example.com/codesleek" class="logo-box" target="_blank">
+        <img src="images/codesleekstudios.png" alt="Code Sleek Studios">
+        <span>Code Sleek Studios</span>
+      </a>
+     
+    </div>
+    
+    <button class="nav-btn prev" id="prevBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="nav-btn next" id="nextBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>
         <script>
              // Mobile menu toggle
         const mobileToggle = document.getElementById('mobileToggle');
@@ -1051,6 +1296,40 @@ body {
             scrollToCard(index);
           });
         });
+        document.addEventListener('DOMContentLoaded', function() {
+      const logoStrip = document.getElementById('logoStrip');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      
+      // Navigation functionality
+      prevBtn.addEventListener('click', () => {
+        logoStrip.scrollBy({
+          left: -300,
+          behavior: 'smooth'
+        });
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        logoStrip.scrollBy({
+          left: 300,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Hide/show navigation buttons based on scroll position
+      function updateNavButtons() {
+        const scrollLeft = logoStrip.scrollLeft;
+        const scrollWidth = logoStrip.scrollWidth;
+        const clientWidth = logoStrip.clientWidth;
+        
+        prevBtn.style.display = scrollLeft > 10 ? 'flex' : 'none';
+        nextBtn.style.display = scrollLeft < (scrollWidth - clientWidth - 10) ? 'flex' : 'none';
+      }
+      
+      logoStrip.addEventListener('scroll', updateNavButtons);
+      window.addEventListener('resize', updateNavButtons);
+      updateNavButtons(); // Initial check
+    });
         </script>
 </body>
 </html>
