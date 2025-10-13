@@ -47,7 +47,6 @@
     margin-top: 20px;
     text-align: center;
     color: var(--text-primary);
-    padding: 0 20px;
   }
 
   /* Outer container */
