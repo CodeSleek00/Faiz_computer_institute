@@ -1147,7 +1147,7 @@ body {
        
       </a>
       <a href="https://example.com/codesleek" class="logo-box" target="_blank">
-        <img src="images/codesleekstudios.png" alt="Code Sleek Studios">
+        <img src="images/Codesleekstudios.png" alt="Code Sleek Studios">
         <span>Code Sleek Studios</span>
       </a>
      
