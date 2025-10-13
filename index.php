@@ -815,7 +815,7 @@ body {
     text-align: center;
     color: var(--text-primary);
     max-width: 600px;
-    padding: 0 20px;
+    padding: 0 2px;
   }
 
   /* Outer container */
