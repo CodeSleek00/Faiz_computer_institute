@@ -470,6 +470,7 @@ body {
       min-width: 0;
       transition: transform 0.3s, box-shadow 0.3s;
       overflow: hidden; /* Added to ensure no overflow from image */
+      position: relative; /* Added for mobile background image */
     }
 
     /* Card 1 - Green */
@@ -504,6 +505,8 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative; /* Added for z-index */
+      z-index: 2; /* Added to ensure content stays above background */
     }
 
     .card h2 {
@@ -553,6 +556,147 @@ body {
       border-radius: 0 12px 12px 0; /* Only round right corners */
     }
 
+    /* Mobile background images - SINGLE CARD VIEW */
+    @media (max-width: 768px) {
+      .carousel-container {
+        padding: 0 15px;
+        gap: 15px;
+        scroll-snap-type: x mandatory;
+      }
+      
+      .card {
+        flex: 0 0 calc(100% - 30px) !important; /* Force single card view */
+        min-width: calc(100% - 30px) !important; /* Force single card view */
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        padding: 0;
+        border-radius: 16px;
+        min-height: 320px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        margin: 0 5px; /* Add small margin for better visual */
+      }
+      
+      /* Add background images for mobile */
+      .card:nth-child(1)::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('2.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8; /* Increased opacity for better visibility */
+        z-index: 1;
+        filter: brightness(0.9);
+      }
+      
+      .card:nth-child(2)::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('1.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        z-index: 1;
+        filter: brightness(0.8);
+      }
+      
+      .card:nth-child(3)::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('3.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        z-index: 1;
+        filter: brightness(0.9);
+      }
+      
+      .card:nth-child(4)::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('4.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8;
+        z-index: 1;
+        filter: brightness(0.8);
+      }
+      
+      .card-content {
+        margin-right: 0;
+        margin-bottom: 0;
+        position: relative;
+        z-index: 2;
+        padding: 25px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, transparent 70%);
+        border-radius: 16px;
+      }
+      
+      .card h2 {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 12px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        font-weight: 600;
+      }
+      
+      .card p {
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 20px;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        line-height: 1.5;
+      }
+      
+      .card button {
+        align-self: flex-start;
+        background: white;
+        color: #0056d2;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+      }
+      
+      .card button:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      }
+      
+      .card-image {
+        display: none; /* Hide individual images on mobile */
+      }
+      
+      .nav-btn {
+        display: none;
+      }
+      
+      .carousel-wrapper {
+        padding: 15px 0;
+      }
+    }
+
     /* Responsive adjustments */
     @media (max-width: 1024px) {
       .card {
@@ -560,51 +704,17 @@ body {
       }
     }
 
-    @media (max-width: 768px) {
-      .card {
-        flex: 0 0 100%;
-        flex-direction: column;
-      }
-      
-      .card-content {
-        margin-right: 0;
-        margin-bottom: 15px;
-      }
-      
-      .card-image {
-        width: calc(100% + 50px); /* Extend beyond card width */
-        margin: 0 -25px -25px -25px; /* Negative margins on all sides */
-      }
-      
-      .card img {
-        border-radius: 0 0 12px 12px; /* Only round bottom corners */
-        height: 180px; /* Fixed height for mobile */
-      }
-      
-      .carousel-container {
-        padding: 0 10px;
-      }
-      
-      .nav-btn {
-        display: none;
-      }
-    }
-
     @media (max-width: 600px) {
       .card {
-        padding: 20px;
+        min-height: 280px;
       }
       
       .card h2 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
       
-      .card img {
-        height: 150px;
-      }
-      
-      .card-image {
-        margin: 0 -20px -20px -20px; /* Adjust for smaller padding */
+      .card-content {
+        padding: 20px;
       }
     }
 
@@ -648,6 +758,33 @@ body {
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    /* Mobile indicators */
+    .carousel-indicators {
+      display: none;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 15px;
+    }
+    
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ccc;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .indicator.active {
+      background-color: #0056d2;
+    }
+    
+    @media (max-width: 768px) {
+      .carousel-indicators {
+        display: flex;
+      }
     }
 </style>
  
@@ -811,7 +948,7 @@ body {
           <button>Explore programs →</button>
         </div>
         <div class="card-image">
-          <img src="https://cdn.pixabay.com/photo/2023/03/28/05/45/ai-7883259_1280.jpg" alt="AI Learning">
+          <img src="2.png" alt="AI Learning">
         </div>
       </div>
 
@@ -825,7 +962,7 @@ body {
           <button>Try University Program →</button>
         </div>
         <div class="card-image">
-          <img src="https://cdn.pixabay.com/photo/2020/08/28/10/56/artificial-intelligence-5527864_1280.jpg" alt="Business Growth">
+          <img src="1.png" alt="Business Growth">
         </div>
       </div>
 
@@ -834,12 +971,12 @@ body {
         <div class="card-content">
           <div>
             <h2>10th & 12th Education Made Easy – BOSSE & NIOS Boards.</h2>
-            <p>Study at your own pace and earn a valid 10th or 12th certificate with BOSSE and NIOS, India’s most trusted open schooling boards.</p>
+            <p>Study at your own pace and earn a valid 10th or 12th certificate with BOSSE and NIOS, India's most trusted open schooling boards.</p>
           </div>
           <button>Start Learning →</button>
         </div>
         <div class="card-image">
-          <img src="https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg" alt="Upskilling">
+          <img src="3.png" alt="Upskilling">
         </div>
       </div>
       
@@ -848,17 +985,23 @@ body {
         <div class="card-content">
           <div>
             <h2 style="color:white">Free Career-Building Courses Powered by EduBridge India</h2>
-            <p style="color: whitesmoke;">Take the first step toward your dream career with EduBridge India’s free learning programs.</p>
+            <p style="color: whitesmoke;">Take the first step toward your dream career with EduBridge India's free learning programs.</p>
           </div>
           <button style="background-color: white;color:black;">View Courses →</button>
         </div>
         <div class="card-image">
-          <img src="https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg" alt="Data Science">
+          <img src="4.png" alt="Data Science">
         </div>
       </div>
 
     </div>
     <button class="nav-btn next">&#10095;</button>
+    <div class="carousel-indicators" id="indicators">
+      <div class="indicator active" data-index="0"></div>
+      <div class="indicator" data-index="1"></div>
+      <div class="indicator" data-index="2"></div>
+      <div class="indicator" data-index="3"></div>
+    </div>
   </div>
 
         <script>
@@ -933,24 +1076,62 @@ body {
         mobileMenu.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+        
+        // Carousel functionality
         const carousel = document.getElementById("carousel");
-    const next = document.querySelector(".next");
-    const prev = document.querySelector(".prev");
-    
-    // Calculate scroll amount based on card width
-    const scrollAmount = () => {
-      const card = document.querySelector('.card');
-      const cardWidth = card.offsetWidth;
-      return cardWidth + 20; // 20px is the gap
-    };
+        const next = document.querySelector(".next");
+        const prev = document.querySelector(".prev");
+        const indicators = document.querySelectorAll('.indicator');
+        
+        // Calculate scroll amount based on card width
+        const scrollAmount = () => {
+          const card = document.querySelector('.card');
+          const cardWidth = card.offsetWidth;
+          return cardWidth + 20; // 20px is the gap
+        };
 
-    next.addEventListener("click", () => {
-      carousel.scrollBy({ left: scrollAmount(), behavior: "smooth" });
-    });
-    
-    prev.addEventListener("click", () => {
-      carousel.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
-    });
+        // Update indicators based on scroll position
+        function updateIndicators() {
+          const scrollPos = carousel.scrollLeft;
+          const cardWidth = document.querySelector('.card').offsetWidth + 20;
+          const activeIndex = Math.round(scrollPos / cardWidth);
+          
+          indicators.forEach((indicator, index) => {
+            if (index === activeIndex) {
+              indicator.classList.add('active');
+            } else {
+              indicator.classList.remove('active');
+            }
+          });
+        }
+
+        // Scroll to specific card
+        function scrollToCard(index) {
+          const cardWidth = document.querySelector('.card').offsetWidth + 20;
+          carousel.scrollTo({
+            left: index * cardWidth,
+            behavior: 'smooth'
+          });
+        }
+
+        next.addEventListener("click", () => {
+          carousel.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+        });
+        
+        prev.addEventListener("click", () => {
+          carousel.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+        });
+        
+        // Update indicators on scroll
+        carousel.addEventListener('scroll', updateIndicators);
+        
+        // Add click events to indicators
+        indicators.forEach(indicator => {
+          indicator.addEventListener('click', () => {
+            const index = parseInt(indicator.getAttribute('data-index'));
+            scrollToCard(index);
+          });
+        });
         </script>
 </body>
 </html>
