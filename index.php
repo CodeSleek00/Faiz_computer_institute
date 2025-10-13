@@ -37,7 +37,7 @@ body {
     text-decoration: none;
     color: white;
     font-size: smaller;
-    font-weight: lighter;
+    font-weight: light;
 }
 .head1 a:hover {
     color: black;
