@@ -685,7 +685,7 @@ body {
       }
       
       .card-image {
-        display: none; /* Hide individual images on mobile */
+        display: ; /* Hide individual images on mobile */
       }
       
       .nav-btn {
