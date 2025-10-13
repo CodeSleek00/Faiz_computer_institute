@@ -585,6 +585,72 @@ body {
             <span>Free Courses</span>
         </div>
     </div>
+
+  <div class="carousel-wrapper">
+    <button class="nav-btn prev">&#10094;</button>
+    <div class="carousel-container" id="carousel">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <h2>Join Our Signature Course to enhance your career</h2>
+            <p>Boost your career with our Signature Course — where learning meets success.
+                Upgrade your skills, elevate your opportunities.</p>
+          </div>
+          <button>Explore programs →</button>
+        </div>
+        <div class="card-image">
+          <img src="https://cdn.pixabay.com/photo/2023/03/28/05/45/ai-7883259_1280.jpg" alt="AI Learning">
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <h2 style="color: white;">Enroll in Top University Programs – Integral, Parul & Mangalayatan</h2>
+            <p style="color: white;">Choose from top-rated degree courses like BA, MA, BBA, MBA, BCA, and MCA. </p>
+          </div>
+          <button>Try University Program →</button>
+        </div>
+        <div class="card-image">
+          <img src="https://cdn.pixabay.com/photo/2020/08/28/10/56/artificial-intelligence-5527864_1280.jpg" alt="Business Growth">
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <h2>10th & 12th Education Made Easy – BOSSE & NIOS Boards.</h2>
+            <p>Study at your own pace and earn a valid 10th or 12th certificate with BOSSE and NIOS, India’s most trusted open schooling boards.</p>
+          </div>
+          <button>Start Learning →</button>
+        </div>
+        <div class="card-image">
+          <img src="https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_1280.jpg" alt="Upskilling">
+        </div>
+      </div>
+      
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="card-content">
+          <div>
+            <h2 style="color:white">Free Career-Building Courses Powered by EduBridge India</h2>
+            <p style="color: whitesmoke;">Take the first step toward your dream career with EduBridge India’s free learning programs.</p>
+          </div>
+          <button style="background-color: white;color:black;">View Courses →</button>
+        </div>
+        <div class="card-image">
+          <img src="https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg" alt="Data Science">
+        </div>
+      </div>
+
+    </div>
+    <button class="nav-btn next">&#10095;</button>
+  </div>
+
         <script>
              // Mobile menu toggle
         const mobileToggle = document.getElementById('mobileToggle');
@@ -657,6 +723,24 @@ body {
         mobileMenu.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+        const carousel = document.getElementById("carousel");
+    const next = document.querySelector(".next");
+    const prev = document.querySelector(".prev");
+    
+    // Calculate scroll amount based on card width
+    const scrollAmount = () => {
+      const card = document.querySelector('.card');
+      const cardWidth = card.offsetWidth;
+      return cardWidth + 20; // 20px is the gap
+    };
+
+    next.addEventListener("click", () => {
+      carousel.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+    });
+    
+    prev.addEventListener("click", () => {
+      carousel.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+    });
         </script>
 </body>
 </html>
