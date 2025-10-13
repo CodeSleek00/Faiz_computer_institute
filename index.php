@@ -44,7 +44,7 @@
   .chip {
     font-size: 24px;
     font-weight: 600;
-    
+    margin-top: 20px;
     text-align: center;
     color: var(--text-primary);
     padding: 0 20px;
