@@ -439,6 +439,216 @@ body {
                 flex-direction: column;
             }
         }
+
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      padding: 40px 0;
+      margin: 0 auto;
+    }
+
+    .carousel-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 0 20px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      flex: 0 0 calc(50% - 10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      padding: 25px;
+      scroll-snap-align: start;
+      min-width: 0;
+      transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden; /* Added to ensure no overflow from image */
+    }
+
+    /* Card 1 - Green */
+    .card:nth-child(1) {
+      background: linear-gradient(135deg,  #f3f0e3);
+    }
+
+    /* Card 2 - Blue */
+    .card:nth-child(2) {
+      background: linear-gradient(135deg, #0B1D51);
+      color: white;
+    }
+
+    /* Card 3 - Purple */
+    .card:nth-child(3) {
+      background: linear-gradient(135deg, #e4f2fb);
+    }
+    
+    /* Card 4 - Orange */
+    .card:nth-child(4) {
+      background: linear-gradient(135deg, #17313E);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-content {
+      flex: 1;
+      margin-right: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      color: #002855;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .card p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .card button {
+      background: #0056d2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.9rem;
+      align-self: flex-start;
+    }
+
+    .card button:hover {
+      background: #003d99;
+    }
+
+    .card-image {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: -25px; /* Negative margin to extend image to edges */
+      margin-left: 0; /* Reset left margin */
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%; /* Changed to 100% to fill container */
+      object-fit: cover;
+      border-radius: 0 12px 12px 0; /* Only round right corners */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .card {
+        flex: 0 0 calc(50% - 10px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        flex: 0 0 100%;
+        flex-direction: column;
+      }
+      
+      .card-content {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      
+      .card-image {
+        width: calc(100% + 50px); /* Extend beyond card width */
+        margin: 0 -25px -25px -25px; /* Negative margins on all sides */
+      }
+      
+      .card img {
+        border-radius: 0 0 12px 12px; /* Only round bottom corners */
+        height: 180px; /* Fixed height for mobile */
+      }
+      
+      .carousel-container {
+        padding: 0 10px;
+      }
+      
+      .nav-btn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+      
+      .card h2 {
+        font-size: 1.2rem;
+      }
+      
+      .card img {
+        height: 150px;
+      }
+      
+      .card-image {
+        margin: 0 -20px -20px -20px; /* Adjust for smaller padding */
+      }
+    }
+
+    /* Navigation buttons */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      font-size: 22px;
+      color: #003d99;
+      z-index: 10;
+      transition: 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: #003d99;
+      color: white;
+    }
+
+    .prev { left: 0; }
+    .next { right: 0; }
+    
+    .carousel-title {
+      text-align: center;
+      font-size: 2rem;
+      color: #002855;
+      margin-bottom: 10px;
+    }
+    
+    .carousel-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 </style>
  
 </head>
