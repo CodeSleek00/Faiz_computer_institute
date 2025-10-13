@@ -44,7 +44,7 @@
   .chip {
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 30px;
+    
     text-align: center;
     color: var(--text-primary);
     max-width: 600px;
@@ -178,7 +178,6 @@
     
     h2 {
       font-size: 20px;
-      margin-bottom: 24px;
     }
     
     .logo-strip {
