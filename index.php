@@ -811,7 +811,7 @@ body {
   .chip {
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 30px;
+    margin-top: 30px;
     text-align: center;
     color: var(--text-primary);
     max-width: 600px;
