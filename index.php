@@ -37,7 +37,7 @@ body {
     text-decoration: none;
     color: white;
     font-size: smaller;
-    font-weight: light;
+    font-weight: normal;
 }
 .head1 a:hover {
     color: black;
@@ -171,6 +171,7 @@ body {
             background: transparent;
             border: 1px solid white;
             color: #0026ff;
+            font-weight: normal;
         }
 
         .login-btn:hover {
