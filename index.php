@@ -368,6 +368,7 @@ function showSection($title, $section, $conn) {
     </div>
   </div>
   </div>
+  <div class="main-container">
   <?php
 function showSection2($title, $section, $conn) {
     echo "<div class='section'>
@@ -408,6 +409,7 @@ function showSection2($title, $section, $conn) {
     <div class="indicator active" data-index="0"></div>
     <div class="indicator" data-index="1"></div>
     <div class="indicator" data-index="2"></div>
+</div>
 </div>
 
 
