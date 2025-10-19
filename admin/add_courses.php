@@ -79,6 +79,16 @@
         <button type="button" class="add-btn" onclick="addSyllabus()">+ Add Syllabus</button>
 
         <br><br>
+        <h3>Reviews</h3>
+<div id="reviews">
+    <div class="review-group">
+        <input type="text" name="reviewer_name[]" placeholder="Reviewer name (e.g., Student)">
+        <textarea name="review_text[]" rows="2" placeholder="Write short review..."></textarea>
+        <input type="number" name="rating[]" min="1" max="5" placeholder="Rating (1–5)">
+    </div>
+</div>
+<button type="button" class="add-btn" onclick="addReview()">+ Add Review</button>
+
         <button type="submit" name="submit">Save Course</button>
     </form>
 </div>
@@ -94,6 +104,12 @@ function addSyllabus() {
         '<input type="text" name="syllabus[]" placeholder="Syllabus topic">'
     );
 }
+function addReview() {
+    document.getElementById('reviews').insertAdjacentHTML('beforeend',
+        '<div class="review-group"><input type="text" name="reviewer_name[]" placeholder="Reviewer name"><textarea name="review_text[]" rows="2" placeholder="Review text"></textarea><input type="number" name="rating[]" min="1" max="5" placeholder="Rating (1–5)"></div>'
+    );
+}
+
 </script>
 </body>
 </html>

@@ -47,6 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
+    // Insert reviews
+if (!empty($_POST['reviewer_name'])) {
+    for ($i = 0; $i < count($_POST['reviewer_name']); $i++) {
+        $rname  = $_POST['reviewer_name'][$i];
+        $rtext  = $_POST['review_text'][$i];
+        $rrate  = $_POST['rating'][$i];
+        if (trim($rname) != "" && trim($rtext) != "") {
+            $stmt = $conn->prepare("INSERT INTO course_reviews (course_id, reviewer_name, review_text, rating) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("issi", $course_id, $rname, $rtext, $rrate);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+}
+
 
     echo "<script>alert('Course added successfully!'); window.location.href='add_courses.php';</script>";
 } else {
