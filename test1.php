@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Courses</title>
 <style>
 body {
@@ -24,26 +25,19 @@ body {
 .header span {
     color: #0066ff;
 }
-.scroll-container {
-    display: flex;
-    overflow-x: auto;
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 18px;
     padding: 20px 40px;
-    scroll-snap-type: x mandatory;
-}
-.scroll-container::-webkit-scrollbar {
-    display: none;
 }
 .course-pill {
-    flex: 0 0 auto;
-    width: 340px;
     background: #fff;
     border-radius: 16px;
     display: flex;
     align-items: center;
     padding: 12px 14px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    scroll-snap-align: start;
     transition: all 0.3s ease;
     cursor: pointer;
     text-decoration: none;
@@ -84,6 +78,54 @@ body {
     color: #f8b400;
     font-size: 15px;
 }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .header {
+        padding: 20px 20px;
+        font-size: 22px;
+    }
+    
+    .courses-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 18px;
+        padding: 10px 20px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .courses-container::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .course-pill {
+        flex: 0 0 auto;
+        width: 300px;
+        scroll-snap-align: start;
+    }
+    
+    .course-pill img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .course-info h3 {
+        font-size: 16px;
+    }
+    
+    .course-info .provider,
+    .course-info .meta {
+        font-size: 13px;
+    }
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .courses-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 </style>
 </head>
 <body>
@@ -92,7 +134,7 @@ body {
 function showSection($title, $section, $conn) {
     echo "<div class='section'>
             <div class='header'>{$title} <span>→</span></div>
-            <div class='scroll-container'>";
+            <div class='courses-container'>";
     
     $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC");
     if($courses->num_rows == 0){
