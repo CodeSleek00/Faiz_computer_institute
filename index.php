@@ -232,7 +232,7 @@
     </div>
   </div>
 <div class="container-chip">
-  <h2 class="chip">Learn from </h2>
+  <h2 class="chip">Learn from leading universities and companies</h2>
 
   <div class="logo-strip-container">
     <div class="logo-strip" id="logoStrip">
