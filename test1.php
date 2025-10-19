@@ -102,16 +102,18 @@ body {
     padding: 20px 0;
 }
 
-/* Mobile Styles */
+/* Mobile Styles - Single Column Layout */
 @media (max-width: 768px) {
     .main-container {
         flex-direction: column;
         padding: 15px 20px;
-        gap: 15px;
+        gap: 20px;
     }
     
     .section {
-        padding: 15px;
+        padding: 18px;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .header {
@@ -121,22 +123,19 @@ body {
     
     .courses-container {
         display: flex;
-        overflow-x: auto;
-        flex-direction: row;
+        flex-direction: column;
         gap: 12px;
-        padding: 10px 5px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .courses-container::-webkit-scrollbar {
-        display: none;
+        overflow: visible;
     }
     
     .course-pill {
-        flex: 0 0 auto;
-        width: 280px;
-        scroll-snap-align: start;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    body {
+        overflow-y: auto;
+        height: 100vh;
     }
 }
 
