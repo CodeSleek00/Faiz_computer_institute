@@ -313,7 +313,6 @@ function showSection($title, $section, $conn) {
     showSection("Skill Development", "skills", $conn);
     showSection("More Courses", "free", $conn);
 
-
     ?>
 </div>
 
@@ -322,6 +321,7 @@ function showSection($title, $section, $conn) {
     <div class="courses-section-indicator" data-index="1"></div>
     <div class="courses-section-indicator" data-index="2"></div>
 </div>
+<h1>hi</h1>
 
        <script src="script.js"></script>
 </body>
