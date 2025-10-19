@@ -1298,3 +1298,80 @@ body {
       }
     }
     
+.course-2-section-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px 40px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.course-2-section-container::-webkit-scrollbar { display: none; }
+
+.course-2-section {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.course-2-header {
+    font-size: 22px;
+    font-weight: 600;
+    color: #222;
+    border-bottom: 2px solid #eef4ff;
+    margin-bottom: 15px;
+}
+.course-2-header span { color: #0066ff; }
+.course-2-courses-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.course-2-course-pill {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #f0f0f0;
+}
+.course-2-course-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-color: #0066ff;
+}
+.course-2-course-pill img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 12px;
+}
+.course-2-course-info h3 { margin:0 0 5px 0; font-size:16px; font-weight:600; }
+.course-2-course-info .course-2-provider { font-size:13px; color:#555; margin-bottom:4px; }
+.course-2-course-info .course-2-meta { font-size:12px; color:#666; display:flex; align-items:center; gap:4px; }
+.course-2-star { color: #f8b400; }
+.course-2-empty-message { text-align:center; color:#888; font-style:italic; padding:20px 0; }
+
+/* Carousel indicators */
+.course-2-indicators { display:flex; justify-content:center; gap:8px; padding:15px 0; }
+.course-2-indicator {
+    width:8px; height:8px; border-radius:50%; background:#ccc; transition:all 0.3s ease;
+}
+.course-2-indicator.active { background:#0066ff; width:20px; border-radius:4px; }
+
+/* Mobile */
+@media(max-width:768px){
+    .course-2-section-container { padding:15px 20px; gap:12px; }
+    .course-2-section { flex:0 0 85%; }
+}
