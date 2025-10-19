@@ -368,7 +368,48 @@ function showSection($title, $section, $conn) {
     </div>
   </div>
   </div>
-  
+  <?php
+function showSection2($title, $section, $conn) {
+    echo "<div class='section'>
+            <div class='header'>{$title} <span>→</span></div>
+            <div class='courses-container'>";
+    
+    $courses = $conn->query("SELECT * FROM courses WHERE home_section2='$section' ORDER BY id DESC LIMIT 4");
+    if($courses->num_rows == 0){
+        echo "<div class='empty-message'>No courses added yet...</div>";
+    } else {
+        while($c = $courses->fetch_assoc()) {
+            $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
+            $rating = 4.8;
+            echo "
+            <a class='course-pill' href='course_detail.php?id={$c['id']}'>
+                <img src='{$image}' alt='{$c['course_name']}'>
+                <div class='course-info'>
+                    <span class='provider'>{$c['company']}</span>
+                    <h3>{$c['course_name']}</h3>
+                    <div class='meta'>Professional Certificate · <span class='star'>★</span> {$rating}</div>
+                </div>
+            </a>";
+        }
+    }
+    echo "</div></div>";
+}
+?>
+
+<div class="main-container" id="mainCarousel">
+    <?php
+    showSection2("Popular Courses", "popular", $conn);
+    showSection2("Skill Development", "skills", $conn);
+    showSection2("More Courses", "free", $conn);
+    ?>
+</div>
+
+<div class="carousel-indicators" id="carouselIndicators">
+    <div class="indicator active" data-index="0"></div>
+    <div class="indicator" data-index="1"></div>
+    <div class="indicator" data-index="2"></div>
+</div>
+
 
        <script src="script.js"></script>
 </body>
