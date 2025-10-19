@@ -1081,6 +1081,7 @@ body {
 .o-level-online-container {
     position: relative;
     margin: 0 auto;
+     padding: 20px;
 }
 
 .o-level-online-carousel {
