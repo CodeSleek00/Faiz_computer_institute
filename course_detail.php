@@ -1,5 +1,5 @@
 <?php 
-include 'db_connect.php';
+include 'db/db_connect.php';
 $id = $_GET['id'] ?? 0;
 $course = $conn->query("SELECT * FROM courses WHERE id=$id")->fetch_assoc();
 $syllabus = $conn->query("SELECT * FROM course_syllabus WHERE course_id=$id");
