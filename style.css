@@ -1376,12 +1376,10 @@ body {
     .course-2-section { flex:0 0 85%; }
 }
  #university-section {
-        max-width: 1200px;
         margin: 0 auto;
         background: white;
         padding: 60px 40px;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .wrapper {
