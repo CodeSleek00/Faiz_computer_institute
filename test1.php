@@ -21,13 +21,12 @@ body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    max-width: 1400px;
     margin: 0 auto;
 }
 .course-2-section-container::-webkit-scrollbar { display: none; }
 
 .course-2-section {
-    flex: 0 0 300px;
+    flex: 0 0 500px;
     scroll-snap-align: start;
     background: white;
     border-radius: 16px;
