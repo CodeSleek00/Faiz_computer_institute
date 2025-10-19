@@ -6,199 +6,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Courses</title>
 <style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #eef4ff;
-    margin: 0;
-    padding: 0;
-}
-.courses-section {
-    display: flex;
-    gap: 20px;
-    padding: 20px 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.courses-section-item {
-    flex: 1;
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-.courses-section-header {
-    text-align: left;
-    padding: 10px 0 20px 0;
-    font-size: 22px;
-    font-weight: 600;
-    color: #222;
-    border-bottom: 2px solid #eef4ff;
-    margin-bottom: 15px;
-}
-.courses-section-header span {
-    color: #0066ff;
-}
-.courses-section-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.courses-section-pill {
-    background: #fff;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    padding: 12px 14px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    text-decoration: none;
-    color: #000;
-    border: 1px solid #f0f0f0;
-}
-.courses-section-pill:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border-color: #0066ff;
-}
-.courses-section-pill img {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    object-fit: cover;
-    margin-right: 12px;
-}
-.courses-section-info {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-.courses-section-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.3;
-}
-.courses-section-info .provider {
-    color: #555;
-    font-size: 13px;
-    margin-bottom: 4px;
-}
-.courses-section-info .meta {
-    font-size: 12px;
-    color: #666;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.courses-section-star {
-    color: #f8b400;
-    font-size: 14px;
-}
-.courses-section-empty {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    padding: 20px 0;
-}
+body { font-family: 'Poppins', sans-serif; background: #eef4ff; margin:0; padding:0; }
+.courses-section { display: flex; gap: 20px; padding: 20px 40px; max-width: 1400px; margin: 0 auto; }
+.courses-section-item { flex: 1; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.courses-section-header { text-align: left; padding: 10px 0 20px 0; font-size: 22px; font-weight: 600; color: #222; border-bottom: 2px solid #eef4ff; margin-bottom: 15px; }
+.courses-section-header span { color: #0066ff; }
+.courses-section-container { display: flex; flex-direction: column; gap: 15px; }
+.courses-section-pill { background: #fff; border-radius: 12px; display: flex; align-items: center; padding: 12px 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: #000; border: 1px solid #f0f0f0; }
+.courses-section-pill:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-color: #0066ff; }
+.courses-section-pill img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-right: 12px; }
+.courses-section-info { display: flex; flex-direction: column; flex: 1; }
+.courses-section-info h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.courses-section-info .provider { color: #555; font-size: 13px; margin-bottom: 4px; }
+.courses-section-info .meta { font-size: 12px; color: #666; display: flex; align-items: center; gap: 4px; }
+.courses-section-star { color: #f8b400; font-size: 14px; }
+.courses-section-empty { text-align: center; color: #888; font-style: italic; padding: 20px 0; }
 
 /* Mobile Styles - Horizontal Carousel */
 @media (max-width: 768px) {
-    .courses-section {
-        display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 15px;
-        padding: 15px 20px;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-    
-    .courses-section::-webkit-scrollbar {
-        display: none;
-    }
-    
-    .courses-section-item {
-        flex: 0 0 auto;
-        width: 85vw;
-        scroll-snap-align: start;
-        padding: 15px;
-    }
-    
-    .courses-section-header {
-        font-size: 18px;
-        padding: 0 0 12px 0;
-    }
-    
-    .courses-section-container {
-        gap: 10px;
-    }
-    
-    .courses-section-pill {
-        padding: 10px 12px;
-    }
-    
-    .courses-section-pill img {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .courses-section-info h3 {
-        font-size: 15px;
-    }
-    
+    .courses-section { display: flex; flex-direction: row; overflow-x: auto; gap: 15px; padding: 15px 20px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .courses-section::-webkit-scrollbar { display: none; }
+    .courses-section-item { flex: 0 0 auto; width: 85vw; scroll-snap-align: start; padding: 15px; }
+    .courses-section-header { font-size: 18px; padding: 0 0 12px 0; }
+    .courses-section-container { gap: 10px; }
+    .courses-section-pill { padding: 10px 12px; }
+    .courses-section-pill img { width: 45px; height: 45px; }
+    .courses-section-info h3 { font-size: 15px; }
     .courses-section-info .provider,
-    .courses-section-info .meta {
-        font-size: 12px;
-    }
-    
-    /* Carousel Indicators */
-    .courses-section-indicators {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        padding: 15px 0;
-    }
-    
-    .courses-section-indicator {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #ccc;
-        transition: all 0.3s ease;
-    }
-    
-    .courses-section-indicator.active {
-        background: #0066ff;
-        width: 20px;
-        border-radius: 4px;
-    }
+    .courses-section-info .meta { font-size: 12px; }
+    .courses-section-indicators { display: flex; justify-content: center; gap: 8px; padding: 15px 0; }
+    .courses-section-indicator { width: 8px; height: 8px; border-radius: 50%; background: #ccc; transition: all 0.3s ease; }
+    .courses-section-indicator.active { background: #0066ff; width: 20px; border-radius: 4px; }
 }
 
 /* Tablet Styles */
 @media (max-width: 1024px) and (min-width: 769px) {
-    .courses-section {
-        padding: 20px 30px;
-        gap: 15px;
-    }
-    
-    .courses-section-item {
-        padding: 15px;
-    }
-    
-    .courses-section-header {
-        font-size: 20px;
-    }
-    
-    .courses-section-pill img {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .courses-section-info h3 {
-        font-size: 15px;
-    }
+    .courses-section { padding: 20px 30px; gap: 15px; }
+    .courses-section-item { padding: 15px; }
+    .courses-section-header { font-size: 20px; }
+    .courses-section-pill img { width: 45px; height: 45px; }
+    .courses-section-info h3 { font-size: 15px; }
 }
 </style>
 </head>
@@ -216,14 +63,16 @@ function showSection($title, $section, $conn) {
     } else {
         while($c = $courses->fetch_assoc()) {
             $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
-            $rating = 4.8;
+            $certificate = !empty($c['certificate']) ? $c['certificate'] : "Professional Certificate";
+            $rating = !empty($c['rating']) ? $c['rating'] : 4.8;
+
             echo "
             <a class='courses-section-pill' href='course_detail.php?id={$c['id']}'>
                 <img src='{$image}' alt='{$c['course_name']}'>
                 <div class='courses-section-info'>
                     <span class='provider'>{$c['company']}</span>
                     <h3>{$c['course_name']}</h3>
-                    <div class='meta'>Professional Certificate · <span class='courses-section-star'>★</span> {$rating}</div>
+                    <div class='meta'>{$certificate} · <span class='courses-section-star'>★</span> {$rating}</div>
                 </div>
             </a>";
         }
@@ -251,7 +100,6 @@ function showSection($title, $section, $conn) {
 const coursesSectionCarousel = document.getElementById('coursesSectionCarousel');
 const coursesSectionIndicators = document.querySelectorAll('.courses-section-indicator');
 
-// Update indicators on scroll
 coursesSectionCarousel.addEventListener('scroll', () => {
     const scrollLeft = coursesSectionCarousel.scrollLeft;
     const sectionWidth = coursesSectionCarousel.querySelector('.courses-section-item').offsetWidth;
@@ -259,15 +107,11 @@ coursesSectionCarousel.addEventListener('scroll', () => {
     const activeIndex = Math.round(scrollLeft / (sectionWidth + gap));
     
     coursesSectionIndicators.forEach((indicator, index) => {
-        if (index === activeIndex) {
-            indicator.classList.add('active');
-        } else {
-            indicator.classList.remove('active');
-        }
+        if (index === activeIndex) indicator.classList.add('active');
+        else indicator.classList.remove('active');
     });
 });
 
-// Click on indicators to scroll to specific section
 coursesSectionIndicators.forEach(indicator => {
     indicator.addEventListener('click', () => {
         const index = parseInt(indicator.getAttribute('data-index'));
