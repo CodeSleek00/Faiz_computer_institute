@@ -71,7 +71,7 @@ function showSection($title, $section, $conn) {
                 <div class='courses-section-info'>
                     <span class='provider'>{$c['company']}</span>
                     <h3>{$c['course_name']}</h3>
-                    <div class='meta'>{$certificate} · <span class='courses-section-star'>★</span> {$rating}</div>
+                    <div class='meta'>{$certificate} · <span class='courses-section-star'>★</span> </div>
                 </div>
             </a>";
         }
