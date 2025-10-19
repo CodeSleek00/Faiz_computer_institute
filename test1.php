@@ -12,63 +12,80 @@ body {
     margin: 0;
     padding: 0;
 }
+.main-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
 .section {
-    margin-bottom: 50px;
+    flex: 1;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .header {
     text-align: left;
-    padding: 25px 40px;
-    font-size: 26px;
+    padding: 10px 0 20px 0;
+    font-size: 22px;
     font-weight: 600;
     color: #222;
+    border-bottom: 2px solid #eef4ff;
+    margin-bottom: 15px;
 }
 .header span {
     color: #0066ff;
 }
 .courses-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 18px;
-    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 .course-pill {
     background: #fff;
-    border-radius: 16px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     padding: 12px 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     transition: all 0.3s ease;
     cursor: pointer;
     text-decoration: none;
     color: #000;
+    border: 1px solid #f0f0f0;
 }
 .course-pill:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-color: #0066ff;
 }
 .course-pill img {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
     object-fit: cover;
-    margin-right: 14px;
+    margin-right: 12px;
 }
 .course-info {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 .course-info h3 {
-    margin: 0;
-    font-size: 17px;
+    margin: 0 0 5px 0;
+    font-size: 16px;
     font-weight: 600;
+    line-height: 1.3;
 }
 .course-info .provider {
     color: #555;
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 4px;
 }
 .course-info .meta {
-    font-size: 13px;
+    font-size: 12px;
     color: #666;
     display: flex;
     align-items: center;
@@ -76,21 +93,38 @@ body {
 }
 .star {
     color: #f8b400;
-    font-size: 15px;
+    font-size: 14px;
+}
+.empty-message {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px 0;
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    
+    .section {
+        padding: 15px;
+    }
+    
     .header {
-        padding: 20px 20px;
-        font-size: 22px;
+        font-size: 20px;
+        padding: 5px 0 15px 0;
     }
     
     .courses-container {
         display: flex;
         overflow-x: auto;
-        gap: 18px;
-        padding: 10px 20px;
+        flex-direction: row;
+        gap: 12px;
+        padding: 10px 5px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
     }
@@ -101,29 +135,33 @@ body {
     
     .course-pill {
         flex: 0 0 auto;
-        width: 300px;
+        width: 280px;
         scroll-snap-align: start;
-    }
-    
-    .course-pill img {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .course-info h3 {
-        font-size: 16px;
-    }
-    
-    .course-info .provider,
-    .course-info .meta {
-        font-size: 13px;
     }
 }
 
 /* Tablet Styles */
 @media (max-width: 1024px) and (min-width: 769px) {
-    .courses-container {
-        grid-template-columns: repeat(2, 1fr);
+    .main-container {
+        padding: 20px 30px;
+        gap: 15px;
+    }
+    
+    .section {
+        padding: 15px;
+    }
+    
+    .header {
+        font-size: 20px;
+    }
+    
+    .course-pill img {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .course-info h3 {
+        font-size: 15px;
     }
 }
 </style>
@@ -136,9 +174,9 @@ function showSection($title, $section, $conn) {
             <div class='header'>{$title} <span>→</span></div>
             <div class='courses-container'>";
     
-    $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC");
+    $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC LIMIT 4");
     if($courses->num_rows == 0){
-        echo "<p style='padding: 0 40px; color: gray;'>No courses added yet...</p>";
+        echo "<div class='empty-message'>No courses added yet...</div>";
     } else {
         while($c = $courses->fetch_assoc()) {
             $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
@@ -158,11 +196,13 @@ function showSection($title, $section, $conn) {
 }
 ?>
 
-<?php
-showSection("Popular Courses", "popular", $conn);
-showSection("Skill Development", "skills", $conn);
-showSection("Free Courses", "free", $conn);
-?>
+<div class="main-container">
+    <?php
+    showSection("Popular Courses", "popular", $conn);
+    showSection("Skill Development", "skills", $conn);
+    showSection("Free Courses", "free", $conn);
+    ?>
+</div>
 
 </body>
 </html>
