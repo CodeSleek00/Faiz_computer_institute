@@ -407,7 +407,7 @@ showSection2("Free Courses","free",$conn);
     <div class="course-2-indicator" data-index="1"></div>
     <div class="course-2-indicator" data-index="2"></div>
 </div>
-<div id="university-section">
+  <a href="" style="text-decoration: none;"><div id="university-section">
     <div class="wrapper">
         <div class="university-logos">
             <div class="university-logo">
@@ -431,8 +431,7 @@ showSection2("Free Courses","free",$conn);
         </div>
 
         <div class="university-text">
-            <h2>Join colleges and universities that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2>
-            <button class="cta-button">Learn More</button>
+          <h2>Join colleges and universities that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2></a>
         </div>
     </div>
 </div>
