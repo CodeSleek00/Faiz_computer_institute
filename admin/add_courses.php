@@ -1,6 +1,6 @@
 
 <?php // add_course.php - place alongside db_connect.php
-require 'db_connect.php';
+require '../db/db_connect.php';
 // fetch companies for dropdown (optional)
 $companies = $pdo->query('SELECT id,name FROM companies ORDER BY name')->fetchAll();
 ?>

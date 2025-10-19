@@ -1,5 +1,5 @@
 <?php
-require 'db_connect.php';
+require '../db/db_connect.php';
 
 // Function to handle file upload
 function saveUploadedFile($file, $targetDir = 'uploads') {
