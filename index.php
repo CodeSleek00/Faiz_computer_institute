@@ -311,7 +311,9 @@ function showSection($title, $section, $conn) {
     <?php
     showSection("Popular Courses", "popular", $conn);
     showSection("Skill Development", "skills", $conn);
-    showSection("Free Courses", "free", $conn);
+    showSection("More Courses", "free", $conn);
+
+
     ?>
 </div>
 
