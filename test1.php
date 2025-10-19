@@ -203,9 +203,8 @@ body {
 </style>
 </head>
 <body>
-
 <?php
-function showSection($title, $section, $conn) {
+function showSection2($title, $section, $conn) {
     echo "<div class='section'>
             <div class='header'>{$title} <span>→</span></div>
             <div class='courses-container'>";
@@ -234,9 +233,9 @@ function showSection($title, $section, $conn) {
 
 <div class="main-container" id="mainCarousel">
     <?php
-    showSection("Popular Courses", "popular", $conn);
-    showSection("Skill Development", "skills", $conn);
-    showSection("Free Courses", "free", $conn);
+    showSection2("Popular Courses", "popular", $conn);
+    showSection2("Skill Development", "skills", $conn);
+    showSection2("More Courses", "free", $conn);
     ?>
 </div>
 
