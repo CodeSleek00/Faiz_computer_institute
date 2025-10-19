@@ -256,3 +256,24 @@ document.addEventListener('DOMContentLoaded', function() {
     createOLevelOnlineDots();
     updateOLevelOnlineDots();
 });
+// Carousel functionality
+const carousel2 = document.getElementById('course2Carousel');
+const indicators2 = document.querySelectorAll('.course-2-indicator');
+
+carousel2.addEventListener('scroll', () => {
+    const scrollLeft = carousel2.scrollLeft;
+    const sectionWidth = carousel2.querySelector('.course-2-section').offsetWidth;
+    const gap = 20; // match CSS gap
+    const activeIndex = Math.round(scrollLeft / (sectionWidth + gap));
+    indicators2.forEach((ind,i) => i===activeIndex ? ind.classList.add('active') : ind.classList.remove('active'));
+});
+
+// Click indicator to scroll
+indicators2.forEach(ind => {
+    ind.addEventListener('click', () => {
+        const index = parseInt(ind.getAttribute('data-index'));
+        const sectionWidth = carousel2.querySelector('.course-2-section').offsetWidth;
+        const gap = 20;
+        carousel2.scrollTo({ left: index*(sectionWidth+gap), behavior:'smooth' });
+    });
+});
