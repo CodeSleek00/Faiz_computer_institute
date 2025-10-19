@@ -1438,11 +1438,13 @@ body {
         object-fit: contain;
         opacity: 0.9;
         transition: filter 0.3s ease, opacity 0.3s ease;
+        filter: grayscale(100%);
     }
 
     .university-logo:hover img {
         opacity: 1;
         filter: grayscale(100%);
+        
     }
 
     .university-text h2 {
