@@ -292,14 +292,13 @@ function showSection($title, $section, $conn) {
     } else {
         while($c = $courses->fetch_assoc()) {
             $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
-            $rating = 4.8;
             echo "
             <a class='courses-section-pill' href='course_detail.php?id={$c['id']}'>
                 <img src='{$image}' alt='{$c['course_name']}'>
                 <div class='courses-section-info'>
                     <span class='provider'>{$c['company']}</span>
                     <h3>{$c['course_name']}</h3>
-                    <div class='meta'>Professional Certificate · <span class='courses-section-star'>★</span> {$rating}</div>
+                    <div class='meta'>Professional Certificate ·</div>
                 </div>
             </a>";
         }
