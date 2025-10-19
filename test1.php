@@ -26,7 +26,7 @@ body {
 .course-2-section-container::-webkit-scrollbar { display: none; }
 
 .course-2-section {
-    flex: 0 0 440px;
+    flex: 0 0 400px;
     scroll-snap-align: start;
     background: white;
     border-radius: 16px;
