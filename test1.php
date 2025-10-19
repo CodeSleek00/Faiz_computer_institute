@@ -102,40 +102,77 @@ body {
     padding: 20px 0;
 }
 
-/* Mobile Styles - Single Column Layout */
+/* Mobile Styles - Horizontal Carousel */
 @media (max-width: 768px) {
     .main-container {
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 15px;
         padding: 15px 20px;
-        gap: 20px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    .main-container::-webkit-scrollbar {
+        display: none;
     }
     
     .section {
-        padding: 18px;
-        width: 100%;
-        box-sizing: border-box;
+        flex: 0 0 auto;
+        width: 85vw;
+        scroll-snap-align: start;
+        padding: 15px;
     }
     
     .header {
-        font-size: 20px;
-        padding: 5px 0 15px 0;
+        font-size: 18px;
+        padding: 0 0 12px 0;
     }
     
     .courses-container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        overflow: visible;
+        gap: 10px;
     }
     
     .course-pill {
-        width: 100%;
-        box-sizing: border-box;
+        padding: 10px 12px;
     }
     
-    body {
-        overflow-y: auto;
-        height: 100vh;
+    .course-pill img {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .course-info h3 {
+        font-size: 15px;
+    }
+    
+    .course-info .provider,
+    .course-info .meta {
+        font-size: 12px;
+    }
+    
+    /* Carousel Indicators */
+    .carousel-indicators {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 15px 0;
+    }
+    
+    .indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ccc;
+        transition: all 0.3s ease;
+    }
+    
+    .indicator.active {
+        background: #0066ff;
+        width: 20px;
+        border-radius: 4px;
     }
 }
 
@@ -195,13 +232,54 @@ function showSection($title, $section, $conn) {
 }
 ?>
 
-<div class="main-container">
+<div class="main-container" id="mainCarousel">
     <?php
     showSection("Popular Courses", "popular", $conn);
     showSection("Skill Development", "skills", $conn);
     showSection("Free Courses", "free", $conn);
     ?>
 </div>
+
+<div class="carousel-indicators" id="carouselIndicators">
+    <div class="indicator active" data-index="0"></div>
+    <div class="indicator" data-index="1"></div>
+    <div class="indicator" data-index="2"></div>
+</div>
+
+<script>
+// Carousel functionality
+const carousel = document.getElementById('mainCarousel');
+const indicators = document.querySelectorAll('.indicator');
+
+// Update indicators on scroll
+carousel.addEventListener('scroll', () => {
+    const scrollLeft = carousel.scrollLeft;
+    const sectionWidth = carousel.querySelector('.section').offsetWidth;
+    const gap = 15;
+    const activeIndex = Math.round(scrollLeft / (sectionWidth + gap));
+    
+    indicators.forEach((indicator, index) => {
+        if (index === activeIndex) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.remove('active');
+        }
+    });
+});
+
+// Click on indicators to scroll to specific section
+indicators.forEach(indicator => {
+    indicator.addEventListener('click', () => {
+        const index = parseInt(indicator.getAttribute('data-index'));
+        const sectionWidth = carousel.querySelector('.section').offsetWidth;
+        const gap = 15;
+        carousel.scrollTo({
+            left: index * (sectionWidth + gap),
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
 
 </body>
 </html>
