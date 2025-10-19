@@ -3,114 +3,105 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>All Courses</title>
+<title>Courses</title>
 <style>
 body {
     font-family: 'Poppins', sans-serif;
-    background: #f4f4f9;
+    background: #eef4ff;
     margin: 0;
     padding: 0;
 }
 .header {
-    text-align: center;
-    padding: 30px;
-    background: #2b8a3e;
-    color: white;
+    text-align: left;
+    padding: 25px 40px;
     font-size: 26px;
-    font-weight: bold;
+    font-weight: 600;
+    color: #222;
 }
-.pill-strip {
+.header span {
+    color: #0066ff;
+}
+.scroll-container {
     display: flex;
     overflow-x: auto;
-    gap: 10px;
-    background: white;
-    padding: 15px 20px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    gap: 18px;
+    padding: 20px 40px;
+    scroll-snap-type: x mandatory;
 }
-.pill {
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+.course-pill {
     flex: 0 0 auto;
-    background: #e7f3ec;
-    color: #2b8a3e;
-    padding: 8px 16px;
-    border-radius: 50px;
+    width: 340px;
+    background: #fff;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    scroll-snap-align: start;
+    transition: all 0.3s ease;
     cursor: pointer;
-    font-weight: 500;
-    border: 1px solid #2b8a3e;
-    transition: 0.3s;
+    text-decoration: none;
+    color: #000;
 }
-.pill:hover {
-    background: #2b8a3e;
-    color: white;
+.course-pill:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.course-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    padding: 40px;
-}
-.course-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    overflow: hidden;
-    transition: transform 0.3s;
-}
-.course-card:hover {
-    transform: translateY(-5px);
-}
-.course-card img {
-    width: 100%;
-    height: 180px;
+.course-pill img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
     object-fit: cover;
+    margin-right: 14px;
 }
-.card-body {
-    padding: 15px;
+.course-info {
+    display: flex;
+    flex-direction: column;
 }
-h3 {
+.course-info h3 {
     margin: 0;
-    font-size: 20px;
+    font-size: 17px;
+    font-weight: 600;
 }
-.rating {
-    color: gold;
+.course-info .provider {
+    color: #555;
+    font-size: 14px;
 }
-.enroll-btn {
-    background: #2b8a3e;
-    color: white;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 6px;
-    margin-top: 10px;
-    cursor: pointer;
+.course-info .meta {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.star {
+    color: #f8b400;
+    font-size: 15px;
 }
 </style>
 </head>
 <body>
 
-<div class="header">Our Courses</div>
+<div class="header">Most Popular <span>Courses →</span></div>
 
-<div class="pill-strip">
+<div class="scroll-container">
 <?php
 $courses = $conn->query("SELECT * FROM courses ORDER BY id DESC");
 while($c = $courses->fetch_assoc()) {
-    echo '<a class="pill" href="course_detail.php?id='.$c['id'].'">'.$c['course_name'].'</a>';
-}
-?>
-</div>
-
-<div class="course-list">
-<?php
-$courses->data_seek(0);
-while($row = $courses->fetch_assoc()) {
-    $image = !empty($row['image']) ? $row['image'] : 'https://via.placeholder.com/400x250';
+    $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
+    $rating = $conn->query("SELECT ROUND(AVG(rating),1) as rate FROM course_reviews WHERE course_id={$c['id']}")->fetch_assoc()['rate'] ?? 4.5;
     echo "
-    <div class='course-card'>
-        <img src='{$image}' alt='{$row['course_name']}'>
-        <div class='card-body'>
-            <h3>{$row['course_name']}</h3>
-            <p>{$row['description']}</p>
-            <a href='course_detail.php?id={$row['id']}'><button class='enroll-btn'>View Details</button></a>
+    <a class='course-pill' href='course_detail.php?id={$c['id']}'>
+        <img src='{$image}' alt='{$c['course_name']}'>
+        <div class='course-info'>
+            <span class='provider'>{$c['company']}</span>
+            <h3>{$c['course_name']}</h3>
+            <div class='meta'>Professional Certificate · <span class='star'>★</span> {$rating}</div>
         </div>
-    </div>";
+    </a>";
 }
 ?>
 </div>
