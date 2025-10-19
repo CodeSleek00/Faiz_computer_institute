@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=1.26">
+    <link rel="stylesheet" href="style.css?v=1.27">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -407,8 +407,35 @@ showSection2("Free Courses","free",$conn);
     <div class="course-2-indicator" data-index="1"></div>
     <div class="course-2-indicator" data-index="2"></div>
 </div>
+<div id="university-section">
+    <div class="wrapper">
+        <div class="university-logos">
+            <div class="university-logo">
+                <img src="images/integral.avif" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/manglayatan.jpg" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/parul.jpg" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/srisharda.png" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/bosse.png" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/rgcsm.png" alt="">
+            </div>
+        </div>
 
-
+        <div class="university-text">
+            <h2>Join colleges and universities worldwide that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2>
+            <button class="cta-button">Learn More</button>
+        </div>
+    </div>
+</div>
        <script src="script.js"></script>
 </body>
 </html>

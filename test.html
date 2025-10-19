@@ -1,108 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What brings you to Coursera today?</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    .career {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9fbff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coursera for Campus</title>
+<style>
+    #university-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 60px 40px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
-    .career-section {
-      background-color: #f1f6ff;
-      padding: 40px 30px;
-      border-radius: 30px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      max-width: 1100px;
-      width: 90%;
-    }
-
-    .career-section h2 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #101010;
-      margin-bottom: 25px;
-    }
-
-    .career-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
-
-    .option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #fff;
-      border: 2px solid #e0e6f5;
-      border-radius: 15px;
-      padding: 12px 20px;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .option .icon {
-      background: #dbe7ff;
-      color: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 1.1rem;
-    }
-
-    .option:hover {
-      border-color: #0056ff;
-      transform: translateY(-2px);
-      box-shadow: 0 3px 10px rgba(0,86,255,0.1);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .career-options {
-        flex-direction: column;
+    .wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
         align-items: center;
-      }
-      .option {
-        width: 90%;
-        justify-content: center;
-      }
     }
-  </style>
+
+    .university-logos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px 40px;
+        position: relative;
+    }
+
+    .university-logos::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 33.33%;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+    }
+
+    .university-logos::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 66.66%;
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+    }
+
+    .university-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        height: 100px;
+        transition: all 0.3s ease;
+    }
+
+    .university-logo:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+    }
+
+    .university-logo img {
+        max-width: 100%;
+        max-height: 80px;
+        object-fit: contain;
+        opacity: 0.9;
+        transition: filter 0.3s ease, opacity 0.3s ease;
+    }
+
+    .university-logo:hover img {
+        filter: grayscale(0%);
+        opacity: 1;
+    }
+
+    .university-text h2 {
+        font-size: 32px;
+        font-weight: 700;
+        
+        color: #1a1a1a;
+       
+    }
+
+    .highlight {
+        color: #0066cc;
+        font-weight: 600;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 14px 32px;
+        background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 102, 204, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        #university-section {
+            padding: 40px 20px;
+        }
+
+        .wrapper {
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .university-logos {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .university-logos::before {
+            left: 50%;
+        }
+        
+        .university-logos::after {
+            display: none;
+        }
+
+        .university-logo {
+            height: 80px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #university-section {
+            padding: 30px 15px;
+        }
+
+        .university-logos {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+    }
+</style>
 </head>
 <body>
-<div class="career">
-  <div class="career-section">
-    <h2>What would you like to learn today?</h2>
-    <div class="career-options">
-      <button class="option">
-        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-lafs/64/external-grow-distance-education-outline-part-4-outline-lafs.png" alt="external-grow-distance-education-outline-part-4-outline-lafs"/></span>
-        <a href="" style="text-decoration: none;color:black;"><span>Grow your skills</span></a>
-      </button>
-      <button class="option">
-        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ink/48/learning.png" alt="learning"/></span>
-        <a href="" style="text-decoration: none;color:black;"><span>Learn something new</span></a>
-      </button>
-      <button class="option">
-        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-geotatah/64/external-development-just-in-time-outline-geotatah.png" alt="external-development-just-in-time-outline-geotatah"/></span>
-        <a href="" style="text-decoration: none;color:black;"><span>Improve your knowledge</span></a>
-      </button>
-      <button class="option">
-        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ios/50/hard-to-find.png" alt="hard-to-find"/></span>
-        <a href="ggfg.html" style="text-decoration: none;color:black;"><span>Explore Our Courses</span></a>
-      </button>
+<div id="university-section">
+    <div class="wrapper">
+        <div class="university-logos">
+            <div class="university-logo">
+                <img src="images/integral.avif" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/manglayatan.jpg" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/parul.jpg" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/srisharda.png" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/bosse.png" alt="">
+            </div>
+            <div class="university-logo">
+                <img src="images/rgcsm.png" alt="">
+            </div>
+        </div>
+
+        <div class="university-text">
+            <h2>Join colleges and universities worldwide that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2>
+            <button class="cta-button">Learn More</button>
+        </div>
     </div>
-  </div>
-  </div>
+</div>
 </body>
 </html>
