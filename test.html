@@ -3,179 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coursera for Campus</title>
+<title>Why People Choose Coursera</title>
 <style>
-    #university-section {
-        max-width: 1200px;
-        margin: 0 auto;
-        background: white;
-        padding: 60px 40px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
     }
 
-    .wrapper {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: center;
+    body {
+        
+       
+        padding: 40px 20px;
     }
 
-    .university-logos {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px 40px;
-        position: relative;
+    .testimonial {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
-    .university-logos::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 33.33%;
-        width: 1px;
-        background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+    .testimonial-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 20px;
+        padding-bottom: 10px;
+        scrollbar-width: none; /* Firefox */
     }
 
-    .university-logos::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 66.66%;
-        width: 1px;
-        background: linear-gradient(to bottom, transparent, #e0e0e0, transparent);
+    .testimonial-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
     }
 
-    .university-logo {
+    .testimonial-card {
+        flex: 0 0 340px;
+        background: #fff;
+        border-radius: 8px;
+       border: 1px solid #d1cfcf;
+        padding: 20px;
+        scroll-snap-align: start;
+        transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .profile {
         display: flex;
         align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        height: 100px;
-        transition: all 0.3s ease;
+        gap: 12px;
+        margin-bottom: 12px;
     }
 
-    .university-logo:hover {
-        background: #f0f0f0;
-        transform: translateY(-2px);
+    .profile img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
     }
 
-    .university-logo img {
-        max-width: 100%;
-        max-height: 80px;
-        object-fit: contain;
-        opacity: 0.9;
-        transition: filter 0.3s ease, opacity 0.3s ease;
-    }
-
-    .university-logo:hover img {
-        filter: grayscale(0%);
-        opacity: 1;
-    }
-
-    .university-text h2 {
-        font-size: 32px;
-        font-weight: 700;
-        
-        color: #1a1a1a;
-       
-    }
-
-    .highlight {
-        color: #0066cc;
-        font-weight: 600;
-    }
-
-    .cta-button {
-        display: inline-block;
-        padding: 14px 32px;
-        background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-        color: white;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
+    .profile h3 {
         font-size: 16px;
+        font-weight: 600;
     }
 
-    .cta-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(0, 102, 204, 0.3);
+    .testimonial-text {
+        font-size: 15px;
+        color: #979797;
+        line-height: 1.6;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
-        #university-section {
-            padding: 40px 20px;
-        }
-
-        .wrapper {
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-
-        .university-logos {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .university-logos::before {
-            left: 50%;
-        }
-        
-        .university-logos::after {
-            display: none;
-        }
-
-        .university-logo {
-            height: 80px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        #university-section {
-            padding: 30px 15px;
-        }
-
-        .university-logos {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+        .testimonial-card {
+            flex: 0 0 80%;
         }
     }
 </style>
 </head>
 <body>
-<div id="university-section">
-    <div class="wrapper">
-        <div class="university-logos">
-            <div class="university-logo">
-                <img src="images/integral.avif" alt="">
-            </div>
-            <div class="university-logo">
-                <img src="images/manglayatan.jpg" alt="">
-            </div>
-            <div class="university-logo">
-                <img src="images/parul.jpg" alt="">
-            </div>
-            <div class="university-logo">
-                <img src="images/srisharda.png" alt="">
-            </div>
-            <div class="university-logo">
-                <img src="images/bosse.png" alt="">
-            </div>
-            <div class="university-logo">
-                <img src="images/rgcsm.png" alt="">
-            </div>
-        </div>
 
-        <div class="university-text">
-            <h2>Join colleges and universities worldwide that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2>
-            <button class="cta-button">Learn More</button>
+<h2 class="testimonial">Why people choose <span style="color:rgb(0, 0, 163)"> Faiz Computer Institute</span></h2>
+
+<div class="testimonial-container" id="scrollArea">
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=1" alt="Sarah">
+            <h3>Sarah W.</h3>
         </div>
+        <p class="testimonial-text">
+            "Coursera's reputation for high-quality content, paired with its flexible structure, made it possible for me to dive into data analytics while managing family, health, and everyday life."
+        </p>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=2" alt="Noeris">
+            <h3>Noeris B.</h3>
+        </div>
+        <p class="testimonial-text">
+            "Coursera rebuilt my confidence and showed me I could dream bigger. It wasn't just about gaining knowledge—it was about believing in my potential again."
+        </p>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=3" alt="Abdullahi">
+            <h3>Abdullahi M.</h3>
+        </div>
+        <p class="testimonial-text">
+            "I now feel more prepared to take on leadership roles and have already started mentoring some of my colleagues."
+        </p>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=4" alt="Anas">
+            <h3>Anas A.</h3>
+        </div>
+        <p class="testimonial-text">
+            "Learning with Coursera has expanded my professional expertise by giving me access to cutting-edge research, practical tools, and global perspectives."
+        </p>
     </div>
 </div>
+
+<script>
+    // Optional: smooth scroll with mouse drag on desktop
+    const scrollArea = document.getElementById('scrollArea');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollArea.addEventListener('mousedown', e => {
+        isDown = true;
+        scrollArea.classList.add('active');
+        startX = e.pageX - scrollArea.offsetLeft;
+        scrollLeft = scrollArea.scrollLeft;
+    });
+
+    scrollArea.addEventListener('mouseleave', () => {
+        isDown = false;
+        scrollArea.classList.remove('active');
+    });
+
+    scrollArea.addEventListener('mouseup', () => {
+        isDown = false;
+        scrollArea.classList.remove('active');
+    });
+
+    scrollArea.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollArea.offsetLeft;
+        const walk = (x - startX) * 2; // scroll speed
+        scrollArea.scrollLeft = scrollLeft - walk;
+    });
+</script>
+
 </body>
 </html>

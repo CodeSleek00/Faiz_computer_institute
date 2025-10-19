@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=1.35">
+    <link rel="stylesheet" href="style.css?v=1.36">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -435,6 +435,51 @@ showSection2("Free Courses","free",$conn);
         </div>
     </div>
 </div>
+
+<h2 class="testimonial">Why people choose <span style="color:rgb(0, 0, 163)"> Faiz Computer Institute</span></h2>
+
+<div class="testimonial-container" id="scrollArea">
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=1" alt="Sarah">
+            <h3>Sarah W.</h3>
+        </div>
+        <p class="testimonial-text">
+            "Coursera's reputation for high-quality content, paired with its flexible structure, made it possible for me to dive into data analytics while managing family, health, and everyday life."
+        </p>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=2" alt="Noeris">
+            <h3>Noeris B.</h3>
+        </div>
+        <p class="testimonial-text">
+            "Coursera rebuilt my confidence and showed me I could dream bigger. It wasn't just about gaining knowledge—it was about believing in my potential again."
+        </p>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=3" alt="Abdullahi">
+            <h3>Abdullahi M.</h3>
+        </div>
+        <p class="testimonial-text">
+            "I now feel more prepared to take on leadership roles and have already started mentoring some of my colleagues."
+        </p>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="profile">
+            <img src="https://i.pravatar.cc/100?img=4" alt="Anas">
+            <h3>Anas A.</h3>
+        </div>
+        <p class="testimonial-text">
+            "Learning with Coursera has expanded my professional expertise by giving me access to cutting-edge research, practical tools, and global perspectives."
+        </p>
+    </div>
+</div>
+
        <script src="script.js"></script>
 </body>
 </html>

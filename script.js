@@ -277,3 +277,33 @@ indicators2.forEach(ind => {
         carousel2.scrollTo({ left: index*(sectionWidth+gap), behavior:'smooth' });
     });
 }); 
+ // Optional: smooth scroll with mouse drag on desktop
+    const scrollArea = document.getElementById('scrollArea');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollArea.addEventListener('mousedown', e => {
+        isDown = true;
+        scrollArea.classList.add('active');
+        startX = e.pageX - scrollArea.offsetLeft;
+        scrollLeft = scrollArea.scrollLeft;
+    });
+
+    scrollArea.addEventListener('mouseleave', () => {
+        isDown = false;
+        scrollArea.classList.remove('active');
+    });
+
+    scrollArea.addEventListener('mouseup', () => {
+        isDown = false;
+        scrollArea.classList.remove('active');
+    });
+
+    scrollArea.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollArea.offsetLeft;
+        const walk = (x - startX) * 2; // scroll speed
+        scrollArea.scrollLeft = scrollLeft - walk;
+    });
