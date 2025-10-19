@@ -4,76 +4,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Homepage 2 | Courses</title>
+<title>Course Explorer | Minimal Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root {
+  --primary: #4361ee;
+  --primary-light: #4895ef;
+  --dark: #2b2d42;
+  --gray: #8d99ae;
+  --light-gray: #edf2f4;
+  --white: #ffffff;
+  --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  --radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #f5f6fa;
-    margin: 0;
-    padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f9fafc;
+  color: var(--dark);
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
 }
+
 .container {
-    width: 90%;
-    margin: 30px auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
+
 .section-title {
-    font-size: 26px;
-    font-weight: 600;
-    color: #333;
-    margin: 40px 0 20px;
-    position: relative;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin: 60px 0 30px;
+  position: relative;
+  padding-bottom: 12px;
 }
+
 .section-title::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 60px;
-    height: 4px;
-    background: #007bff;
-    border-radius: 4px;
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
 }
+
 .course-grid {
-    display: grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.course-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  position: relative;
+}
+
+.course-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.course-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.course-info {
+  padding: 20px;
+}
+
+.course-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.course-company {
+  font-size: 0.875rem;
+  color: var(--gray);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--white);
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    margin: 40px 0 25px;
+  }
+  
+  .course-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
-}
-.course-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: 0.3s;
-}
-.course-card:hover {
-    transform: translateY(-6px);
-}
-.course-card img {
-    width: 100%;
+  }
+  
+  .course-image {
     height: 160px;
-    object-fit: cover;
+  }
 }
-.course-info {
-    padding: 15px;
-}
-.course-info h4 {
-    margin: 0;
-    font-size: 18px;
-    color: #222;
-}
-.course-info p {
-    font-size: 14px;
-    color: #555;
-    margin-top: 6px;
-}
-.badge {
-    display: inline-block;
-    background: #007bff;
-    color: white;
-    padding: 3px 8px;
-    font-size: 12px;
-    border-radius: 6px;
-    margin-top: 8px;
+
+@media (max-width: 576px) {
+  .course-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .section-title {
+    font-size: 1.375rem;
+    margin: 30px 0 20px;
+  }
+  
+  .course-info {
+    padding: 16px;
+  }
+  
+  .course-title {
+    font-size: 1rem;
+  }
 }
 </style>
 </head>
@@ -89,10 +172,10 @@ body {
             echo "<div class='course-grid'>";
             while($r = $res->fetch_assoc()){
                 echo "<div class='course-card'>
-                        <img src='../uploads/{$r['image']}' alt='{$r['course_name']}'>
+                        <img class='course-image' src='../uploads/{$r['image']}' alt='{$r['course_name']}'>
                         <div class='course-info'>
-                            <h4>{$r['course_name']}</h4>
-                            <p>{$r['company']}</p>
+                            <h3 class='course-title'>{$r['course_name']}</h3>
+                            <p class='course-company'>{$r['company']}</p>
                             <span class='badge'>".ucfirst($section)."</span>
                         </div>
                       </div>";
