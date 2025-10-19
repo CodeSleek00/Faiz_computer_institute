@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=1.24">
+    <link rel="stylesheet" href="style.css?v=1.21">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -369,41 +369,6 @@ function showSection($title, $section, $conn) {
   </div>
   </div>
   
-<div class="course-2-main-container">
-<?php
-function showSection2($title, $section, $conn) {
-    echo "<div class='course-2-section'>
-            <div class='course-2-header'>{$title} <span>→</span></div>
-            <div class='course-2-courses-container'>";
-    
-    $courses = $conn->query("SELECT * FROM courses WHERE home_section2='$section' ORDER BY id DESC LIMIT 4");
-    if($courses->num_rows == 0){
-        echo "<div class='course-2-empty-message'>No courses added yet...</div>";
-    } else {
-        while($c = $courses->fetch_assoc()) {
-            $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
-            $rating = 4.8;
-            echo "
-            <a class='course-2-course-pill' href='course_detail.php?id={$c['id']}'>
-                <img src='{$image}' alt='{$c['course_name']}'>
-                <div class='course-2-course-info'>
-                    <span class='course-2-provider'>{$c['company']}</span>
-                    <h3>{$c['course_name']}</h3>
-                    <div class='course-2-meta'>Professional Certificate · <span class='course-2-star'>★</span> {$rating}</div>
-                </div>
-            </a>";
-        }
-    }
-    echo "</div></div>";
-}
-
-// Display all 3 sections
-showSection2("Popular Courses", "popular", $conn);
-showSection2("Skill Development", "skills", $conn);
-showSection2("More Courses", "free", $conn);
-?>
-</div>
-
 
        <script src="script.js"></script>
 </body>
