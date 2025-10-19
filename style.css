@@ -1441,8 +1441,8 @@ body {
     }
 
     .university-logo:hover img {
-        filter: grayscale(0%);
         opacity: 1;
+        filter: grayscale(100%);
     }
 
     .university-text h2 {
