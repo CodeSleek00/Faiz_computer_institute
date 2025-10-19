@@ -396,9 +396,9 @@ function showSection2($title, $section, $conn) {
     echo "</div></div>";
 }
 
-showSection2("Popular Courses","popular",$conn);
+showSection2("Popular In Data","popular",$conn);
 showSection2("Skill Development","skills",$conn);
-showSection2("More Courses","free",$conn);
+showSection2("Free Courses","free",$conn);
 ?>
 </div>
 
