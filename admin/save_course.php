@@ -1,15 +1,12 @@
 <?php
-include '../db/db_connect.php';
+include '../db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $course_name   = $_POST['course_name'];
-    $description   = $_POST['description'];
-    $duration      = $_POST['duration'];
-    $company       = $_POST['company'];
-    $total_exams   = $_POST['total_exams'];
-    $admission_fee = $_POST['admission_fee'];
-    $monthly_fee   = $_POST['monthly_fee'];
-    $exam_fee      = $_POST['exam_fee'];
+    $course_name = $_POST['course_name'];
+    $description = $_POST['description'];
+    $duration    = $_POST['duration'];
+    $company     = $_POST['company'];
+    $total_exams = $_POST['total_exams'];
 
     // Handle image upload
     $imagePath = "";
@@ -20,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath);
     }
 
-    // Insert course data
-    $stmt = $conn->prepare("INSERT INTO courses (course_name, description, duration, image, company, total_exams, admission_fee, monthly_fee, exam_fee) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssiddd", $course_name, $description, $duration, $imagePath, $company, $total_exams, $admission_fee, $monthly_fee, $exam_fee);
+    // Insert course
+    $stmt = $conn->prepare("INSERT INTO courses (course_name, description, duration, image, company, total_exams) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $course_name, $description, $duration, $imagePath, $company, $total_exams);
     $stmt->execute();
     $course_id = $stmt->insert_id;
     $stmt->close();
@@ -45,20 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (trim($topic) != "") {
                 $stmt = $conn->prepare("INSERT INTO course_syllabus (course_id, syllabus_item) VALUES (?, ?)");
                 $stmt->bind_param("is", $course_id, $topic);
-                $stmt->execute();
-                $stmt->close();
-            }
-        }
-    }
-
-    // Insert additional fees
-    if (!empty($_POST['additional_fee_name'])) {
-        for ($i = 0; $i < count($_POST['additional_fee_name']); $i++) {
-            $feeName = $_POST['additional_fee_name'][$i];
-            $feeAmt  = $_POST['additional_fee_amount'][$i];
-            if (trim($feeName) != "" && $feeAmt != "") {
-                $stmt = $conn->prepare("INSERT INTO course_additional_fees (course_id, fee_name, fee_amount) VALUES (?, ?, ?)");
-                $stmt->bind_param("isd", $course_id, $feeName, $feeAmt);
                 $stmt->execute();
                 $stmt->close();
             }

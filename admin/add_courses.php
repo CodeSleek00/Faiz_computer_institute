@@ -18,7 +18,7 @@
             margin: auto;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        input, textarea, select {
+        input, textarea {
             width: 100%;
             padding: 10px;
             margin: 6px 0 15px 0;
@@ -78,25 +78,6 @@
         </div>
         <button type="button" class="add-btn" onclick="addSyllabus()">+ Add Syllabus</button>
 
-        <h3>Fees</h3>
-        <label>Admission Fee:</label>
-        <input type="number" step="0.01" name="admission_fee" value="0">
-
-        <label>Monthly Fee:</label>
-        <input type="number" step="0.01" name="monthly_fee" value="0">
-
-        <label>Exam Fee:</label>
-        <input type="number" step="0.01" name="exam_fee" value="0">
-
-        <h4>Additional Fees</h4>
-        <div id="additional-fees">
-            <div class="fee-group">
-                <input type="text" name="additional_fee_name[]" placeholder="Fee name (e.g., Registration)">
-                <input type="number" step="0.01" name="additional_fee_amount[]" placeholder="Amount">
-            </div>
-        </div>
-        <button type="button" class="add-btn" onclick="addFee()">+ Add Additional Fee</button>
-
         <br><br>
         <button type="submit" name="submit">Save Course</button>
     </form>
@@ -111,11 +92,6 @@ function addDocument() {
 function addSyllabus() {
     document.getElementById('syllabus').insertAdjacentHTML('beforeend', 
         '<input type="text" name="syllabus[]" placeholder="Syllabus topic">'
-    );
-}
-function addFee() {
-    document.getElementById('additional-fees').insertAdjacentHTML('beforeend',
-        '<div class="fee-group"><input type="text" name="additional_fee_name[]" placeholder="Fee name"><input type="number" step="0.01" name="additional_fee_amount[]" placeholder="Amount"></div>'
     );
 }
 </script>
