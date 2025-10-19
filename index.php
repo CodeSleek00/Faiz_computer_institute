@@ -431,7 +431,7 @@ showSection2("Free Courses","free",$conn);
         </div>
 
         <div class="university-text">
-            <h2>Join colleges and universities worldwide that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2>
+            <h2>Join colleges and universities that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2>
             <button class="cta-button">Learn More</button>
         </div>
     </div>
