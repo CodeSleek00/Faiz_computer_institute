@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=1.17">
+    <link rel="stylesheet" href="style.css?v=1.18">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -345,6 +345,29 @@ function showSection($title, $section, $conn) {
 
     <div class="o-level-online-dots" id="o-level-online-dots"></div>
 </div>
+<div class="career">
+  <div class="career-section">
+    <h2>What would you like to learn today?</h2>
+    <div class="career-options">
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-lafs/64/external-grow-distance-education-outline-part-4-outline-lafs.png" alt="external-grow-distance-education-outline-part-4-outline-lafs"/></span>
+        <a href="" style="text-decoration: none;color:black;"><span>Grow your skills</span></a>
+      </button>
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ink/48/learning.png" alt="learning"/></span>
+        <a href="" style="text-decoration: none;color:black;"><span>Learn something new</span></a>
+      </button>
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-geotatah/64/external-development-just-in-time-outline-geotatah.png" alt="external-development-just-in-time-outline-geotatah"/></span>
+        <a href="" style="text-decoration: none;color:black;"><span>Improve your knowledge</span></a>
+      </button>
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ios/50/hard-to-find.png" alt="hard-to-find"/></span>
+        <a href="ggfg.html" style="text-decoration: none;color:black;"><span>Explore Our Courses</span></a>
+      </button>
+    </div>
+  </div>
+  </div>
 
        <script src="script.js"></script>
 </body>

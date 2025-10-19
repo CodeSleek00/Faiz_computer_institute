@@ -1,261 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   
-<title>Swipeable Card Carousel</title>
-<style>
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    padding: 20px;
-    margin: 0;
-}
-
-.o-level-online-container {
-    position: relative;
-    margin: 0 auto;
-}
-
-.o-level-online-carousel {
-    display: flex;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    gap: 10px;
-    padding: 10px 0;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    cursor: grab;
-}
-
-/* Hide scrollbar */
-.o-level-online-carousel::-webkit-scrollbar {
-    display: none;
-}
-.o-level-online-carousel {
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
-}
-
-/* Card styling */
-.o-level-online-card {
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    display: flex;
-    overflow: hidden;
-    flex: 0 0 50%;  /* Each card takes 100% width */
-    scroll-snap-align: start;
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    height: 250px;
-}
-
-.o-level-online-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-}
-
-.o-level-online-card-text {
-    flex: 2;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 2;
-}
-
-.o-level-online-card-text h2 {
-    font-size: 1.5rem;
-    color: #ffffff;
-    margin-top: 0%;
-}
-
-.o-level-online-card-text p {
-    font-size: 1rem;
-    color: #fffcfc;
-    margin: 8px 0 0px 0;
-}
-
-.o-level-online-card-image {
-    flex: 1;
-    background-size: cover;
-    background-position: center;
-}
-
-/* Dots indicator */
-.o-level-online-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    gap: 10px;
-}
-
-.o-level-online-dot {
-   display: none;
-}
-
-.o-level-online-dot.active {
-    background-color: #4a6cf7;
-}
-.o-level-online-explore {
-    margin-top: 12px;
-    padding: 10px 15px;
-    border: none;
-    background-color: #0323b2;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-}
-.o-level-online-explore:hover {
-    background-color: #3751c8;
-}
-@media (max-width:480px) {
-    .o-level-online-card {
-        flex: 0 0 100%;  /* Each card takes full width on small screens */
-    }
-    .o-level-online-card p{
-        display: none;
-    }
-    @media (max-width:480px) {
-    .o-level-online-card {
-        flex: 0 0 100%;  /* Each card takes full width on small screens */
-        flex-direction: column; /* stack content vertically */
-        background-size: cover;
-        background-position: center;
-        color: #fff;
-        position: relative;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What brings you to Coursera today?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .career {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9fbff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
     }
 
-    .o-level-online-card-text {
-        z-index: 2;
-        background: rgba(0,0,0,0.4); /* optional overlay for readability */
-        padding: 20px;
+    .career-section {
+      background-color: #f1f6ff;
+      padding: 40px 30px;
+      border-radius: 30px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      max-width: 1100px;
+      width: 90%;
     }
 
-    .o-level-online-card p{
-        display: none; /* you can keep it or hide */
+    .career-section h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #101010;
+      margin-bottom: 25px;
     }
 
-    .o-level-online-card-image {
-        display: none; /* hide the separate image div on mobile */
+    .career-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
     }
-}
 
-    @media (max-width:480px) {
-    .o-level-online-card:nth-child(1) {
-        background-image: url('images/Online\ acces.png');
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 2px solid #e0e6f5;
+      border-radius: 15px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
-    .o-level-online-card:nth-child(2) {
-        background-image: url('images/O\ level.png');
-    }
-    .o-level-online-explore {
-        margin-top: 4px;
-    }
-}
 
-    
-}
-</style>
+    .option .icon {
+      background: #dbe7ff;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+
+    .option:hover {
+      border-color: #0056ff;
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0,86,255,0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .career-options {
+        flex-direction: column;
+        align-items: center;
+      }
+      .option {
+        width: 90%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="o-level-online-container">
-    <div class="o-level-online-carousel" id="o-level-online-carousel">
-        <div class="o-level-online-card" style="background-color: #1328e4;">
-            <div class="o-level-online-card-text">
-                <h2>Start your O-Level preparation online today. </h2>
-                <p>Join our comprehensive online O-Level preparation program designed to help you in your exams.</p>
-               <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
-            </div>
-            <div class="o-level-online-card-image" style="background-image: url('images/Online\ acces.png');"></div>
-        </div>
-
-        <div class="o-level-online-card"  style="background-color: #00167a;">
-            <div class="o-level-online-card-text">
-                <h2>Start your CCC preparation online Today.</h2>
-                  <p>Join our comprehensive online CCC preparation program designed to help you in your exams.</p>
-                <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
-            </div>
-            <div class="o-level-online-card-image" style="background-image: url('images/O\ level.png');"></div>
-        </div>
+<div class="career">
+  <div class="career-section">
+    <h2>What would you like to learn today?</h2>
+    <div class="career-options">
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-lafs/64/external-grow-distance-education-outline-part-4-outline-lafs.png" alt="external-grow-distance-education-outline-part-4-outline-lafs"/></span>
+        <a href="" style="text-decoration: none;color:black;"><span>Grow your skills</span></a>
+      </button>
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ink/48/learning.png" alt="learning"/></span>
+        <a href="" style="text-decoration: none;color:black;"><span>Learn something new</span></a>
+      </button>
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-geotatah/64/external-development-just-in-time-outline-geotatah.png" alt="external-development-just-in-time-outline-geotatah"/></span>
+        <a href="" style="text-decoration: none;color:black;"><span>Improve your knowledge</span></a>
+      </button>
+      <button class="option">
+        <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ios/50/hard-to-find.png" alt="hard-to-find"/></span>
+        <a href="ggfg.html" style="text-decoration: none;color:black;"><span>Explore Our Courses</span></a>
+      </button>
     </div>
-
-    <div class="o-level-online-dots" id="o-level-online-dots"></div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const oLevelOnlineCarousel = document.getElementById('o-level-online-carousel');
-    const oLevelOnlineDotsContainer = document.getElementById('o-level-online-dots');
-    const oLevelOnlineCards = document.querySelectorAll('.o-level-online-card');
-    
-    let currentIndex = 0;
-    let cardsPerView = 1;  // Each card is 100% width, so 1 per view
-
-    function createOLevelOnlineDots() {
-        oLevelOnlineDotsContainer.innerHTML = '';
-        const totalDots = oLevelOnlineCards.length; // 1 dot per card
-        for (let i = 0; i < totalDots; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('o-level-online-dot');
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToOLevelOnlineSlide(i);
-            });
-            oLevelOnlineDotsContainer.appendChild(dot);
-        }
-    }
-
-    function updateOLevelOnlineDots() {
-        const dots = document.querySelectorAll('.o-level-online-dot');
-        const activeDotIndex = Math.round(oLevelOnlineCarousel.scrollLeft / oLevelOnlineCards[0].offsetWidth);
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === activeDotIndex);
-        });
-    }
-
-    function goToOLevelOnlineSlide(index) {
-        oLevelOnlineCarousel.scrollTo({
-            left: index * oLevelOnlineCards[0].offsetWidth,
-            behavior: 'smooth'
-        });
-    }
-
-    // Swipe/drag functionality
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    oLevelOnlineCarousel.addEventListener('mousedown', (e) => {
-        isDown = true;
-        oLevelOnlineCarousel.classList.add('active');
-        startX = e.pageX - oLevelOnlineCarousel.offsetLeft;
-        scrollLeft = oLevelOnlineCarousel.scrollLeft;
-    });
-    oLevelOnlineCarousel.addEventListener('mouseleave', () => isDown = false);
-    oLevelOnlineCarousel.addEventListener('mouseup', () => isDown = false);
-    oLevelOnlineCarousel.addEventListener('mousemove', (e) => {
-        if(!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - oLevelOnlineCarousel.offsetLeft;
-        const walk = (startX - x) * 2; // scroll-fast
-        oLevelOnlineCarousel.scrollLeft = scrollLeft + walk;
-        updateOLevelOnlineDots();
-    });
-
-    // Touch for mobile
-    oLevelOnlineCarousel.addEventListener('touchmove', () => updateOLevelOnlineDots());
-
-    createOLevelOnlineDots();
-    updateOLevelOnlineDots();
-});
-</script>
-
+  </div>
+  </div>
 </body>
 </html>
