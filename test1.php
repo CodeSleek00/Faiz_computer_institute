@@ -1,15 +1,18 @@
-<?php include 'db/db_connect.php'; ?>
+<?php include 'db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Courses</title>
+<title>Our Courses</title>
 <style>
 body {
     font-family: 'Poppins', sans-serif;
     background: #eef4ff;
     margin: 0;
     padding: 0;
+}
+.section {
+    margin-bottom: 50px;
 }
 .header {
     text-align: left;
@@ -85,26 +88,39 @@ body {
 </head>
 <body>
 
-<div class="header">Most Popular <span>Courses →</span></div>
-
-<div class="scroll-container">
 <?php
-$courses = $conn->query("SELECT * FROM courses ORDER BY id DESC");
-while($c = $courses->fetch_assoc()) {
-    $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
-    $rating = $conn->query("SELECT ROUND(AVG(rating),1) as rate FROM course_reviews WHERE course_id={$c['id']}")->fetch_assoc()['rate'] ?? 4.5;
-    echo "
-    <a class='course-pill' href='course_detail.php?id={$c['id']}'>
-        <img src='{$image}' alt='{$c['course_name']}'>
-        <div class='course-info'>
-            <span class='provider'>{$c['company']}</span>
-            <h3>{$c['course_name']}</h3>
-            <div class='meta'>Professional Certificate · <span class='star'>★</span> {$rating}</div>
-        </div>
-    </a>";
+function showSection($title, $section, $conn) {
+    echo "<div class='section'>
+            <div class='header'>{$title} <span>→</span></div>
+            <div class='scroll-container'>";
+    
+    $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC");
+    if($courses->num_rows == 0){
+        echo "<p style='padding: 0 40px; color: gray;'>No courses added yet...</p>";
+    } else {
+        while($c = $courses->fetch_assoc()) {
+            $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
+            $rating = 4.8;
+            echo "
+            <a class='course-pill' href='course_detail.php?id={$c['id']}'>
+                <img src='{$image}' alt='{$c['course_name']}'>
+                <div class='course-info'>
+                    <span class='provider'>{$c['company']}</span>
+                    <h3>{$c['course_name']}</h3>
+                    <div class='meta'>Professional Certificate · <span class='star'>★</span> {$rating}</div>
+                </div>
+            </a>";
+        }
+    }
+    echo "</div></div>";
 }
 ?>
-</div>
+
+<?php
+showSection("Popular Courses", "popular", $conn);
+showSection("Skill Development", "skills", $conn);
+showSection("Free Courses", "free", $conn);
+?>
 
 </body>
 </html>
