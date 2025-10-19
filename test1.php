@@ -64,7 +64,6 @@ function showSection($title, $section, $conn) {
         while($c = $courses->fetch_assoc()) {
             $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
             $certificate = !empty($c['certificate']) ? $c['certificate'] : "Professional Certificate";
-            $rating = !empty($c['rating']) ? $c['rating'] : 4.8;
 
             echo "
             <a class='courses-section-pill' href='course_detail.php?id={$c['id']}'>
