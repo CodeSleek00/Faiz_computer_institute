@@ -388,7 +388,7 @@ function showSection2($title, $section, $conn) {
                 <div class='course-2-course-info'>
                     <span class='course-2-provider'>{$c['company']}</span>
                     <h3>{$c['course_name']}</h3>
-                    <div class='course-2-meta'>Professional Certificate · <span class='course-2-star'>★</span> {$rating}</div>
+                    <div class='course-2-meta'>Professional Certificate </div>
                 </div>
             </a>";
         }
