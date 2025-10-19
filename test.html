@@ -3,138 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coursera Promotions</title>
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
+<title>Swipeable Card Carousel</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Poppins', sans-serif; background: #f5f5f5; padding: 20px; color: #111; }
-
-/* Desktop layout */
-.container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-.banner { position: relative; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: space-between; min-height: 280px; cursor: pointer; transition: all 0.4s ease; padding: 40px; color: #fff; }
-.banner:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.25); }
-.banner-left { background: linear-gradient(135deg,#0066ff,#0052cc); }
-.banner-right { background: linear-gradient(135deg,#001a4d,#003380); }
-.banner-content { flex:1; z-index:2; }
-.banner-logo { font-size: 14px; font-weight: 600; letter-spacing: 1px; opacity: 0.85; text-transform: uppercase; margin-bottom: 12px; }
-.banner-title { font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
-.banner-cta { display: inline-block; padding: 12px 28px; border-radius: 50px; background: rgba(255,255,255,0.2); color: #fff; font-weight: 600; font-size: 16px; text-decoration: none; transition: all 0.3s ease; backdrop-filter: blur(5px); }
-.banner-cta:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
-.banner-image { flex:0.6; display:flex; justify-content:center; align-items:center; margin-left:30px; position:relative; z-index:1; }
-.shape { width: 200px; height: 200px; position:relative; display:flex; align-items:center; justify-content:center; }
-.user-icon { width:80px; height:80px; border-radius:50%; background:#fff; display:flex; justify-content:center; align-items:center; font-size:40px; z-index:10; box-shadow:0 6px 20px rgba(0,0,0,0.2); }
-.geometric { position:absolute; border-radius:10px; animation: rotate 25s linear infinite; }
-.pink { width:100px; height:100px; background:#ff4d7d; top:20px; left:30px; transform:rotate(45deg); }
-.yellow { width:90px; height:90px; background:#ffc745; top:40px; right:40px; transform:rotate(-30deg); }
-.orange { width:80px; height:80px; background:#ff8c42; bottom:30px; left:50px; transform:rotate(15deg); }
-@keyframes rotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-
-/* Mobile */
-@media (max-width: 768px){
-    .desktop-view { display:none; }
-    .mobile-view { display:block; }
-    .banner { flex-direction:column; text-align:center; padding:30px; border-radius:20px; min-height:300px; position:relative; overflow:hidden; }
-    .banner-image { display:none; }
-    .banner-left { background: url('https://images.unsplash.com/photo-1581091215364-ecb8b0a1f8b8?auto=format&fit=crop&w=800&q=60') center/cover no-repeat; background-size: cover; }
-    .banner-right { background: url('https://images.unsplash.com/photo-1531497865142-6a511dd5a6b4?auto=format&fit=crop&w=800&q=60') center/cover no-repeat; background-size: cover; }
-    .banner::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.35); z-index:1; border-radius:20px; }
-    .banner-content { position:relative; z-index:2; transition: transform 0.3s ease; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin: 0;
 }
 
-/* Swiper */
-.swiper { width:100%; padding:20px 0; }
-.swiper-slide { display:flex; justify-content:center; transition: all 0.5s ease-in-out; }
+.o-level-online-container {
+    position: relative;
+    margin: 0 auto;
+}
+
+.o-level-online-carousel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    gap: 10px;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+
+/* Hide scrollbar */
+.o-level-online-carousel::-webkit-scrollbar {
+    display: none;
+}
+.o-level-online-carousel {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+/* Card styling */
+.o-level-online-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    display: flex;
+    overflow: hidden;
+    flex: 0 0 50%;  /* Each card takes 100% width */
+    scroll-snap-align: start;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    height: 250px;
+}
+
+.o-level-online-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.o-level-online-card-text {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+}
+
+.o-level-online-card-text h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 0%;
+}
+
+.o-level-online-card-text p {
+    font-size: 1rem;
+    color: #fffcfc;
+    margin: 8px 0 0px 0;
+}
+
+.o-level-online-card-image {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Dots indicator */
+.o-level-online-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.o-level-online-dot {
+   display: none;
+}
+
+.o-level-online-dot.active {
+    background-color: #4a6cf7;
+}
+.o-level-online-explore {
+    margin-top: 12px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #0323b2;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+.o-level-online-explore:hover {
+    background-color: #3751c8;
+}
+@media (max-width:480px) {
+    .o-level-online-card {
+        flex: 0 0 100%;  /* Each card takes full width on small screens */
+    }
+    .o-level-online-card p{
+        display: none;
+    }
+    @media (max-width:480px) {
+    .o-level-online-card {
+        flex: 0 0 100%;  /* Each card takes full width on small screens */
+        flex-direction: column; /* stack content vertically */
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        position: relative;
+    }
+
+    .o-level-online-card-text {
+        z-index: 2;
+        background: rgba(0,0,0,0.4); /* optional overlay for readability */
+        padding: 20px;
+    }
+
+    .o-level-online-card p{
+        display: none; /* you can keep it or hide */
+    }
+
+    .o-level-online-card-image {
+        display: none; /* hide the separate image div on mobile */
+    }
+}
+
+    @media (max-width:480px) {
+    .o-level-online-card:nth-child(1) {
+        background-image: url('images/Online\ acces.png');
+    }
+    .o-level-online-card:nth-child(2) {
+        background-image: url('images/O\ level.png');
+    }
+    .o-level-online-explore {
+        margin-top: 4px;
+    }
+}
+
+    
+}
 </style>
 </head>
 <body>
 
-<!-- Desktop -->
-<div class="container desktop-view">
-    <div class="banner banner-left" onclick="handleClick('Coursera Plus')">
-        <div class="banner-content">
-            <div class="banner-logo">coursera plus</div>
-            <div class="banner-title">Unlock access to 10,000+ courses</div>
-            <a href="#" class="banner-cta">Start 7-day trial</a>
-        </div>
-        <div class="banner-image">
-            <div class="shape">
-                <div class="geometric pink"></div>
-                <div class="geometric yellow"></div>
-                <div class="geometric orange"></div>
-                <div class="user-icon">👨‍💻</div>
+<div class="o-level-online-container">
+    <div class="o-level-online-carousel" id="o-level-online-carousel">
+        <div class="o-level-online-card" style="background-color: #1328e4;">
+            <div class="o-level-online-card-text">
+                <h2>Start your O-Level preparation online today. </h2>
+                <p>Join our comprehensive online O-Level preparation program designed to help you in your exams.</p>
+               <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
             </div>
+            <div class="o-level-online-card-image" style="background-image: url('images/Online\ acces.png');"></div>
+        </div>
+
+        <div class="o-level-online-card"  style="background-color: #00167a;">
+            <div class="o-level-online-card-text">
+                <h2>Start your CCC preparation online Today.</h2>
+                  <p>Join our comprehensive online CCC preparation program designed to help you in your exams.</p>
+                <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
+            </div>
+            <div class="o-level-online-card-image" style="background-image: url('images/O\ level.png');"></div>
         </div>
     </div>
-    <div class="banner banner-right" onclick="handleClick('Coursera for Business')">
-        <div class="banner-content">
-            <div class="banner-logo">coursera for business</div>
-            <div class="banner-title">Drive your business forward</div>
-            <a href="#" class="banner-cta">Try Coursera for Business</a>
-        </div>
-        <div class="banner-image">
-            <div class="shape">
-                <div class="user-icon">👩‍💼</div>
-            </div>
-        </div>
-    </div>
+
+    <div class="o-level-online-dots" id="o-level-online-dots"></div>
 </div>
 
-<!-- Mobile Swiper -->
-<div class="swiper mobile-view" style="display:none;">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">
-            <div class="banner banner-left" onclick="handleClick('Coursera Plus')">
-                <div class="banner-content">
-                    <div class="banner-logo">coursera plus</div>
-                    <div class="banner-title">Unlock access to 10,000+ courses</div>
-                    <a href="#" class="banner-cta">Start 7-day trial</a>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-slide">
-            <div class="banner banner-right" onclick="handleClick('Coursera for Business')">
-                <div class="banner-content">
-                    <div class="banner-logo">coursera for business</div>
-                    <div class="banner-title">Drive your business forward</div>
-                    <a href="#" class="banner-cta">Try Coursera for Business</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="swiper-pagination"></div>
-</div>
-
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
-function handleClick(banner){
-    alert(`Clicked on ${banner}`);
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const oLevelOnlineCarousel = document.getElementById('o-level-online-carousel');
+    const oLevelOnlineDotsContainer = document.getElementById('o-level-online-dots');
+    const oLevelOnlineCards = document.querySelectorAll('.o-level-online-card');
+    
+    let currentIndex = 0;
+    let cardsPerView = 1;  // Each card is 100% width, so 1 per view
 
-// Enable mobile carousel
-function checkViewport(){
-    if(window.innerWidth <= 768){
-        document.querySelector('.desktop-view').style.display='none';
-        document.querySelector('.mobile-view').style.display='block';
-
-        new Swiper('.swiper',{
-            loop:true,
-            speed:700,
-            effect: 'slide',      // smooth sliding
-            grabCursor:true,      // cursor shows grab
-            allowTouchMove:true,  // manual swipe
-            touchRatio:1,         // natural swipe sensitivity
-            touchAngle:45,
-            simulateTouch:true,
-            pagination:{ el:'.swiper-pagination', clickable:true },
-            autoplay:false        // no automatic sliding
-        });
-    } else {
-        document.querySelector('.desktop-view').style.display='grid';
-        document.querySelector('.mobile-view').style.display='none';
+    function createOLevelOnlineDots() {
+        oLevelOnlineDotsContainer.innerHTML = '';
+        const totalDots = oLevelOnlineCards.length; // 1 dot per card
+        for (let i = 0; i < totalDots; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('o-level-online-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToOLevelOnlineSlide(i);
+            });
+            oLevelOnlineDotsContainer.appendChild(dot);
+        }
     }
-}
-window.addEventListener('load', checkViewport);
-window.addEventListener('resize', checkViewport);
+
+    function updateOLevelOnlineDots() {
+        const dots = document.querySelectorAll('.o-level-online-dot');
+        const activeDotIndex = Math.round(oLevelOnlineCarousel.scrollLeft / oLevelOnlineCards[0].offsetWidth);
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeDotIndex);
+        });
+    }
+
+    function goToOLevelOnlineSlide(index) {
+        oLevelOnlineCarousel.scrollTo({
+            left: index * oLevelOnlineCards[0].offsetWidth,
+            behavior: 'smooth'
+        });
+    }
+
+    // Swipe/drag functionality
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    oLevelOnlineCarousel.addEventListener('mousedown', (e) => {
+        isDown = true;
+        oLevelOnlineCarousel.classList.add('active');
+        startX = e.pageX - oLevelOnlineCarousel.offsetLeft;
+        scrollLeft = oLevelOnlineCarousel.scrollLeft;
+    });
+    oLevelOnlineCarousel.addEventListener('mouseleave', () => isDown = false);
+    oLevelOnlineCarousel.addEventListener('mouseup', () => isDown = false);
+    oLevelOnlineCarousel.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - oLevelOnlineCarousel.offsetLeft;
+        const walk = (startX - x) * 2; // scroll-fast
+        oLevelOnlineCarousel.scrollLeft = scrollLeft + walk;
+        updateOLevelOnlineDots();
+    });
+
+    // Touch for mobile
+    oLevelOnlineCarousel.addEventListener('touchmove', () => updateOLevelOnlineDots());
+
+    createOLevelOnlineDots();
+    updateOLevelOnlineDots();
+});
 </script>
 
 </body>

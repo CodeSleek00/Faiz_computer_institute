@@ -191,3 +191,68 @@ coursesSectionIndicators.forEach(indicator => {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const oLevelOnlineCarousel = document.getElementById('o-level-online-carousel');
+    const oLevelOnlineDotsContainer = document.getElementById('o-level-online-dots');
+    const oLevelOnlineCards = document.querySelectorAll('.o-level-online-card');
+    
+    let currentIndex = 0;
+    let cardsPerView = 1;  // Each card is 100% width, so 1 per view
+
+    function createOLevelOnlineDots() {
+        oLevelOnlineDotsContainer.innerHTML = '';
+        const totalDots = oLevelOnlineCards.length; // 1 dot per card
+        for (let i = 0; i < totalDots; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('o-level-online-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToOLevelOnlineSlide(i);
+            });
+            oLevelOnlineDotsContainer.appendChild(dot);
+        }
+    }
+
+    function updateOLevelOnlineDots() {
+        const dots = document.querySelectorAll('.o-level-online-dot');
+        const activeDotIndex = Math.round(oLevelOnlineCarousel.scrollLeft / oLevelOnlineCards[0].offsetWidth);
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeDotIndex);
+        });
+    }
+
+    function goToOLevelOnlineSlide(index) {
+        oLevelOnlineCarousel.scrollTo({
+            left: index * oLevelOnlineCards[0].offsetWidth,
+            behavior: 'smooth'
+        });
+    }
+
+    // Swipe/drag functionality
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    oLevelOnlineCarousel.addEventListener('mousedown', (e) => {
+        isDown = true;
+        oLevelOnlineCarousel.classList.add('active');
+        startX = e.pageX - oLevelOnlineCarousel.offsetLeft;
+        scrollLeft = oLevelOnlineCarousel.scrollLeft;
+    });
+    oLevelOnlineCarousel.addEventListener('mouseleave', () => isDown = false);
+    oLevelOnlineCarousel.addEventListener('mouseup', () => isDown = false);
+    oLevelOnlineCarousel.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - oLevelOnlineCarousel.offsetLeft;
+        const walk = (startX - x) * 2; // scroll-fast
+        oLevelOnlineCarousel.scrollLeft = scrollLeft + walk;
+        updateOLevelOnlineDots();
+    });
+
+    // Touch for mobile
+    oLevelOnlineCarousel.addEventListener('touchmove', () => updateOLevelOnlineDots());
+
+    createOLevelOnlineDots();
+    updateOLevelOnlineDots();
+});

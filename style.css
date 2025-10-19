@@ -1077,3 +1077,150 @@ body {
         font-size: 15px;
     }
 }
+
+.o-level-online-container {
+    position: relative;
+    margin: 0 auto;
+}
+
+.o-level-online-carousel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    gap: 10px;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+
+/* Hide scrollbar */
+.o-level-online-carousel::-webkit-scrollbar {
+    display: none;
+}
+.o-level-online-carousel {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+/* Card styling */
+.o-level-online-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    display: flex;
+    overflow: hidden;
+    flex: 0 0 50%;  /* Each card takes 100% width */
+    scroll-snap-align: start;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    height: 250px;
+}
+
+.o-level-online-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.o-level-online-card-text {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+}
+
+.o-level-online-card-text h2 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 0%;
+}
+
+.o-level-online-card-text p {
+    font-size: 1rem;
+    color: #fffcfc;
+    margin: 8px 0 0px 0;
+}
+
+.o-level-online-card-image {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Dots indicator */
+.o-level-online-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.o-level-online-dot {
+   display: none;
+}
+
+.o-level-online-dot.active {
+    background-color: #4a6cf7;
+}
+.o-level-online-explore {
+    margin-top: 12px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #0323b2;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+.o-level-online-explore:hover {
+    background-color: #3751c8;
+}
+@media (max-width:480px) {
+    .o-level-online-card {
+        flex: 0 0 100%;  /* Each card takes full width on small screens */
+    }
+    .o-level-online-card p{
+        display: none;
+    }
+    @media (max-width:480px) {
+    .o-level-online-card {
+        flex: 0 0 100%;  /* Each card takes full width on small screens */
+        flex-direction: column; /* stack content vertically */
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        position: relative;
+    }
+
+    .o-level-online-card-text {
+        z-index: 2;
+        background: rgba(0,0,0,0.4); /* optional overlay for readability */
+        padding: 20px;
+    }
+
+    .o-level-online-card p{
+        display: none; /* you can keep it or hide */
+    }
+
+    .o-level-online-card-image {
+        display: none; /* hide the separate image div on mobile */
+    }
+}
+
+    @media (max-width:480px) {
+    .o-level-online-card:nth-child(1) {
+        background-image: url('images/Online\ acces.png');
+    }
+    .o-level-online-card:nth-child(2) {
+        background-image: url('images/O\ level.png');
+    }
+    .o-level-online-explore {
+        margin-top: 4px;
+    }
+}
+
+    
+}

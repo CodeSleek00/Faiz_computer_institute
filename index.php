@@ -321,7 +321,30 @@ function showSection($title, $section, $conn) {
     <div class="courses-section-indicator" data-index="1"></div>
     <div class="courses-section-indicator" data-index="2"></div>
 </div>
-<h1>hi</h1>
+
+<div class="o-level-online-container">
+    <div class="o-level-online-carousel" id="o-level-online-carousel">
+        <div class="o-level-online-card" style="background-color: #1328e4;">
+            <div class="o-level-online-card-text">
+                <h2>Start your O-Level preparation online today. </h2>
+                <p>Join our comprehensive online O-Level preparation program designed to help you in your exams.</p>
+               <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
+            </div>
+            <div class="o-level-online-card-image" style="background-image: url('images/Online\ acces.png');"></div>
+        </div>
+
+        <div class="o-level-online-card"  style="background-color: #00167a;">
+            <div class="o-level-online-card-text">
+                <h2>Start your CCC preparation online Today.</h2>
+                  <p>Join our comprehensive online CCC preparation program designed to help you in your exams.</p>
+                <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
+            </div>
+            <div class="o-level-online-card-image" style="background-image: url('images/O\ level.png');"></div>
+        </div>
+    </div>
+
+    <div class="o-level-online-dots" id="o-level-online-dots"></div>
+</div>
 
        <script src="script.js"></script>
 </body>
