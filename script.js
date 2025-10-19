@@ -159,3 +159,35 @@
       window.addEventListener('resize', updateNavButtons);
       updateNavButtons(); // Initial check
     });
+    // Carousel functionality
+const coursesSectionCarousel = document.getElementById('coursesSectionCarousel');
+const coursesSectionIndicators = document.querySelectorAll('.courses-section-indicator');
+
+// Update indicators on scroll
+coursesSectionCarousel.addEventListener('scroll', () => {
+    const scrollLeft = coursesSectionCarousel.scrollLeft;
+    const sectionWidth = coursesSectionCarousel.querySelector('.courses-section-item').offsetWidth;
+    const gap = 15;
+    const activeIndex = Math.round(scrollLeft / (sectionWidth + gap));
+    
+    coursesSectionIndicators.forEach((indicator, index) => {
+        if (index === activeIndex) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.remove('active');
+        }
+    });
+});
+
+// Click on indicators to scroll to specific section
+coursesSectionIndicators.forEach(indicator => {
+    indicator.addEventListener('click', () => {
+        const index = parseInt(indicator.getAttribute('data-index'));
+        const sectionWidth = coursesSectionCarousel.querySelector('.courses-section-item').offsetWidth;
+        const gap = 15;
+        coursesSectionCarousel.scrollTo({
+            left: index * (sectionWidth + gap),
+            behavior: 'smooth'
+        });
+    });
+});

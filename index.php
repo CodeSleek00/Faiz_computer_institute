@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="stylesheet" href="style.css?v=1.11">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="images/logo.png">
@@ -279,6 +279,49 @@
     </button>
   </div>
 </div>
+
+<?php
+function showSection($title, $section, $conn) {
+    echo "<div class='courses-section-item'>
+            <div class='courses-section-header'>{$title} <span>→</span></div>
+            <div class='courses-section-container'>";
+    
+    $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC LIMIT 4");
+    if($courses->num_rows == 0){
+        echo "<div class='courses-section-empty'>No courses added yet...</div>";
+    } else {
+        while($c = $courses->fetch_assoc()) {
+            $image = !empty($c['image']) ? $c['image'] : 'https://via.placeholder.com/80';
+            $rating = 4.8;
+            echo "
+            <a class='courses-section-pill' href='course_detail.php?id={$c['id']}'>
+                <img src='{$image}' alt='{$c['course_name']}'>
+                <div class='courses-section-info'>
+                    <span class='provider'>{$c['company']}</span>
+                    <h3>{$c['course_name']}</h3>
+                    <div class='meta'>Professional Certificate · <span class='courses-section-star'>★</span> {$rating}</div>
+                </div>
+            </a>";
+        }
+    }
+    echo "</div></div>";
+}
+?>
+
+<div class="courses-section" id="coursesSectionCarousel">
+    <?php
+    showSection("Popular Courses", "popular", $conn);
+    showSection("Skill Development", "skills", $conn);
+    showSection("Free Courses", "free", $conn);
+    ?>
+</div>
+
+<div class="courses-section-indicators" id="coursesSectionIndicators">
+    <div class="courses-section-indicator active" data-index="0"></div>
+    <div class="courses-section-indicator" data-index="1"></div>
+    <div class="courses-section-indicator" data-index="2"></div>
+</div>
+
        <script src="script.js"></script>
 </body>
 </html>
