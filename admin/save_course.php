@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    echo "<script>alert('Course added successfully!'); window.location.href='add_course.php';</script>";
+    echo "<script>alert('Course added successfully!'); window.location.href='add_courses.php';</script>";
 } else {
     echo "Invalid Request.";
 }
