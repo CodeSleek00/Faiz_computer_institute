@@ -1,748 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Courses - Skill Development Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #4a6cf7;
-            --primary-light: #6a8aff;
-            --primary-dark: #3a56d4;
-            --light-bg: #f8fafc;
-            --white: #ffffff;
-            --text-dark: #1e293b;
-            --text-medium: #475569;
-            --text-light: #94a3b8;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
-            --card-radius: 16px;
-            --transition: all 0.3s ease;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coursera Promotions</title>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Poppins', sans-serif; background: #f5f5f5; padding: 20px; color: #111; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Desktop layout */
+.container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+.banner { position: relative; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: space-between; min-height: 280px; cursor: pointer; transition: all 0.4s ease; padding: 40px; color: #fff; }
+.banner:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.25); }
+.banner-left { background: linear-gradient(135deg,#0066ff,#0052cc); }
+.banner-right { background: linear-gradient(135deg,#001a4d,#003380); }
+.banner-content { flex:1; z-index:2; }
+.banner-logo { font-size: 14px; font-weight: 600; letter-spacing: 1px; opacity: 0.85; text-transform: uppercase; margin-bottom: 12px; }
+.banner-title { font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
+.banner-cta { display: inline-block; padding: 12px 28px; border-radius: 50px; background: rgba(255,255,255,0.2); color: #fff; font-weight: 600; font-size: 16px; text-decoration: none; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+.banner-cta:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
+.banner-image { flex:0.6; display:flex; justify-content:center; align-items:center; margin-left:30px; position:relative; z-index:1; }
+.shape { width: 200px; height: 200px; position:relative; display:flex; align-items:center; justify-content:center; }
+.user-icon { width:80px; height:80px; border-radius:50%; background:#fff; display:flex; justify-content:center; align-items:center; font-size:40px; z-index:10; box-shadow:0 6px 20px rgba(0,0,0,0.2); }
+.geometric { position:absolute; border-radius:10px; animation: rotate 25s linear infinite; }
+.pink { width:100px; height:100px; background:#ff4d7d; top:20px; left:30px; transform:rotate(45deg); }
+.yellow { width:90px; height:90px; background:#ffc745; top:40px; right:40px; transform:rotate(-30deg); }
+.orange { width:80px; height:80px; background:#ff8c42; bottom:30px; left:50px; transform:rotate(15deg); }
+@keyframes rotate { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--light-bg);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+/* Mobile */
+@media (max-width: 768px){
+    .desktop-view { display:none; }
+    .mobile-view { display:block; }
+    .banner { flex-direction:column; text-align:center; padding:30px; border-radius:20px; min-height:300px; position:relative; overflow:hidden; }
+    .banner-image { display:none; }
+    .banner-left { background: url('https://images.unsplash.com/photo-1581091215364-ecb8b0a1f8b8?auto=format&fit=crop&w=800&q=60') center/cover no-repeat; background-size: cover; }
+    .banner-right { background: url('https://images.unsplash.com/photo-1531497865142-6a511dd5a6b4?auto=format&fit=crop&w=800&q=60') center/cover no-repeat; background-size: cover; }
+    .banner::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.35); z-index:1; border-radius:20px; }
+    .banner-content { position:relative; z-index:2; transition: transform 0.3s ease; }
+}
 
-        .header {
-            background: var(--white);
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            color: var(--text-medium);
-            font-weight: 400;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .tabs-container {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 15px;
-            padding: 20px 40px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            background: var(--light-bg);
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 0.95em;
-            color: var(--text-medium);
-            transition: var(--transition);
-            white-space: nowrap;
-            font-weight: 500;
-        }
-
-        .tab.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .tab:hover {
-            background: var(--primary-light);
-            color: var(--white);
-        }
-
-        .container {
-            padding: 40px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .courses-section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .course-card {
-            background: var(--white);
-            border-radius: var(--card-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .course-image {
-            width: 100%;
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 2.5em;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .course-image.bg1 { background: linear-gradient(135deg, #4a6cf7 0%, #6a8aff 100%); }
-        .course-image.bg2 { background: linear-gradient(135deg, #10b981 0%, #34d399 100%); }
-        .course-image.bg3 { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); }
-        .course-image.bg4 { background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%); }
-        .course-image.bg5 { background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); }
-        .course-image.bg6 { background: linear-gradient(135deg, #06b6d4 0%, #67e8f9 100%); }
-
-        .pro-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            color: var(--white);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75em;
-            font-weight: 600;
-        }
-
-        .course-content {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-meta {
-            font-size: 0.8em;
-            color: var(--text-light);
-            margin-bottom: 12px;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .course-title {
-            font-size: 1.1em;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-            line-height: 1.4;
-        }
-
-        .course-hours {
-            font-size: 0.9em;
-            color: var(--text-medium);
-            margin-bottom: 15px;
-            font-weight: 400;
-        }
-
-        .course-footer {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .view-btn {
-            width: 100%;
-            padding: 10px;
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9em;
-        }
-
-        .view-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .subscription-badge {
-            font-size: 0.8em;
-            color: var(--primary);
-            text-align: center;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .explore-section {
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .explore-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 30px;
-            background: var(--white);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            border-radius: 30px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1em;
-        }
-
-        .explore-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--white);
-            border-radius: var(--card-radius);
-            width: 100%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.3s;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--text-medium);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            background: var(--white);
-        }
-
-        .modal-header {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4em;
-            color: var(--white);
-            position: relative;
-        }
-
-        .modal-body {
-            padding: 30px;
-        }
-
-        .modal-title {
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-
-        .modal-section {
-            margin-bottom: 25px;
-        }
-
-        .modal-label {
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 1em;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .modal-text {
-            color: var(--text-medium);
-            line-height: 1.6;
-        }
-
-        .modal-list {
-            list-style: none;
-            color: var(--text-medium);
-            line-height: 1.8;
-        }
-
-        .modal-list li {
-            padding-left: 24px;
-            position: relative;
-            margin-bottom: 8px;
-        }
-
-        .modal-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .modal-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 20px;
-            transition: var(--transition);
-        }
-
-        .modal-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 1200px) {
-            .courses-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .courses-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .tabs {
-                padding: 15px 20px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-        }
-    </style>
+/* Swiper */
+.swiper { width:100%; padding:20px 0; }
+.swiper-slide { display:flex; justify-content:center; transition: all 0.5s ease-in-out; }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>Become a Skilled Professional with Pro Courses</h1>
-        <p>Gain industry-ready skills with certificate courses, hands-on projects, expert guidance, and AI tools to boost productivity</p>
-    </div>
 
-    <div class="tabs-container">
-        <div class="tabs">
-            <button class="tab active" onclick="filterCourses('all')">Popular</button>
-            <button class="tab" onclick="filterCourses('microsoft')">Microsoft</button>
-            <button class="tab" onclick="filterCourses('it')">IT & Software</button>
-            <button class="tab" onclick="filterCourses('data')">Data Science</button>
-            <button class="tab" onclick="filterCourses('ai')">AI & Generative AI</button>
-            <button class="tab" onclick="filterCourses('management')">Management</button>
-            <button class="tab" onclick="filterCourses('cyber')">Cyber Security</button>
-            <button class="tab" onclick="filterCourses('cloud')">Cloud Computing</button>
+<!-- Desktop -->
+<div class="container desktop-view">
+    <div class="banner banner-left" onclick="handleClick('Coursera Plus')">
+        <div class="banner-content">
+            <div class="banner-logo">coursera plus</div>
+            <div class="banner-title">Unlock access to 10,000+ courses</div>
+            <a href="#" class="banner-cta">Start 7-day trial</a>
         </div>
-    </div>
-
-    <div class="container">
-        <div class="courses-section">
-            <h2 class="section-title">Featured Courses</h2>
-            <div class="courses-grid" id="coursesGrid"></div>
-            
-            <div class="explore-section">
-                <button class="explore-btn" onclick="showAllCourses()">
-                    <span>Explore All Courses</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+        <div class="banner-image">
+            <div class="shape">
+                <div class="geometric pink"></div>
+                <div class="geometric yellow"></div>
+                <div class="geometric orange"></div>
+                <div class="user-icon">👨‍💻</div>
             </div>
         </div>
     </div>
-
-    <div class="modal" id="courseModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
-            <div class="modal-header" id="modalHeader"></div>
-            <div class="modal-body">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                
-                <div class="modal-section">
-                    <div class="modal-label">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
-                            <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Course Details
-                    </div>
-                    <div class="modal-text" id="modalDescription"></div>
-                </div>
-
-                <div class="modal-section">
-                    <div class="modal-label">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        What You'll Learn
-                    </div>
-                    <ul class="modal-list" id="modalLearning"></ul>
-                </div>
-
-                <div class="modal-section">
-                    <div class="modal-label">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Course Duration & Content
-                    </div>
-                    <div class="modal-text" id="modalDuration"></div>
-                </div>
-
-                <div class="modal-section">
-                    <div class="modal-label">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 17H7C5.89543 17 5 16.1046 5 15V5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V15C19 16.1046 18.1046 17 17 17H15M9 17V21L12 18L15 21V17M9 17H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Projects Included
-                    </div>
-                    <div class="modal-text" id="modalProjects"></div>
-                </div>
-
-                <button class="modal-btn" onclick="enrollCourse()">Enroll Now</button>
+    <div class="banner banner-right" onclick="handleClick('Coursera for Business')">
+        <div class="banner-content">
+            <div class="banner-logo">coursera for business</div>
+            <div class="banner-title">Drive your business forward</div>
+            <a href="#" class="banner-cta">Try Coursera for Business</a>
+        </div>
+        <div class="banner-image">
+            <div class="shape">
+                <div class="user-icon">👩‍💼</div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Course data stored in HTML for easy addition
-        const coursesData = {
-            all: [
-                {
-                    id: 1,
-                    category: 'it',
-                    title: 'Master Python Programming',
-                    emoji: '🐍',
-                    bg: 'bg1',
-                    exercises: '51 coding exercises',
-                    projects: '3 projects',
-                    hours: '11.5 hrs video content',
-                    description: 'Learn Python from basics to advanced concepts with hands-on coding exercises and real-world projects.',
-                    learning: [
-                        'Python fundamentals and syntax',
-                        'Object-oriented programming',
-                        'Working with libraries and frameworks',
-                        'Data structures and algorithms',
-                        'Building complete applications'
-                    ],
-                    duration: '11.5 hours of video content',
-                    projects: '3 comprehensive projects'
-                },
-                {
-                    id: 2,
-                    category: 'it',
-                    title: 'Advanced Web Development',
-                    emoji: '🌐',
-                    bg: 'bg2',
-                    exercises: '40 coding exercises',
-                    projects: '2 projects',
-                    hours: '15 hrs video content',
-                    description: 'Master modern web development with React, Node.js, and advanced JavaScript techniques.',
-                    learning: [
-                        'HTML, CSS, and JavaScript mastery',
-                        'React framework and hooks',
-                        'Backend development with Node.js',
-                        'Database design and management',
-                        'Deployment and optimization'
-                    ],
-                    duration: '15 hours of video content',
-                    projects: '2 full-stack web applications'
-                },
-                {
-                    id: 3,
-                    category: 'microsoft',
-                    title: 'Master Data Analytics in Excel',
-                    emoji: '📊',
-                    bg: 'bg3',
-                    exercises: 'Advanced functions',
-                    projects: '2 projects',
-                    hours: '5.5 hrs video content',
-                    description: 'Become an Excel expert with advanced analytics, data visualization, and reporting techniques.',
-                    learning: [
-                        'Advanced Excel formulas and functions',
-                        'Pivot tables and data analysis',
-                        'Data visualization and charts',
-                        'Creating professional reports',
-                        'Automation with macros'
-                    ],
-                    duration: '5.5 hours of video content',
-                    projects: '2 real-world data analysis projects'
-                },
-                {
-                    id: 4,
-                    category: 'microsoft',
-                    title: 'Power Query & Data Modeling',
-                    emoji: '⚙️',
-                    bg: 'bg4',
-                    exercises: 'Data transformation',
-                    projects: '2 projects',
-                    hours: '8 hrs video content',
-                    description: 'Learn Power Query and data modeling for advanced business intelligence solutions.',
-                    learning: [
-                        'Power Query fundamentals',
-                        'Data transformation and cleaning',
-                        'Creating data models',
-                        'DAX formulas and measures',
-                        'Building interactive dashboards'
-                    ],
-                    duration: '8 hours of video content',
-                    projects: '2 comprehensive BI projects'
-                },
-                {
-                    id: 5,
-                    category: 'ai',
-                    title: 'ChatGPT for Working Professionals',
-                    emoji: '🤖',
-                    bg: 'bg5',
-                    exercises: 'Practical prompts',
-                    projects: '2 projects',
-                    hours: '12 hrs video content',
-                    description: 'Master ChatGPT and AI tools to boost productivity and create professional content.',
-                    learning: [
-                        'ChatGPT fundamentals and capabilities',
-                        'Crafting effective prompts',
-                        'Content creation and copywriting',
-                        'Code generation and debugging',
-                        'AI ethics and responsible usage'
-                    ],
-                    duration: '12 hours of video content',
-                    projects: '2 practical AI implementation projects'
-                },
-                {
-                    id: 6,
-                    category: 'data',
-                    title: 'Machine Learning Fundamentals',
-                    emoji: '🧠',
-                    bg: 'bg6',
-                    exercises: 'ML algorithms',
-                    projects: '3 projects',
-                    hours: '18 hrs video content',
-                    description: 'Learn machine learning from scratch with practical applications and real datasets.',
-                    learning: [
-                        'ML concepts and algorithms',
-                        'Python for machine learning',
-                        'Working with scikit-learn',
-                        'Feature engineering and selection',
-                        'Model evaluation and optimization'
-                    ],
-                    duration: '18 hours of video content',
-                    projects: '3 hands-on ML projects'
-                }
-            ]
-        };
-
-        let currentCategory = 'all';
-        let selectedCourse = null;
-
-        function filterCourses(category) {
-            currentCategory = category;
-            
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            renderCourses();
-        }
-
-        function renderCourses() {
-            const grid = document.getElementById('coursesGrid');
-            const courses = currentCategory === 'all' 
-                ? coursesData.all 
-                : coursesData.all.filter(c => c.category === currentCategory);
-            
-            // Show only 4 courses initially
-            const coursesToShow = courses.slice(0, 4);
-            
-            grid.innerHTML = coursesToShow.map(course => `
-                <div class="course-card" onclick="openCourse(${course.id})">
-                    <div class="course-image ${course.bg}">
-                        <div class="pro-badge">PRO</div>
-                        ${course.emoji}
-                    </div>
-                    <div class="course-content">
-                        <div class="course-meta">
-                            <span>${course.exercises}</span>
-                            <span>•</span>
-                            <span>${course.projects}</span>
-                        </div>
-                        <div class="course-title">${course.title}</div>
-                        <div class="course-hours">${course.hours}</div>
-                        <div class="course-footer">
-                            <button class="view-btn">View Course</button>
-                            <div class="subscription-badge">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                Included with Pro+
-                            </div>
-                        </div>
-                    </div>
+<!-- Mobile Swiper -->
+<div class="swiper mobile-view" style="display:none;">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <div class="banner banner-left" onclick="handleClick('Coursera Plus')">
+                <div class="banner-content">
+                    <div class="banner-logo">coursera plus</div>
+                    <div class="banner-title">Unlock access to 10,000+ courses</div>
+                    <a href="#" class="banner-cta">Start 7-day trial</a>
                 </div>
-            `).join('');
-        }
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="banner banner-right" onclick="handleClick('Coursera for Business')">
+                <div class="banner-content">
+                    <div class="banner-logo">coursera for business</div>
+                    <div class="banner-title">Drive your business forward</div>
+                    <a href="#" class="banner-cta">Try Coursera for Business</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
 
-        function showAllCourses() {
-            // In a real app, this would load more courses or navigate to a full courses page
-            alert('Loading all available courses...');
-            // For demo purposes, we'll just show a message
-        }
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+function handleClick(banner){
+    alert(`Clicked on ${banner}`);
+}
 
-        function openCourse(courseId) {
-            selectedCourse = coursesData.all.find(c => c.id === courseId);
-            
-            document.getElementById('modalHeader').style.background = `linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%)`;
-            document.getElementById('modalHeader').textContent = selectedCourse.emoji;
-            
-            document.getElementById('modalTitle').textContent = selectedCourse.title;
-            document.getElementById('modalDescription').textContent = selectedCourse.description;
-            document.getElementById('modalDuration').innerHTML = `<strong>${selectedCourse.duration}</strong><br>${selectedCourse.exercises} • ${selectedCourse.projects}`;
-            document.getElementById('modalProjects').textContent = selectedCourse.projects;
-            
-            const learningList = document.getElementById('modalLearning');
-            learningList.innerHTML = selectedCourse.learning.map(item => 
-                `<li>${item}</li>`
-            ).join('');
-            
-            document.getElementById('courseModal').classList.add('active');
-        }
+// Enable mobile carousel
+function checkViewport(){
+    if(window.innerWidth <= 768){
+        document.querySelector('.desktop-view').style.display='none';
+        document.querySelector('.mobile-view').style.display='block';
 
-        function closeModal() {
-            document.getElementById('courseModal').classList.remove('active');
-            selectedCourse = null;
-        }
-
-        function enrollCourse() {
-            alert(`You've enrolled in: ${selectedCourse.title}\n\nWelcome to the course! Check your email for further instructions.`);
-            closeModal();
-        }
-
-        document.getElementById('courseModal').addEventListener('click', (e) => {
-            if (e.target.id === 'courseModal') {
-                closeModal();
-            }
+        new Swiper('.swiper',{
+            loop:true,
+            speed:700,
+            effect: 'slide',      // smooth sliding
+            grabCursor:true,      // cursor shows grab
+            allowTouchMove:true,  // manual swipe
+            touchRatio:1,         // natural swipe sensitivity
+            touchAngle:45,
+            simulateTouch:true,
+            pagination:{ el:'.swiper-pagination', clickable:true },
+            autoplay:false        // no automatic sliding
         });
+    } else {
+        document.querySelector('.desktop-view').style.display='grid';
+        document.querySelector('.mobile-view').style.display='none';
+    }
+}
+window.addEventListener('load', checkViewport);
+window.addEventListener('resize', checkViewport);
+</script>
 
-        // Initial render
-        renderCourses();
-    </script>
 </body>
 </html>
