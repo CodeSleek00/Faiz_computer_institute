@@ -431,7 +431,7 @@ showSection2("Free Courses","free",$conn);
         </div>
 
         <div class="university-text">
-          <h2>Join colleges and universities that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2></a>
+          <h2 style="text-align:center;">Join colleges and universities that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2></a>
         </div>
     </div>
 </div>
