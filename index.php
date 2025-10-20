@@ -482,7 +482,7 @@ showSection2("Free Courses","free",$conn);
     </div>
 </div>
   <!-- CTA Section -->
-  <section class="bg-blue-600 text-white py-12 mt-16">
+  <section class="bg-blue-600 text-white py-12 mt-1">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-xl sm:text-2xl font-bold mb-4">Ready to Transform Your Career?</h2>
       <p class="text-sm sm:text-base mb-6 max-w-2xl mx-auto">Join thousands of students who've accelerated their careers with our intensive bootcamp programs.</p>
