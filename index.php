@@ -139,7 +139,7 @@
         
         <div class="mobile-menu-item">
             <div class="mobile-menu-header-item" data-target="mobileProfessional">
-               <a href="h.html" style="text-decoration:none;color:black;"> <span>Professional Courses</span></a>
+                <span>Professional Courses</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileProfessional">
@@ -283,7 +283,7 @@
 <?php
 function showSection($title, $section, $conn) {
     echo "<div class='courses-section-item'>
-            <div class='courses-section-header'>{$title} <span>→</span></div>
+            <a href='a.html'> <div class='courses-section-header'>{$title} <span>→</span></div></a>
             <div class='courses-section-container'>";
     
     $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC LIMIT 4");
