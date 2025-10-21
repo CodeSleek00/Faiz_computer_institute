@@ -1,70 +1,71 @@
-      // Mobile menu toggle
-        const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileClose = document.getElementById('mobileClose');
-        const overlay = document.getElementById('overlay');
-        
-        function openMobileMenu() {
-            mobileMenu.classList.add('active');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeMobileMenu() {
-            mobileMenu.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            
-            // Close all dropdowns when closing menu
-            document.querySelectorAll('.mobile-dropdown').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-            document.querySelectorAll('.mobile-menu-header-item').forEach(header => {
-                header.classList.remove('active');
-            });
-        }
-        
-        mobileToggle.addEventListener('click', openMobileMenu);
-        mobileClose.addEventListener('click', closeMobileMenu);
-        overlay.addEventListener('click', closeMobileMenu);
+     const mobileToggle = document.getElementById('mobileToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+const overlay = document.getElementById('overlay');
 
-        // Mobile dropdown functionality
-        const mobileHeaders = document.querySelectorAll('.mobile-menu-header-item');
-        
-        mobileHeaders.forEach(header => {
-            header.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const targetId = header.getAttribute('data-target');
-                const targetDropdown = document.getElementById(targetId);
-                
-                // Toggle current dropdown
-                header.classList.toggle('active');
-                targetDropdown.classList.toggle('active');
-                
-                // Close other dropdowns
-                mobileHeaders.forEach(otherHeader => {
-                    if (otherHeader !== header) {
-                        otherHeader.classList.remove('active');
-                        const otherTargetId = otherHeader.getAttribute('data-target');
-                        const otherTargetDropdown = document.getElementById(otherTargetId);
-                        otherTargetDropdown.classList.remove('active');
-                    }
-                });
-            });
-        });
+// ✅ Toggle function (open/close)
+function toggleMobileMenu() {
+    const isActive = mobileMenu.classList.contains('active');
+    if (isActive) {
+        closeMobileMenu();
+    } else {
+        openMobileMenu();
+    }
+}
 
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.mobile-menu-header-item')) {
-                mobileHeaders.forEach(header => {
-                    header.classList.remove('active');
-                    const targetId = header.getAttribute('data-target');
-                    const targetDropdown = document.getElementById(targetId);
-                    targetDropdown.classList.remove('active');
-                });
+// ✅ Open menu
+function openMobileMenu() {
+    mobileMenu.classList.add('active');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// ✅ Close menu
+function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+
+    // Close all dropdowns
+    document.querySelectorAll('.mobile-dropdown').forEach(dropdown => dropdown.classList.remove('active'));
+    document.querySelectorAll('.mobile-menu-header-item').forEach(header => header.classList.remove('active'));
+}
+
+// ✅ Click events
+mobileToggle.addEventListener('click', toggleMobileMenu);
+mobileClose.addEventListener('click', closeMobileMenu);
+overlay.addEventListener('click', closeMobileMenu);
+
+// ✅ Close when clicking anywhere outside the menu (desktop-like UX)
+document.addEventListener('click', (e) => {
+    const clickedInsideMenu = e.target.closest('#mobileMenu');
+    const clickedToggle = e.target.closest('#mobileToggle');
+    if (!clickedInsideMenu && !clickedToggle && mobileMenu.classList.contains('active')) {
+        closeMobileMenu();
+    }
+});
+
+// ✅ Mobile dropdowns
+const mobileHeaders = document.querySelectorAll('.mobile-menu-header-item');
+
+mobileHeaders.forEach(header => {
+    header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetId = header.getAttribute('data-target');
+        const targetDropdown = document.getElementById(targetId);
+
+        header.classList.toggle('active');
+        targetDropdown.classList.toggle('active');
+
+        // Close others
+        mobileHeaders.forEach(other => {
+            if (other !== header) {
+                other.classList.remove('active');
+                document.getElementById(other.getAttribute('data-target')).classList.remove('active');
             }
         });
-
+    });
+});
         // Prevent clicks inside mobile menu from closing it
         mobileMenu.addEventListener('click', (e) => {
             e.stopPropagation();
