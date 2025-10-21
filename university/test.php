@@ -67,7 +67,7 @@ body {background:#f7f8fa;color:#333;}
 
 /* Card */
 .courses-university-card {
-   
+    min-width:260px;
     background:white;
     border-radius:16px;
     box-shadow:0 3px 10px rgba(0,0,0,0.1);
