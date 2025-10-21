@@ -12,7 +12,7 @@ if(isset($_POST['add_course'])){
     // image upload
     $image = '';
     if(isset($_FILES['image']) && $_FILES['image']['name'] != ''){
-        $image = 'uploads/'.time().'_'.$_FILES['image']['name'];
+        $image = '../uploads/'.time().'_'.$_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
