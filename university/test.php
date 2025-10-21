@@ -41,7 +41,7 @@ function showCourseSection($conn, $category, $limit = 4) {
 <style>
 * {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body {background:#f7f8fa;color:#333;}
-.courses-university-container {max-width:1200px;margin:60px auto;padding:0 20px;}
+.courses-university-container {max-width:1200px;margin:0px auto;padding:0 20px;}
 .courses-university-title {text-align:center;font-size:2rem;margin-bottom:40px;}
 
 /* Course Section */
