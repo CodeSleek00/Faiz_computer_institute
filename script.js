@@ -66,10 +66,7 @@ mobileHeaders.forEach(header => {
         });
     });
 });
-        // Prevent clicks inside mobile menu from closing it
-        mobileMenu.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+       
         
         // Carousel functionality
         const carousel = document.getElementById("carousel");
