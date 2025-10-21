@@ -1,7 +1,7 @@
 <?php
 include '../db/db_connect.php';
 
-function showCourseSection($conn, $category, $limit = 10) {
+function showCourseSection($conn, $category, $limit = 4) {
     $courses = $conn->query("SELECT * FROM university_courses WHERE category='$category' LIMIT $limit");
     ?>
     <div class="courses-university-section">
