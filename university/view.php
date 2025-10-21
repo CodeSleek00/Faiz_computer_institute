@@ -1,26 +1,55 @@
 <?php
 include '../db/db_connect.php';
-$id = $_GET['id'];
-$course = $conn->query("SELECT * FROM university_courses WHERE id=$id")->fetch_assoc();
 
-$syllabus = $conn->query("SELECT * FROM university_course_syllabus WHERE course_id=$id");
-$documents = $conn->query("SELECT * FROM university_course_documents WHERE course_id=$id");
+// Get course ID safely
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+// Fetch course
+$course_stmt = $conn->prepare("SELECT * FROM university_courses WHERE id = ?");
+$course_stmt->bind_param("i", $id);
+$course_stmt->execute();
+$course_result = $course_stmt->get_result();
+$course = $course_result->fetch_assoc();
+$course_stmt->close();
+
+if(!$course){
+    echo "<p>Course not found.</p>";
+    exit;
+}
+
+// Fetch syllabus
+$syllabus_stmt = $conn->prepare("SELECT * FROM university_course_syllabus WHERE course_id = ?");
+$syllabus_stmt->bind_param("i", $id);
+$syllabus_stmt->execute();
+$syllabus_result = $syllabus_stmt->get_result();
+$syllabus_stmt->close();
+
+// Fetch documents
+$documents_stmt = $conn->prepare("SELECT * FROM university_course_documents WHERE course_id = ?");
+$documents_stmt->bind_param("i", $id);
+$documents_stmt->execute();
+$documents_result = $documents_stmt->get_result();
+$documents_stmt->close();
 ?>
 
-<h1><?= $course['course_name'] ?></h1>
-<p><?= $course['description'] ?></p>
-<p><strong>Duration:</strong> <?= $course['duration'] ?></p>
+<h1><?= htmlspecialchars($course['course_name']) ?></h1>
+<p><?= nl2br(htmlspecialchars($course['description'])) ?></p>
+<p><strong>Duration:</strong> <?= htmlspecialchars($course['duration']) ?></p>
 
 <h2>Syllabus</h2>
+<?php if($syllabus_result->num_rows > 0){ ?>
 <ul>
-<?php while($s = $syllabus->fetch_assoc()){ ?>
-    <li><?= $s['syllabus_item'] ?></li>
-<?php } ?>
+    <?php while($s = $syllabus_result->fetch_assoc()){ ?>
+        <li><?= htmlspecialchars($s['syllabus_item']) ?></li>
+    <?php } ?>
 </ul>
+<?php } else { echo "<p>No syllabus added yet.</p>"; } ?>
 
 <h2>Documents</h2>
+<?php if($documents_result->num_rows > 0){ ?>
 <ul>
-<?php while($d = $documents->fetch_assoc()){ ?>
-    <li><a href="uploads/documents/<?= $d['document_name'] ?>" target="_blank"><?= $d['document_name'] ?></a></li>
-<?php } ?>
+    <?php while($d = $documents_result->fetch_assoc()){ ?>
+        <li><a href="../uploads/documents/<?= urlencode($d['document_name']) ?>" target="_blank"><?= htmlspecialchars($d['document_name']) ?></a></li>
+    <?php } ?>
 </ul>
+<?php } else { echo "<p>No documents uploaded yet.</p>"; } ?>
