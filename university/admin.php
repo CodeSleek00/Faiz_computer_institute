@@ -16,7 +16,7 @@ if(isset($_POST['add_course'])){
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
-    $stmt = $conn->prepare("INSERT INTO courses (course_name, description, duration, image, company, home_section) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO university_courses (course_name, description, duration, image, company, home_section) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss",$name,$desc,$duration,$image,$company,$home_section);
     $stmt->execute();
     $course_id = $stmt->insert_id;
@@ -32,7 +32,7 @@ if(isset($_POST['add_syllabus'])){
 
     foreach($items as $item){
         if($item != ''){
-            $stmt = $conn->prepare("INSERT INTO course_syllabus (course_id, syllabus_item) VALUES (?, ?)");
+            $stmt = $conn->prepare("INSERT INTO university_course_syllabus (course_id, syllabus_item) VALUES (?, ?)");
             $stmt->bind_param("is", $course_id, $item);
             $stmt->execute();
             $stmt->close();
@@ -49,7 +49,7 @@ if(isset($_POST['add_document'])){
         $doc_path = 'uploads/documents/'.time().'_'.$doc_name;
         move_uploaded_file($_FILES['document']['tmp_name'],$doc_path);
 
-        $stmt = $conn->prepare("INSERT INTO course_documents (course_id, document_name) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO university_course_documents (course_id, document_name) VALUES (?, ?)");
         $stmt->bind_param("is",$course_id,$doc_name);
         $stmt->execute();
         $stmt->close();
@@ -59,7 +59,7 @@ if(isset($_POST['add_document'])){
 }
 
 // Fetch courses for syllabus/documents selection
-$courses = $conn->query("SELECT id, course_name FROM courses");
+$courses = $conn->query("SELECT id, course_name FROM university_courses");
 ?>
 
 <h2>Add University Course</h2>
