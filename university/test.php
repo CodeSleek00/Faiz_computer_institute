@@ -93,6 +93,80 @@ a.view-link:hover {text-decoration:underline;}
 @media(max-width:600px){
     h1{font-size:1.6rem;}
 }
+ .path {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      padding: 40px;
+    }
+
+    .path-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .path-left {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .path-left h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #000;
+    }
+
+    .path-left p {
+      margin-top: 10px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .path-right {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .path-right p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 25px;
+    }
+
+    .path-btn {
+      background-color: #000;
+      color: #fff;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .path-btn:hover {
+      background-color: #333;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .path-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .path-left h1 {
+        font-size: 2.2rem;
+      }
+    }
 </style>
 </head>
 <body>
@@ -104,7 +178,19 @@ a.view-link:hover {text-decoration:underline;}
     // You can freely reorder or add more categories here
     showCourseSection($conn, 'Graduation'); 
 
-    echo '<h1>dvd</h1>'; // This line now properly stays inside the container
+    echo '
+    <div class="path">
+  <div class="path-container">
+    <div class="path-left">
+      <h1>Your Path<br>to Wellness</h1>
+      <p>Explore your inner world and gain insights</p>
+    </div>
+
+    <div class="path-right">
+      <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
+      <button class="path-btn">Book Appointment</button>
+    </div>
+  </div></div>'; // This line now properly stays inside the container
 
     showCourseSection($conn, 'Diploma'); 
     showCourseSection($conn, 'Post Graduation'); 

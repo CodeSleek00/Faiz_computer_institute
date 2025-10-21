@@ -1,193 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Therapy Sessions</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  body {
-    background: #f5f5f5;
-    
-  
-  }
-
-  .card-container {
-    padding: 40px 20px;
-     display: flex;
-    justify-content: center;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-   justify-content: center;
-    max-width: 1500px;
-  }
-
-  .card {
-    background: white;
-    border-radius: 20px;
-    width: 320px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-  }
-
-  .card:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  }
-
-  .card-header {
-    padding: 20px;
-    border-radius: 20px 20px 0 0;
-    position: relative;
-    padding-bottom: 0px;
-  }
-
-
-  .card-header span {
-    display: inline-block;
-    background: rgba(255,255,255,0.6);
-    border-radius: 20px;
-    font-size: 12px;
-    padding: 3px 10px;
-    margin-right: 5px;
-    font-weight: 600;
-  }
-
-  .card-header .circle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    opacity: 0.3;
-  }
-
-  .card h2 {
-    font-size: 22px;
-    margin-top: 10px;
-  }
-
-  .card p {
-    font-size: 14px;
-    color: #555;
-    margin-top: 5px;
-  }
-
-  .card img {
-    width: 100%;
-    height: 220px;
-    object-fit: contain;
-    border-radius: 0 0 20px 20px;
-    margin-top: 10px;
-    transition: transform 0.3s ease;
-  }
-
-  .card:hover img {
-    transform: scale(1.05);
-  }
-
-  /* Button inside card */
-  .card .card-btn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    padding: 10px 20px;
-    background: rgba(255,255,255,0.3);
-    color: #000;
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 50px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-  }
-
-  .card .card-btn:hover {
-    transform: translateY(-3px);
-    background: rgba(255,255,255,0.5);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  }
-
-  /* Mobile carousel */
-  @media (max-width: 768px) {
-    .card-container {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      gap: 15px;
-      padding: 0 15px;
-      justify-content: left;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Path to Wellness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .card-container::-webkit-scrollbar {
-      height: 6px;
+    .path {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      padding: 40px;
     }
 
-    .card-container::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.2);
-      border-radius: 3px;
+    .path-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 40px;
     }
 
-    .card {
-      flex-shrink: 0;
-      min-width: 90%; /* show 1 card at a time */
-      scroll-snap-align: start;
+    .path-left {
+      flex: 1;
+      min-width: 280px;
     }
-  }
-</style>
+
+    .path-left h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #000;
+    }
+
+    .path-left p {
+      margin-top: 10px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .path-right {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .path-right p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 25px;
+    }
+
+    .path-btn {
+      background-color: #000;
+      color: #fff;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .path-btn:hover {
+      background-color: #333;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .path-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .path-left h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="card-container">
-
-  <div class="card" style="background-color: #ffffff;">
-    <div class="card-header">
-      <span>Offline</span><span>Online</span>
-      <div class="circle"></div>
-      <h2>Integral University</h2>
-      <p>SIntegral University is one of the Oldest Recognized Private university in Uttar Pradesh</p>
+<div class="path">
+  <div class="path-container">
+    <div class="path-left">
+      <h1>Your Path<br>to Wellness</h1>
+      <p>Explore your inner world and gain insights</p>
     </div>
-    <img src="image.png" alt="Couples">
-     <button class="card-btn">Enroll Now</button>
-  </div>
 
-  <div class="card" style="background-color: #ffffff;">
-    <div class="card-header">
-      <span>Offline</span><span>Online</span>
-      <div class="circle"></div>
-      <h2>Parul University</h2>
-      <p>Parul University in Vadodara, Gujarat, is a leading private institution known for its modern education and research opportunities.</p>
+    <div class="path-right">
+      <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
+      <button class="path-btn">Book Appointment</button>
     </div>
-    <img src="image copy.png" alt="Couples">
-      <button class="card-btn">Enroll Now</button>
   </div>
-
-  <div class="card" style="background-color: #ffffff;">
-    <div class="card-header">
-<span>Offline</span><span>Online</span>
-      <div class="circle"></div>
-      <h2>Manglayatan Sessions</h2>
-      <p>Manglayatan University in Aligarh, Uttar Pradesh, is a private institution known for quality education development.</p>
-    </div>
-    <img src="image copy 2.png" alt="Couples">
-        <button class="card-btn">Enroll Now</button>
-  </div>
-
 </div>
-
 </body>
 </html>
