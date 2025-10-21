@@ -63,7 +63,7 @@ ul li::before {
     <h1><?= $course['course_name'] ?></h1>
     <p><?= nl2br($course['description']) ?></p>
     <p><b>Duration:</b> <?= $course['duration'] ?></p>
-    <p><b>Company:</b> <?= $course['company'] ?></p>
+    <p><b>University: </b><?=$course['university']?></p>
     <p><b>Total Exams:</b> <?= $course['total_exams'] ?></p>
 
     <h3>Syllabus</h3>
