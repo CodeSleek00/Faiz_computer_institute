@@ -58,7 +58,7 @@ $categories = ['Graduation', 'Post Graduation', 'Diploma'];
     <div class="course-section">
         <div class="section-header">
             <h2><?= $category ?></h2>
-            <button class="show-more-btn" onclick="window.location.href='index.php?category=<?= urlencode($category) ?>'">Show More</button>
+            <button class="show-more-btn" onclick="window.location.href='courses.php?category=<?= urlencode($category) ?>'">Show More</button>
         </div>
 
         <div class="course-grid">
