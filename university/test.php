@@ -1,35 +1,33 @@
 <?php
 include '../db/db_connect.php';
 
-function showCourseSection($conn, $category, $limit = 3) {
+function showCourseSection($conn, $category, $limit = 10) {
     $courses = $conn->query("SELECT * FROM university_courses WHERE category='$category' LIMIT $limit");
     ?>
-
-    <div class="course-section">
-        <div class="section-header">
+    <div class="courses-university-section">
+        <div class="courses-university-header">
             <h2><?= htmlspecialchars($category) ?></h2>
-            <button class="show-more-btn" onclick="window.location.href='courses.php?category=<?= urlencode($category) ?>'">Show More</button>
+            <button class="courses-university-show-more-btn" onclick="window.location.href='courses.php?category=<?= urlencode($category) ?>'">Show More</button>
         </div>
 
-        <div class="course-grid">
-            <?php while($c = $courses->fetch_assoc()): 
+        <div class="courses-university-carousel">
+            <?php while($c = $courses->fetch_assoc()):
                 $imagePath = !empty($c['image']) && file_exists("../uploads/".$c['image']) 
                     ? "../uploads/".$c['image'] 
                     : "../uploads/default.jpg";
             ?>
-            <div class="course-card">
+            <div class="courses-university-card">
                 <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($c['course_name']) ?>">
-                <div class="course-content">
+                <div class="courses-university-content">
                     <h3><?= htmlspecialchars($c['course_name']) ?></h3>
                     <p><?= substr($c['description'], 0, 80) ?>...</p>
-                    <p class="duration"><strong>Duration:</strong> <?= $c['duration'] ?></p>
-                    <a href="view.php?id=<?= $c['id'] ?>" class="view-link">View Details →</a>
+                    <p class="courses-university-duration"><strong>Duration:</strong> <?= $c['duration'] ?></p>
+                    <a href="view.php?id=<?= $c['id'] ?>" class="courses-university-view-link">View Details →</a>
                 </div>
             </div>
             <?php endwhile; ?>
         </div>
     </div>
-
     <?php
 }
 ?>
@@ -43,155 +41,89 @@ function showCourseSection($conn, $category, $limit = 3) {
 <style>
 * {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body {background:#f7f8fa;color:#333;}
-.container {max-width:1200px;margin:60px auto;padding:0 20px;}
-h1 {text-align:center;font-size:2rem;margin-bottom:40px;}
-.course-section {margin-bottom:60px;}
-.section-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.section-header h2 {font-size:1.5rem;color:#333;}
-.course-grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
+.courses-university-container {max-width:1200px;margin:60px auto;padding:0 20px;}
+.courses-university-title {text-align:center;font-size:2rem;margin-bottom:40px;}
+
+/* Course Section */
+.courses-university-section {margin-bottom:60px;}
+.courses-university-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.courses-university-header h2 {font-size:1.5rem;color:#333;}
+.courses-university-show-more-btn {
+    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:8px;font-size:0.9rem;cursor:pointer;transition:0.3s;
 }
-.course-card {
+.courses-university-show-more-btn:hover {background:#0056b3;}
+
+/* Carousel */
+.courses-university-carousel {
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding-bottom:10px;
+}
+.courses-university-carousel::-webkit-scrollbar {height:8px;}
+.courses-university-carousel::-webkit-scrollbar-thumb {background:#ccc;border-radius:4px;}
+.courses-university-carousel::-webkit-scrollbar-track {background:#f0f0f0;border-radius:4px;}
+
+/* Card */
+.courses-university-card {
+    min-width:260px;
     background:white;
     border-radius:16px;
     box-shadow:0 3px 10px rgba(0,0,0,0.1);
     overflow:hidden;
+    flex-shrink:0;
     transition:all 0.3s ease;
 }
-.course-card:hover {
-    transform:translateY(-5px);
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+.courses-university-card:hover {transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,0.15);}
+.courses-university-card img {width:100%;height:160px;object-fit:cover;}
+.courses-university-content {padding:20px;}
+.courses-university-content h3 {font-size:1.1rem;margin-bottom:10px;color:#222;}
+.courses-university-content p {font-size:0.9rem;color:#555;margin-bottom:10px;}
+.courses-university-duration {font-size:0.85rem;color:#777;}
+.courses-university-view-link {color:#007bff;text-decoration:none;font-weight:500;}
+.courses-university-view-link:hover {text-decoration:underline;}
+
+/* Path Section */
+.courses-university-path-container {display:flex;flex-wrap:wrap;margin:60px 0;background:#e3f2fd;border-radius:16px;padding:40px;}
+.courses-university-path-left {flex:1;min-width:280px;margin-right:20px;}
+.courses-university-path-left h1 {font-size:2rem;margin-bottom:10px;}
+.courses-university-path-left p {font-size:1rem;color:#555;}
+.courses-university-path-right {flex:1;min-width:280px;}
+.courses-university-path-right p {font-size:1rem;color:#333;margin-bottom:20px;}
+.courses-university-path-btn {
+    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:8px;font-size:1rem;cursor:pointer;transition:0.3s;
 }
-.course-card img {
-    width:100%;
-    height:180px;
-    object-fit:cover;
-}
-.course-content {padding:20px;}
-.course-content h3 {font-size:1.1rem;margin-bottom:10px;color:#222;}
-.course-content p {font-size:0.9rem;color:#555;margin-bottom:10px;}
-.duration {font-size:0.85rem;color:#777;}
-.show-more-btn {
-    background:#007bff;
-    color:white;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    font-size:0.9rem;
-    cursor:pointer;
-    transition:0.3s;
-}
-.show-more-btn:hover {background:#0056b3;}
-a.view-link {
-    color:#007bff;
-    text-decoration:none;
-    font-weight:500;
-}
-a.view-link:hover {text-decoration:underline;}
+.courses-university-path-btn:hover {background:#0056b3;}
+
 @media(max-width:600px){
-    h1{font-size:1.6rem;}
+    .courses-university-title{font-size:1.6rem;}
+    .courses-university-path-container {flex-direction:column;}
+    .courses-university-path-left, .courses-university-path-right {margin-right:0;margin-bottom:20px;}
 }
- .path {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #fff;
-      padding: 40px;
-    }
-
-    .path-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1000px;
-      width: 100%;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
-
-    .path-left {
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .path-left h1 {
-      font-size: 3.2rem;
-      font-weight: 700;
-      line-height: 1.2;
-      color: #000;
-    }
-
-    .path-left p {
-      margin-top: 10px;
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    .path-right {
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .path-right p {
-      color: #555;
-      line-height: 1.6;
-      font-size: 1rem;
-      margin-bottom: 25px;
-    }
-
-    .path-btn {
-      background-color: #000;
-      color: #fff;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .path-btn:hover {
-      background-color: #333;
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 768px) {
-      .path-container {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .path-left h1 {
-        font-size: 2.2rem;
-      }
-    }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Explore Our Courses</h1>
+<div class="courses-university-container">
+    <h1 class="courses-university-title">Explore Our Courses</h1>
 
     <?php 
-    // You can freely reorder or add more categories here
     showCourseSection($conn, 'Graduation'); 
+    ?>
 
-    echo '
-    <div class="path">
-  <div class="path-container">
-    <div class="path-left">
-      <h1>Your Path<br>to Wellness</h1>
-      <p>Explore your inner world and gain insights</p>
+    <div class="courses-university-path-container">
+        <div class="courses-university-path-left">
+            <h1>Your Path<br>to Wellness</h1>
+            <p>Explore your inner world and gain insights</p>
+        </div>
+        <div class="courses-university-path-right">
+            <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
+            <button class="courses-university-path-btn">Book Appointment</button>
+        </div>
     </div>
 
-    <div class="path-right">
-      <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
-      <button class="path-btn">Book Appointment</button>
-    </div>
-  </div></div>'; // This line now properly stays inside the container
-
+    <?php 
     showCourseSection($conn, 'Diploma'); 
     showCourseSection($conn, 'Post Graduation'); 
     ?>
