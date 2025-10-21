@@ -45,9 +45,7 @@ $documents_stmt->close();
 </ul>
 <?php } else { echo "<p>No syllabus added yet.</p>"; } ?>
 
-<h2>Documents</h2>
-
-<h2>Syllabus</h2>
+<h2>Document</h2>
 <?php if($syllabus_result->num_rows > 0){ ?>
 <ul>
     <?php while($s = $syllabus_result->fetch_assoc()){ ?>
