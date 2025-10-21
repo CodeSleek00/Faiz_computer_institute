@@ -123,7 +123,7 @@ body {background:#f7f8fa;color:#333;}
 
     <div class="courses-university-path-container">
         <div class="courses-university-path-left">
-            <h1>Your Path<br>to Wellness</h1>
+            <h1>Your Path to Wellness</h1>
             <p>Explore your inner world and gain insights</p>
         </div>
         <div class="courses-university-path-right">
