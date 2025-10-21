@@ -91,7 +91,7 @@ body {background:#f7f8fa;color:#333;}
 .courses-university-path-right {flex:1;min-width:280px;}
 .courses-university-path-right p {font-size:1rem;color:#333;margin-bottom:20px;}
 .courses-university-path-btn {
-    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:8px;font-size:1rem;cursor:pointer;transition:0.3s;
+    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:20px;font-size:1rem;cursor:pointer;transition:0.3s;
 }
 .courses-university-path-btn:hover {background:#0056b3;}
 
