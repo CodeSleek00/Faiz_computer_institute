@@ -1,6 +1,6 @@
 <?php
 include '../db/db_connect.php';
-$courses = $conn->query("SELECT * FROM courses ORDER BY id DESC");
+$courses = $conn->query("SELECT * FROM university_courses ORDER BY id DESC");
 ?>
 <h1>University Courses</h1>
 <div class="courses-list">
