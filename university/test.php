@@ -67,7 +67,7 @@ $categories = ['Graduation', 'Post Graduation', 'Diploma'];
                 <h3><?= htmlspecialchars($c['course_name']) ?></h3>
                 <p><?= substr($c['description'], 0, 80) ?>...</p>
                 <p class="duration"><strong>Duration:</strong> <?= $c['duration'] ?></p>
-                <a href="course_detail.php?id=<?= $c['id'] ?>" style="color:#007bff;text-decoration:none;">View Details →</a>
+                <a href="view.php?id=<?= $c['id'] ?>" style="color:#007bff;text-decoration:none;">View Details →</a>
             </div>
             <?php endwhile; ?>
         </div>
