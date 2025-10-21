@@ -67,30 +67,36 @@ $courses = $conn->query("SELECT id, course_name FROM university_courses");
     <textarea name="description" placeholder="Description"></textarea><br>
     <input type="text" name="duration" placeholder="Duration"><br>
     <input type="text" name="company" placeholder="University/Company"><br>
-    <select name="home_section">
-        <option value="none">None</option>
-        <option value="popular">Popular</option>
-        <option value="skills">Skills</option>
-        <option value="free">Free</option>
-    </select><br>
+
+    <br>
     <input type="file" name="image"><br>
     <button type="submit" name="add_course">Add Course</button>
 </form>
 
 <hr>
+<hr>
 <h2>Add Syllabus</h2>
 <form method="POST">
     <select name="course_id" required>
         <option value="">Select Course</option>
-        <?php while($row = $courses->fetch_assoc()){ ?>
+        <?php
+        $courses3 = $conn->query("SELECT id, course_name FROM university_courses");
+        while($row = $courses3->fetch_assoc()){ ?>
             <option value="<?= $row['id'] ?>"><?= $row['course_name'] ?></option>
         <?php } ?>
     </select><br>
-    <input type="text" name="syllabus_item[]" placeholder="Syllabus Item 1"><br>
-    <input type="text" name="syllabus_item[]" placeholder="Syllabus Item 2"><br>
-    <input type="text" name="syllabus_item[]" placeholder="Syllabus Item 3"><br>
+
+    <div id="syllabus-items">
+        <input type="text" name="syllabus_item[]" placeholder="Syllabus Item 1">
+    </div>
+    <button type="button" onclick="addSyllabus()">+ Add Syllabus Item</button><br><br>
     <button type="submit" name="add_syllabus">Add Syllabus</button>
 </form>
+
+<script>
+
+</script>
+
 
 <hr>
 <h2>Add Documents</h2>
@@ -117,6 +123,15 @@ function addDocument(){
     input.type = 'text';
     input.name = 'documents[]';
     input.placeholder = 'Document name';
+    div.appendChild(document.createElement('br'));
+    div.appendChild(input);
+}
+function addSyllabus(){
+    const div = document.getElementById('syllabus-items');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'syllabus_item[]';
+    input.placeholder = 'Syllabus Item';
     div.appendChild(document.createElement('br'));
     div.appendChild(input);
 }
