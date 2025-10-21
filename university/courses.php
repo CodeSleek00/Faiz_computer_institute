@@ -1,16 +1,40 @@
 <?php
 include '../db/db_connect.php';
 
-// Category filter
+// Category and search filters
 $selected_category = isset($_GET['category']) ? $_GET['category'] : 'All';
-if($selected_category == 'All'){
-    $courses = $conn->query("SELECT * FROM university_courses ORDER BY id DESC");
-}else{
-    $stmt = $conn->prepare("SELECT * FROM university_courses WHERE category=? ORDER BY id DESC");
-    $stmt->bind_param("s", $selected_category);
-    $stmt->execute();
-    $courses = $stmt->get_result();
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+$query = "SELECT * FROM university_courses WHERE 1=1";
+$params = [];
+$types = "";
+
+// Category filter
+if($selected_category != 'All'){
+    $query .= " AND category=?";
+    $params[] = $selected_category;
+    $types .= "s";
 }
+
+// Search filter
+if($search != ''){
+    $query .= " AND (course_name LIKE ? OR description LIKE ?)";
+    $search_param = "%$search%";
+    $params[] = $search_param;
+    $params[] = $search_param;
+    $types .= "ss";
+}
+
+$query .= " ORDER BY id DESC";
+
+$stmt = $conn->prepare($query);
+
+if(!empty($params)){
+    $stmt->bind_param($types, ...$params);
+}
+
+$stmt->execute();
+$courses = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +48,11 @@ body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f4f4f4;}
 .container{max-width:1200px;margin:auto;padding:20px;}
 h1{text-align:center;margin-bottom:20px;}
 .filter{margin-bottom:20px;text-align:center;}
-.filter select{padding:8px 12px;font-size:16px;}
+.filter select, .filter input[type="text"], .filter button{
+    padding:8px 12px;font-size:16px;margin:5px;border:1px solid #ccc;border-radius:5px;
+}
+.filter button{background:#007BFF;color:#fff;cursor:pointer;transition:0.3s;}
+.filter button:hover{background:#0056b3;}
 .courses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
 .card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:0.3s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 4px 15px rgba(0,0,0,0.2);}
@@ -42,14 +70,15 @@ h1{text-align:center;margin-bottom:20px;}
     <h1>University Courses</h1>
     
     <div class="filter">
-        <form method="GET">
-            <label>Filter by Category:</label>
-            <select name="category" onchange="this.form.submit()">
+        <form method="GET" style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+            <select name="category">
                 <option value="All" <?= $selected_category=='All'?'selected':'' ?>>All</option>
                 <option value="Graduation" <?= $selected_category=='Graduation'?'selected':'' ?>>Graduation</option>
                 <option value="Post Graduation" <?= $selected_category=='Post Graduation'?'selected':'' ?>>Post Graduation</option>
                 <option value="Diploma" <?= $selected_category=='Diploma'?'selected':'' ?>>Diploma</option>
             </select>
+            <input type="text" name="search" placeholder="Search courses..." value="<?= htmlspecialchars($search) ?>">
+            <button type="submit">Search</button>
         </form>
     </div>
     
@@ -57,7 +86,7 @@ h1{text-align:center;margin-bottom:20px;}
         <?php if($courses->num_rows > 0){ ?>
             <?php while($c = $courses->fetch_assoc()){ ?>
                 <div class="card">
-                    <img src="<?= $c['image']? $c['image']:'placeholder.jpg' ?>" alt="<?= htmlspecialchars($c['course_name']) ?>">
+                    <img src="<?= $c['image'] ? $c['image'] : 'placeholder.jpg' ?>" alt="<?= htmlspecialchars($c['course_name']) ?>">
                     <div class="card-content">
                         <h3><?= htmlspecialchars($c['course_name']) ?></h3>
                         <p><strong>Duration:</strong> <?= htmlspecialchars($c['duration']) ?></p>
@@ -66,8 +95,8 @@ h1{text-align:center;margin-bottom:20px;}
                     </div>
                 </div>
             <?php } ?>
-        <?php }else{ ?>
-            <p>No courses found in this category.</p>
+        <?php } else { ?>
+            <p style="text-align:center;">No courses found matching your search or filter.</p>
         <?php } ?>
     </div>
 </div>
