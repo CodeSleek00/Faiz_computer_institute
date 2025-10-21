@@ -84,14 +84,20 @@ body {background:#f7f8fa;color:#333;}
 .courses-university-view-link:hover {text-decoration:underline;}
 
 /* Path Section */
-.courses-university-path-container {display:flex;flex-wrap:wrap;margin:60px 0;background:#e3f2fd;border-radius:16px;padding:40px;}
+.courses-university-path-container {
+    display:flex;
+    flex-wrap:wrap;
+    margin:60px 0;
+    background:#e3f2fd;
+    border-radius:16px;
+    padding:40px;}
 .courses-university-path-left {flex:1;min-width:280px;margin-right:20px;}
 .courses-university-path-left h1 {font-size:2rem;margin-bottom:10px;}
 .courses-university-path-left p {font-size:1rem;color:#555;}
 .courses-university-path-right {flex:1;min-width:280px;}
 .courses-university-path-right p {font-size:1rem;color:#333;margin-bottom:20px;}
 .courses-university-path-btn {
-    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:20px;font-size:1rem;cursor:pointer;transition:0.3s;
+    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:25px;font-size:1rem;cursor:pointer;transition:0.3s;
 }
 .courses-university-path-btn:hover {background:#0056b3;}
 
