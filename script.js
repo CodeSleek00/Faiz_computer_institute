@@ -1,133 +1,122 @@
-
 document.addEventListener('DOMContentLoaded', () => {
+    // ---------------- Mobile Menu ----------------
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    const overlay = document.getElementById('overlay');
 
-  // =========================
-  // 1️⃣ Mobile Menu Logic
-  // =========================
-  const mobileToggle = document.getElementById('mobileToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileClose = document.getElementById('mobileClose');
-  const overlay = document.getElementById('overlay');
-  const mobileHeaders = document.querySelectorAll('.mobile-menu-header-item');
+    function openMobileMenu() {
+        mobileMenu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
 
-  function openMobileMenu() {
-      mobileMenu.classList.add('active');
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-  }
+    function closeMobileMenu() {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        document.querySelectorAll('.mobile-dropdown').forEach(dd => dd.classList.remove('active'));
+        document.querySelectorAll('.mobile-menu-header-item').forEach(header => header.classList.remove('active'));
+    }
 
-  function closeMobileMenu() {
-      mobileMenu.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
+    function toggleMobileMenu() {
+        mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu();
+    }
 
-      // Close all dropdowns
-      mobileHeaders.forEach(header => header.classList.remove('active'));
-      document.querySelectorAll('.mobile-dropdown').forEach(dropdown => dropdown.classList.remove('active'));
-  }
+    mobileToggle.addEventListener('click', toggleMobileMenu);
+    mobileClose.addEventListener('click', closeMobileMenu);
+    overlay.addEventListener('click', closeMobileMenu);
 
-  // Toggle menu
-  mobileToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      mobileMenu.classList.contains('active') ? closeMobileMenu() : openMobileMenu();
-  });
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#mobileMenu') && !e.target.closest('#mobileToggle')) {
+            document.querySelectorAll('.mobile-dropdown').forEach(dd => dd.classList.remove('active'));
+            document.querySelectorAll('.mobile-menu-header-item').forEach(header => header.classList.remove('active'));
+        }
+    });
 
-  // Close via close button or overlay
-  mobileClose.addEventListener('click', closeMobileMenu);
-  overlay.addEventListener('click', closeMobileMenu);
+    // Mobile Dropdowns
+    const mobileHeaders = document.querySelectorAll('.mobile-menu-header-item');
+    mobileHeaders.forEach(header => {
+        header.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const target = document.getElementById(header.dataset.target);
+            header.classList.toggle('active');
+            target.classList.toggle('active');
 
-  // Dropdown toggles
-  mobileHeaders.forEach(header => {
-      header.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const targetId = header.dataset.target;
-          const targetDropdown = document.getElementById(targetId);
+            // Close others
+            mobileHeaders.forEach(other => {
+                if (other !== header) {
+                    other.classList.remove('active');
+                    document.getElementById(other.dataset.target).classList.remove('active');
+                }
+            });
+        });
+    });
 
-          // Toggle current
-          header.classList.toggle('active');
-          targetDropdown.classList.toggle('active');
+    // ---------------- Generic Carousel ----------------
+    function initCarousel(carouselId, cardSelector, indicatorClass=null, gap=20) {
+        const carousel = document.getElementById(carouselId);
+        if (!carousel) return;
 
-          // Close others
-          mobileHeaders.forEach(other => {
-              if (other !== header) {
-                  other.classList.remove('active');
-                  const otherDropdown = document.getElementById(other.dataset.target);
-                  otherDropdown.classList.remove('active');
-              }
-          });
-      });
-  });
+        const cards = carousel.querySelectorAll(cardSelector);
+        const indicators = indicatorClass ? document.querySelectorAll(`.${indicatorClass}`) : [];
 
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-      const clickedInsideMenu = e.target.closest('#mobileMenu');
-      const clickedToggle = e.target.closest('#mobileToggle');
-      if (!clickedInsideMenu && !clickedToggle && mobileMenu.classList.contains('active')) {
-          closeMobileMenu();
-      }
-  });
+        // Drag/Swipe
+        let isDown = false, startX, scrollLeft;
 
-  // =========================
-  // 2️⃣ Generic Carousel Function
-  // =========================
-  function initCarousel(carouselId, prevBtnId, nextBtnId, indicatorClass, cardSelector, gap=20) {
-      const carousel = document.getElementById(carouselId);
-      if (!carousel) return;
+        carousel.addEventListener('mousedown', e => {
+            isDown = true;
+            startX = e.pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+        carousel.addEventListener('mouseup', () => isDown = false);
+        carousel.addEventListener('mouseleave', () => isDown = false);
+        carousel.addEventListener('mousemove', e => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (startX - x) * 2; // speed
+            carousel.scrollLeft = scrollLeft + walk;
+            updateIndicators();
+        });
 
-      const prevBtn = prevBtnId ? document.getElementById(prevBtnId) : null;
-      const nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
-      const indicators = indicatorClass ? document.querySelectorAll(`.${indicatorClass}`) : [];
-      const cards = carousel.querySelectorAll(cardSelector);
+        // Touch for mobile
+        carousel.addEventListener('touchstart', e => {
+            startX = e.touches[0].pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+        carousel.addEventListener('touchmove', e => {
+            const x = e.touches[0].pageX - carousel.offsetLeft;
+            const walk = (startX - x) * 2;
+            carousel.scrollLeft = scrollLeft + walk;
+            updateIndicators();
+        });
 
-      // Scroll by one card
-      const scrollAmount = () => cards[0] ? cards[0].offsetWidth + gap : 0;
+        function updateIndicators() {
+            if (!indicators.length) return;
+            const activeIndex = Math.round(carousel.scrollLeft / (cards[0].offsetWidth + gap));
+            indicators.forEach((ind,i)=> ind.classList.toggle('active', i===activeIndex));
+        }
 
-      // Update indicators
-      const updateIndicators = () => {
-          const scrollLeft = carousel.scrollLeft;
-          const activeIndex = cards[0] ? Math.round(scrollLeft / (cards[0].offsetWidth + gap)) : 0;
-          indicators.forEach((ind,i) => i===activeIndex ? ind.classList.add('active') : ind.classList.remove('active'));
-      }
+        // Click indicator
+        indicators.forEach((ind,i) => {
+            ind.addEventListener('click', () => {
+                carousel.scrollTo({
+                    left: i * (cards[0].offsetWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-      // Click indicator
-      indicators.forEach(ind => {
-          ind.addEventListener('click', () => {
-              const index = parseInt(ind.dataset.index);
-              if (!cards[0]) return;
-              carousel.scrollTo({ left: index * (cards[0].offsetWidth + gap), behavior: 'smooth' });
-          });
-      });
+        // Initial indicator update
+        updateIndicators();
+    }
 
-      // Prev/Next buttons
-      if(prevBtn) prevBtn.addEventListener('click', () => carousel.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
-      if(nextBtn) nextBtn.addEventListener('click', () => carousel.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
-
-      // Drag/Swipe functionality
-      let isDown = false, startX, scrollStart;
-      carousel.addEventListener('mousedown', (e) => { isDown=true; startX=e.pageX - carousel.offsetLeft; scrollStart=carousel.scrollLeft; carousel.classList.add('active'); });
-      carousel.addEventListener('mouseleave', () => isDown=false);
-      carousel.addEventListener('mouseup', () => isDown=false);
-      carousel.addEventListener('mousemove', (e) => {
-          if(!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - carousel.offsetLeft;
-          const walk = (startX - x) * 2;
-          carousel.scrollLeft = scrollStart + walk;
-          updateIndicators();
-      });
-
-      // Touch for mobile
-      carousel.addEventListener('touchmove', updateIndicators);
-      carousel.addEventListener('scroll', updateIndicators);
-
-      // Initial indicators
-      updateIndicators();
-  }
-
-  // Example usage: initialize your carousels
-  initCarousel('carousel', 'prevBtn', 'nextBtn', 'indicator', '.card', 20);
-  initCarousel('coursesSectionCarousel', null, null, 'courses-section-indicator', '.courses-section-item', 15);
-  initCarousel('o-level-online-carousel', null, null, 'o-level-online-dot', '.o-level-online-card', 0);
-  initCarousel('course2Carousel', null, null, 'course-2-indicator', '.course-2-section', 20);
-
+    // ---------------- Initialize All Carousels ----------------
+    initCarousel('carousel', '.card', 'indicator', 20);
+    initCarousel('coursesSectionCarousel', '.courses-section-item', 'courses-section-indicator', 15);
+    initCarousel('o-level-online-carousel', '.o-level-online-card', 'o-level-online-dot', 0);
+    initCarousel('course2Carousel', '.course-2-section', 'course-2-indicator', 20);
+    initCarousel('scrollArea', '.card', null, 20); // optional scroll area
 });
