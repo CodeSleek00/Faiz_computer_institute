@@ -45,6 +45,7 @@ body {background:#f7f8fa;color:#333;}
 .courses-university-title {text-align:center;font-size:2rem;margin-bottom:40px;}
 
 /* Course Section */
+.courses-university-section {margin-bottom:30px;}
 .courses-university-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
 .courses-university-header h2 {font-size:1.5rem;color:#333;}
 .courses-university-show-more-btn {
