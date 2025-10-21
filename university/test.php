@@ -89,7 +89,7 @@ body {background:#f7f8fa;color:#333;}
     flex-wrap:wrap;
    
     border-radius:16px;
-    padding:40px;}
+    padding:20px;}
 .courses-university-path-left {flex:1;min-width:280px;margin-right:20px;}
 .courses-university-path-left h1 {font-size:2rem;margin-bottom:10px;}
 .courses-university-path-left p {font-size:1rem;color:#555;}
