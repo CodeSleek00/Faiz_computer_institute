@@ -1,55 +1,84 @@
-<?php
+<?php 
 include '../db/db_connect.php';
-
-// Get course ID safely
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-
-// Fetch course
-$course_stmt = $conn->prepare("SELECT * FROM university_courses WHERE id = ?");
-$course_stmt->bind_param("i", $id);
-$course_stmt->execute();
-$course_result = $course_stmt->get_result();
-$course = $course_result->fetch_assoc();
-$course_stmt->close();
-
-if(!$course){
-    echo "<p>Course not found.</p>";
-    exit;
-}
-
-// Fetch syllabus
-$syllabus_stmt = $conn->prepare("SELECT * FROM university_course_syllabus WHERE course_id = ?");
-$syllabus_stmt->bind_param("i", $id);
-$syllabus_stmt->execute();
-$syllabus_result = $syllabus_stmt->get_result();
-$syllabus_stmt->close();
-
-// Fetch documents
-$documents_stmt = $conn->prepare("SELECT * FROM university_course_documents WHERE course_id = ?");
-$documents_stmt->bind_param("i", $id);
-$documents_stmt->execute();
-$documents_result = $documents_stmt->get_result();
-$documents_stmt->close();
+$id = $_GET['id'] ?? 0;
+$course = $conn->query("SELECT * FROM university_courses WHERE id=$id")->fetch_assoc();
+$syllabus = $conn->query("SELECT * FROM university_course_syllabus WHERE course_id=$id");
+$docs = $conn->query("SELECT * FROM university_course_documents WHERE course_id=$id");
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title><?= $course['course_name'] ?></title>
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.course-image {
+    width: 100%;
+    height: 320px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+h1 { color: #2b8a3e; }
+ul { list-style: none; padding: 0; }
+ul li::before {
+    content: "✔ ";
+    color: #2b8a3e;
+}
+.enroll-btn {
+    background: #2b8a3e;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.enroll-btn:hover { background: #256f33; }
+.review-box {
+    background: #f2f8f4;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
 
-<h1><?= htmlspecialchars($course['course_name']) ?></h1>
-<p><?= nl2br(htmlspecialchars($course['description'])) ?></p>
-<p><strong>Duration:</strong> <?= htmlspecialchars($course['duration']) ?></p>
+<div class="container">
+    <img src="<?= !empty($course['image']) ? $course['image'] : 'https://via.placeholder.com/800x400' ?>" class="course-image">
 
-<h2>Syllabus</h2>
-<?php if($syllabus_result->num_rows > 0){ ?>
-<ul>
-    <?php while($s = $syllabus_result->fetch_assoc()){ ?>
-        <li><?= htmlspecialchars($s['syllabus_item']) ?></li>
-    <?php } ?>
-</ul>
-<?php } else { echo "<p>No syllabus added yet.</p>"; } ?>
+    <h1><?= $course['course_name'] ?></h1>
+    <p><?= nl2br($course['description']) ?></p>
+    <p><b>Duration:</b> <?= $course['duration'] ?></p>
+    <p><b>Company:</b> <?= $course['company'] ?></p>
+    <p><b>Total Exams:</b> <?= $course['total_exams'] ?></p>
 
-<h2>Document</h2>
-<?php if($syllabus_result->num_rows > 0){ ?>
-<ul>
-    <?php while($s = $syllabus_result->fetch_assoc()){ ?>
-        <li><?= htmlspecialchars($s['document_name']) ?></li>
-    <?php } ?>
-</ul>
-<?php } else { echo "<p>No Document added yet.</p>"; } ?>
+    <h3>Syllabus</h3>
+    <ul>
+    <?php while($s = $syllabus->fetch_assoc()) echo "<li>".$s['syllabus_item']."</li>"; ?>
+    </ul>
+
+    <h3>Documents</h3>
+    <ul>
+    <?php while($d = $docs->fetch_assoc()) echo "<li>".$d['document_name']."</li>"; ?>
+    </ul>
+
+    <br>
+    <button class="enroll-btn">Enroll Now</button>
+</div>
+
+</body>
+</html>
