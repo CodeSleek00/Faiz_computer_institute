@@ -1,24 +1,7 @@
-<?php include 'db/db_connect.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css?v=1.41">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-   
-    <title>Faiz Computer Institute</title>
-   <style>
-   body {
-   
+ body {
+   font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 0;
+   
     height: 1000px;
 }
 .head {
@@ -436,225 +419,339 @@
             .dropdown {
                 grid-template-columns: 1fr;
             }
-            
+           
             .mobile-auth {
                 flex-direction: column;
             }
         }
-</style>
- 
-</head>
-<body>
-    <header>
-        <div class="head">
-            <ul class="head1">
-                <a href=""><li>For Individual</li></a>
-                <a href=""><li>For University Courses</li></a>
-                <a href=""><li>For High School & Intermediate Courses</li></a>
-                <a href=""><li>For Free Courses</li></a>
-            </ul>
-        </div>
-    </header>
-     <nav>
-        <div class="nav-left">
-           
-            Faiz Computer Institute
-        </div>
 
-        <div class="nav-center">
-            <button id="exploreBtn">
-                Explore <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="dropdown" id="dropdownMenu">
-                <div class="dropdown-column">
-                    <h4>Explore Roles</h4>
-                    <a href="#"><i class="fas fa-code"></i> Software Developer</a>
-                    <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
-                    <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
-                    <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
-                </div>
-                <div class="dropdown-column">
-                    <h4>Online Degree</h4>
-                    <a href="#"><i class="fas fa-graduation-cap"></i> BCA</a>
-                    <a href="#"><i class="fas fa-user-graduate"></i> MCA</a>
-                    <a href="#"><i class="fas fa-book"></i> BBA</a>
-                    <a href="#"><i class="fas fa-briefcase"></i> MBA</a>
-                </div>
-                <div class="dropdown-column">
-                    <h4>Trending Courses</h4>
-                    <a href="#"><i class="fab fa-python"></i> Python Programming</a>
-                    <a href="#"><i class="fas fa-palette"></i> Graphic Design</a>
-                    <a href="#"><i class="fas fa-calculator"></i> Tally Prime</a>
-                    <a href="#"><i class="fas fa-bullhorn"></i> Digital Marketing</a>
-                </div>
-                <div class="dropdown-column">
-                    <h4>Professional Courses</h4>
-                    <a href="#"><i class="fas fa-layer-group"></i> Full Stack Development</a>
-                    <a href="#"><i class="fas fa-table"></i> Advanced Excel</a>
-                    <a href="#"><i class="fas fa-network-wired"></i> Networking</a>
-                    <a href="#"><i class="fas fa-user-secret"></i> Ethical Hacking</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="nav-right">
-            <div class="auth-buttons">
-                <button class="login-btn">Login</button>
-                <button class="signup-btn">Free Courses</button>
-            </div>
-            
-        </div>
-
-        <!-- Mobile Toggle Button -->
-        <button class="mobile-toggle" id="mobileToggle">
-            <i class="fas fa-bars"></i>
-        </button>
-    </nav>
-
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Left Side Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <div class="logo">
-                Faiz Computer Institute
-            </div>
-            <button class="mobile-close" id="mobileClose">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="mobile-menu-item">
-            <div class="mobile-menu-header-item" data-target="mobileRoles">
-                <span>Explore Roles</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown" id="mobileRoles">
-                <a href="#"><i class="fas fa-code"></i> Software Developer</a>
-                <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
-                <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
-                <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
-            </div>
-        </div>
-        
-        <div class="mobile-menu-item">
-            <div class="mobile-menu-header-item" data-target="mobileDegree">
-                <span>Online Degree</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown" id="mobileDegree">
-                <a href="#"><i class="fas fa-graduation-cap"></i> BCA</a>
-                <a href="#"><i class="fas fa-user-graduate"></i> MCA</a>
-                <a href="#"><i class="fas fa-book"></i> BBA</a>
-                <a href="#"><i class="fas fa-briefcase"></i> MBA</a>
-            </div>
-        </div>
-        
-        <div class="mobile-menu-item">
-            <div class="mobile-menu-header-item" data-target="mobileTrending">
-                <span>Trending Courses</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown" id="mobileTrending">
-                <a href="#"><i class="fab fa-python"></i> Python Programming</a>
-                <a href="#"><i class="fas fa-palette"></i> Graphic Design</a>
-                <a href="#"><i class="fas fa-calculator"></i> Tally Prime</a>
-                <a href="#"><i class="fas fa-bullhorn"></i> Digital Marketing</a>
-            </div>
-        </div>
-        
-        <div class="mobile-menu-item">
-            <div class="mobile-menu-header-item" data-target="mobileProfessional">
-                <span>Professional Courses</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="mobile-dropdown" id="mobileProfessional">
-                <a href="#"><i class="fas fa-layer-group"></i> Full Stack Development</a>
-                <a href="#"><i class="fas fa-table"></i> Advanced Excel</a>
-                <a href="#"><i class="fas fa-network-wired"></i> Networking</a>
-                <a href="#"><i class="fas fa-user-secret"></i> Ethical Hacking</a>
-            </div>
-        </div>
-        
-        <div class="mobile-auth">
-            <button class="mobile-login">Login</button>
-            <button class="mobile-signup">Sign Up</button>
-        </div>
-        
-        <div class="mobile-free">
-            <i class="fas fa-gift"></i>
-            <span>Free Courses</span>
-        </div>
-    </div>
-   <script>
-const mobileToggle = document.getElementById('mobileToggle');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileClose = document.getElementById('mobileClose');
-const overlay = document.getElementById('overlay');
-
-// ✅ Toggle function (open/close)
-function toggleMobileMenu() {
-    const isActive = mobileMenu.classList.contains('active');
-    if (isActive) {
-        closeMobileMenu();
-    } else {
-        openMobileMenu();
+    /* === Responsive Preloader === */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
-}
 
-// ✅ Open menu
-function openMobileMenu() {
-    mobileMenu.classList.add('active');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-// ✅ Close menu
-function closeMobileMenu() {
-    mobileMenu.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = 'auto';
-
-    // Close all dropdowns
-    document.querySelectorAll('.mobile-dropdown').forEach(dropdown => dropdown.classList.remove('active'));
-    document.querySelectorAll('.mobile-menu-header-item').forEach(header => header.classList.remove('active'));
-}
-
-// ✅ Click events
-mobileToggle.addEventListener('click', toggleMobileMenu);
-mobileClose.addEventListener('click', closeMobileMenu);
-overlay.addEventListener('click', closeMobileMenu);
-
-// ✅ Close when clicking anywhere outside the menu (desktop-like UX)
-document.addEventListener('click', (e) => {
-    const clickedInsideMenu = e.target.closest('#mobileMenu');
-    const clickedToggle = e.target.closest('#mobileToggle');
-    if (!clickedInsideMenu && !clickedToggle && mobileMenu.classList.contains('active')) {
-        closeMobileMenu();
+    #preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
     }
-});
 
-// ✅ Mobile dropdowns
-const mobileHeaders = document.querySelectorAll('.mobile-menu-header-item');
+    #preloader h1 {
+      color: #012250;
+      letter-spacing: 2px;
+      text-align: center;
+      animation: fadeText 2s ease-in-out infinite alternate;
+      font-size: clamp(1.8rem, 6vw, 3rem); /* responsive text size */
+    }
 
-mobileHeaders.forEach(header => {
-    header.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const targetId = header.getAttribute('data-target');
-        const targetDropdown = document.getElementById(targetId);
+    @keyframes fadeText {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.05); }
+    }
 
-        header.classList.toggle('active');
-        targetDropdown.classList.toggle('active');
+    /* Optional loader circle below text */
+    .loader-circle {
+      margin-top: 25px;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #142a9b;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
 
-        // Close others
-        mobileHeaders.forEach(other => {
-            if (other !== header) {
-                other.classList.remove('active');
-                document.getElementById(other.getAttribute('data-target')).classList.remove('active');
-            }
-        });
-    });
-});
-</script>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
 
+    body {
+      background: #fff;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* === Section === */
+    .courses-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+        padding: 10px 20px;
+        padding-left: 12%;
+      flex-wrap: wrap;
+      gap: 110px;
+    }
+
+    .courses-left {
+      position: relative;
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .main-img {
+      width: 100%;
+      border-bottom-right-radius: 200px;
+      border-top-left-radius: 200px;
+      overflow: hidden;
+    }
+
+    .main-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .floating-img {
+      position: absolute;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .float1 {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      right: -60px;
+      border-top-left-radius: 150px;
+      border-top-right-radius: 150px;
+      border-bottom-left-radius: 0;
+    }
+
+    .float2 {
+      width: 90px;
+      height: 90px;
+      bottom: -40px;
+      right: 20%;
+    }
+
+    .floating-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .courses-right {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .courses-right h4 {
+      color: #0008a5;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .courses-right h1 {
+      font-size: 2.2rem;
+      line-height: 1.0;
+      font-weight: 400;
+      color: #1b1b1b;
+      margin-bottom: 15px;
+    }
+
+    .courses-right p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 20px;
+      max-width: 400px;
+    }
+
+    .read-btn {
+      background-color: #02006e;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+
+    .read-btn:hover {
+      background-color: #c75045;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 992px) {
+      .courses-section {
+        flex-direction: column;
+        text-align: left;
+        gap: 20px;
+        padding-left:4%;
+      }
+
+      .courses-right {
+        order: -1;
+      }
+
+      .courses-right p {
+        margin: 0 auto 25px;
+      }
+
+      .main-img ,.floating-img , .floating-img float2 {
+        border-radius: 5px;
+        display: none;
+      }
+
+      .float1 {
+        right: 10%;
+        top: -20px;
+      }
+
+      .float2 {
+        bottom: -30px;
+        left: 30%;
+      }
+    } .card-container {
+    padding: 20px 20px;
+     display: flex;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+   justify-content: center;
+    max-width: 1500px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    width: 320px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  .card-header {
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    padding-bottom: 0px;
+  }
+
+
+  .card-header span {
+    display: inline-block;
+    background: rgba(255,255,255,0.6);
+    border-radius: 20px;
+    font-size: 12px;
+    padding: 3px 10px;
+    margin-right: 5px;
+    font-weight: 600;
+  }
+
+  .card-header .circle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    opacity: 0.3;
+  }
+
+  .card h2 {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+  }
+
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 0 0 20px 20px;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Button inside card */
+  .card .card-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.3);
+    color: #000;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+  }
+
+  .card .card-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  .cards {
+    background-color: #f1f6ff;
+  }
+
+  /* Mobile carousel */
+  @media (max-width: 768px) {
+    .card-container {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 15px;
+      padding: 0 15px;
+      justify-content: left;
+    }
+
+    .card-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .card-container::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 3px;
+    }
+
+    .card {
+      flex-shrink: 0;
+      min-width: 90%; /* show 1 card at a time */
+      scroll-snap-align: start;
+    }
+    
+  }
+  .university {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 10px;
+  }

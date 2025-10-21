@@ -1,247 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Faiz Website</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Therapy Sessions</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    background: #f5f5f5;
+    
+  
+  }
+
+  .card-container {
+    padding: 40px 20px;
+     display: flex;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+   justify-content: center;
+    max-width: 1500px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    width: 320px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  .card-header {
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    padding-bottom: 0px;
+  }
+
+
+  .card-header span {
+    display: inline-block;
+    background: rgba(255,255,255,0.6);
+    border-radius: 20px;
+    font-size: 12px;
+    padding: 3px 10px;
+    margin-right: 5px;
+    font-weight: 600;
+  }
+
+  .card-header .circle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    opacity: 0.3;
+  }
+
+  .card h2 {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 5px;
+  }
+
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 0 0 20px 20px;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Button inside card */
+  .card .card-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.3);
+    color: #000;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+  }
+
+  .card .card-btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  /* Mobile carousel */
+  @media (max-width: 768px) {
+    .card-container {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 15px;
+      padding: 0 15px;
+      justify-content: left;
     }
 
-    /* === Responsive Preloader === */
-    #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+    .card-container::-webkit-scrollbar {
+      height: 6px;
     }
 
-    #preloader.fade-out {
-      opacity: 0;
-      visibility: hidden;
+    .card-container::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.2);
+      border-radius: 3px;
     }
 
-    #preloader h1 {
-      color: #012250;
-      letter-spacing: 2px;
-      text-align: center;
-      animation: fadeText 2s ease-in-out infinite alternate;
-      font-size: clamp(1.8rem, 6vw, 3rem); /* responsive text size */
+    .card {
+      flex-shrink: 0;
+      min-width: 90%; /* show 1 card at a time */
+      scroll-snap-align: start;
     }
-
-    @keyframes fadeText {
-      0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0.6; transform: scale(1.05); }
-    }
-
-    /* Optional loader circle below text */
-    .loader-circle {
-      margin-top: 25px;
-      width: 40px;
-      height: 40px;
-      border: 4px solid #142a9b;
-      border-top: 4px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    body {
-      background: #fff;
-      color: #333;
-      overflow-x: hidden;
-    }
-
-    /* === Section === */
-    .courses-section {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 60px 8%;
-      flex-wrap: wrap;
-      gap: 110px;
-    }
-
-    .courses-left {
-      position: relative;
-      flex: 1;
-      min-width: 320px;
-    }
-
-    .main-img {
-      width: 100%;
-      border-bottom-right-radius: 200px;
-      border-top-left-radius: 200px;
-      overflow: hidden;
-    }
-
-    .main-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .floating-img {
-      position: absolute;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .float1 {
-      width: 150px;
-      height: 150px;
-      top: 10%;
-      right: -60px;
-      border-top-left-radius: 150px;
-      border-top-right-radius: 150px;
-      border-bottom-left-radius: 0;
-    }
-
-    .float2 {
-      width: 90px;
-      height: 90px;
-      bottom: -40px;
-      right: 20%;
-    }
-
-    .floating-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .courses-right {
-      flex: 1;
-      min-width: 300px;
-    }
-
-    .courses-right h4 {
-      color: #0008a5;
-      font-weight: 500;
-      margin-bottom: 10px;
-    }
-
-    .courses-right h1 {
-      font-size: 2.2rem;
-      line-height: 1.3;
-      font-weight: 700;
-      color: #1b1b1b;
-      margin-bottom: 15px;
-    }
-
-    .courses-right p {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 25px;
-      max-width: 400px;
-    }
-
-    .read-btn {
-      background-color: #02006e;
-      color: white;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: 0.3s ease;
-      display: inline-block;
-    }
-
-    .read-btn:hover {
-      background-color: #c75045;
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 992px) {
-      .courses-section {
-        flex-direction: column;
-        text-align: left;
-        gap: 40px;
-      }
-
-      .courses-right {
-        order: -1;
-      }
-
-      .courses-right p {
-        margin: 0 auto 25px;
-      }
-
-      .main-img {
-        border-radius: 5px;
-      }
-
-      .float1 {
-        right: 10%;
-        top: -20px;
-      }
-
-      .float2 {
-        bottom: -30px;
-        left: 30%;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <!-- 🔹 Responsive Preloader -->
-  <div id="preloader">
-    <h1>Hi, welcome to the site</h1>
-    <div class="loader-circle"></div>
+<div class="card-container">
+
+  <div class="card" style="background-color: #ffffff;">
+    <div class="card-header">
+      <span>Offline</span><span>Online</span>
+      <div class="circle"></div>
+      <h2>Integral University</h2>
+      <p>SIntegral University is one of the Oldest Recognized Private university in Uttar Pradesh</p>
+    </div>
+    <img src="image.png" alt="Couples">
+     <button class="card-btn">Enroll Now</button>
   </div>
 
-  <!-- 🔹 Main Section -->
-  <section class="courses-section">
-    <div class="courses-left">
-      <div class="main-img">
-        <img src="https://images.pexels.com/photos/5905703/pexels-photo-5905703.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Student studying">
-      </div>
-      <div class="floating-img float1">
-        <img src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Smiling student with globe">
-      </div>
-      <div class="floating-img float2">
-        <img src="https://images.pexels.com/photos/3184399/pexels-photo-3184399.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Teacher portrait">
-      </div>
+  <div class="card" style="background-color: #ffffff;">
+    <div class="card-header">
+      <span>Offline</span><span>Online</span>
+      <div class="circle"></div>
+      <h2>Parul University</h2>
+      <p>Parul University in Vadodara, Gujarat, is a leading private institution known for its modern education and research opportunities.</p>
     </div>
+    <img src="image copy.png" alt="Couples">
+      <button class="card-btn">Enroll Now</button>
+  </div>
 
-    <div class="courses-right">
-      <h4>About Our Courses</h4>
-      <h1>Explore Thousands<br>of Creative Classes</h1>
-      <p>Dramatically supply transparent deliverables by dynamically syndicating forward-thinking information. Seamlessly leverage innovation to empower your learning journey.</p>
-      <a href="#" class="read-btn">Read More</a>
+  <div class="card" style="background-color: #ffffff;">
+    <div class="card-header">
+<span>Offline</span><span>Online</span>
+      <div class="circle"></div>
+      <h2>Manglayatan Sessions</h2>
+      <p>Manglayatan University in Aligarh, Uttar Pradesh, is a private institution known for quality education development.</p>
     </div>
-  </section>
+    <img src="image copy 2.png" alt="Couples">
+        <button class="card-btn">Enroll Now</button>
+  </div>
 
-  <script>
-    // Smooth preloader fade-out
-    window.addEventListener("load", () => {
-      const preloader = document.getElementById("preloader");
-      setTimeout(() => {
-        preloader.classList.add("fade-out");
-        setTimeout(() => preloader.style.display = "none", 800);
-      }, 1500);
-    });
-  </script>
+</div>
 
 </body>
 </html>

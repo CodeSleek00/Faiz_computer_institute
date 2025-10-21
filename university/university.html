@@ -1,0 +1,233 @@
+<?php include 'db/db_connect.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="university.css?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+   
+    <title>Faiz Computer Institute</title>
+
+ 
+</head>
+<body>
+    <div id="preloader">
+    <h1>
+    Faiz Computer Institute
+        <br>University Courses
+    </h1>
+    <div class="loader-circle"></div>
+  </div>
+    <header>
+        <div class="head">
+            <ul class="head1">
+                <a href=""><li>For Individual</li></a>
+                <a href=""><li>For University Courses</li></a>
+                <a href=""><li>For High School & Intermediate Courses</li></a>
+                <a href=""><li>For Free Courses</li></a>
+            </ul>
+        </div>
+    </header>
+     <nav>
+        <div class="nav-left">
+           
+            Faiz Computer Institute
+        </div>
+
+        <div class="nav-center">
+            <button id="exploreBtn">
+                Explore <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="dropdown" id="dropdownMenu">
+                <div class="dropdown-column">
+                    <h4>Explore Roles</h4>
+                    <a href="#"><i class="fas fa-code"></i> Software Developer</a>
+                    <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
+                    <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
+                    <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+                </div>
+                <div class="dropdown-column">
+                    <h4>Online Degree</h4>
+                    <a href="#"><i class="fas fa-graduation-cap"></i> BCA</a>
+                    <a href="#"><i class="fas fa-user-graduate"></i> MCA</a>
+                    <a href="#"><i class="fas fa-book"></i> BBA</a>
+                    <a href="#"><i class="fas fa-briefcase"></i> MBA</a>
+                </div>
+                <div class="dropdown-column">
+                    <h4>Trending Courses</h4>
+                    <a href="#"><i class="fab fa-python"></i> Python Programming</a>
+                    <a href="#"><i class="fas fa-palette"></i> Graphic Design</a>
+                    <a href="#"><i class="fas fa-calculator"></i> Tally Prime</a>
+                    <a href="#"><i class="fas fa-bullhorn"></i> Digital Marketing</a>
+                </div>
+                <div class="dropdown-column">
+                    <h4>Professional Courses</h4>
+                    <a href="#"><i class="fas fa-layer-group"></i> Full Stack Development</a>
+                    <a href="#"><i class="fas fa-table"></i> Advanced Excel</a>
+                    <a href="#"><i class="fas fa-network-wired"></i> Networking</a>
+                    <a href="#"><i class="fas fa-user-secret"></i> Ethical Hacking</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="auth-buttons">
+                <button class="login-btn">Login</button>
+                <button class="signup-btn">Free Courses</button>
+            </div>
+            
+        </div>
+
+        <!-- Mobile Toggle Button -->
+        <button class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Left Side Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                Faiz Computer Institute
+            </div>
+            <button class="mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileRoles">
+                <span>Explore Roles</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileRoles">
+                <a href="#"><i class="fas fa-code"></i> Software Developer</a>
+                <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
+                <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+            </div>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileDegree">
+                <span>Online Degree</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileDegree">
+                <a href="#"><i class="fas fa-graduation-cap"></i> BCA</a>
+                <a href="#"><i class="fas fa-user-graduate"></i> MCA</a>
+                <a href="#"><i class="fas fa-book"></i> BBA</a>
+                <a href="#"><i class="fas fa-briefcase"></i> MBA</a>
+            </div>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileTrending">
+                <span>Trending Courses</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileTrending">
+                <a href="#"><i class="fab fa-python"></i> Python Programming</a>
+                <a href="#"><i class="fas fa-palette"></i> Graphic Design</a>
+                <a href="#"><i class="fas fa-calculator"></i> Tally Prime</a>
+                <a href="#"><i class="fas fa-bullhorn"></i> Digital Marketing</a>
+            </div>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileProfessional">
+                <span>Professional Courses</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileProfessional">
+                <a href="#"><i class="fas fa-layer-group"></i> Full Stack Development</a>
+                <a href="#"><i class="fas fa-table"></i> Advanced Excel</a>
+                <a href="#"><i class="fas fa-network-wired"></i> Networking</a>
+                <a href="#"><i class="fas fa-user-secret"></i> Ethical Hacking</a>
+            </div>
+        </div>
+        
+        <div class="mobile-auth">
+            <button class="mobile-login">Login</button>
+            <button class="mobile-signup">Sign Up</button>
+        </div>
+        
+        <div class="mobile-free">
+            <i class="fas fa-gift"></i>
+            <span>Free Courses</span>
+        </div>
+    </div>
+
+  <!-- 🔹 Main Section -->
+  <section class="courses-section">
+    <div class="courses-left">
+      <div class="main-img">
+        <img src="https://images.pexels.com/photos/5905703/pexels-photo-5905703.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Student studying">
+      </div>
+      <div class="floating-img float1">
+        <img src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Smiling student with globe">
+      </div>
+      <div class="floating-img float2">
+        <img src="https://images.pexels.com/photos/3184399/pexels-photo-3184399.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Teacher portrait">
+      </div>
+    </div>
+
+    <div class="courses-right">
+      <h4>About Our Courses</h4>
+      <h1>Explore Thousands<br>of Creative Classes</h1>
+      <p>Dramatically supply transparent deliverables by dynamically syndicating forward-thinking information. Seamlessly leverage innovation to empower your learning journey.</p>
+      <a href="#" class="read-btn">Read More</a>
+    </div>
+  
+  </section>  <hr><div class="cards">
+<h1 class="university">Universitie's</h1>
+  
+<div class="card-container">
+
+  <div class="card" style="background-color: #ffffff;">
+    <div class="card-header">
+      <span>Offline</span><span>Online</span>
+      <div class="circle"></div>
+      <h2>Integral University</h2>
+      <p>SIntegral University is one of the Oldest Recognized Private university in Uttar Pradesh</p>
+    </div>
+    <img src="../images/image.png" alt="Couples">
+     <button class="card-btn">Enroll Now</button>
+  </div>
+
+  <div class="card" style="background-color: #ffffff;">
+    <div class="card-header">
+      <span>Offline</span><span>Online</span>
+      <div class="circle"></div>
+      <h2>Parul University</h2>
+      <p>Parul University in Vadodara, Gujarat, is a leading private institution known for its modern education and research opportunities.</p>
+    </div>
+    <img src="../images/image copy.png" alt="Couples">
+      <button class="card-btn">Enroll Now</button>
+  </div>
+
+  <div class="card" style="background-color: #ffffff;">
+    <div class="card-header">
+<span>Offline</span><span>Online</span>
+      <div class="circle"></div>
+      <h2>Manglayatan University</h2>
+      <p>Manglayatan University in Aligarh, Uttar Pradesh, is a private institution known for quality education development.</p>
+    </div>
+    <img src="../images/image copy 2.png" alt="Couples">
+        <button class="card-btn">Enroll Now</button>
+  </div>
+
+</div></div>
+
+   <script src="university.js"></script>
+
