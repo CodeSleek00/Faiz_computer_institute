@@ -1,108 +1,247 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faiz Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-    <title>Document</title>
+    /* === Responsive Preloader === */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #preloader h1 {
+      color: #012250;
+      letter-spacing: 2px;
+      text-align: center;
+      animation: fadeText 2s ease-in-out infinite alternate;
+      font-size: clamp(1.8rem, 6vw, 3rem); /* responsive text size */
+    }
+
+    @keyframes fadeText {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.05); }
+    }
+
+    /* Optional loader circle below text */
+    .loader-circle {
+      margin-top: 25px;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #142a9b;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    body {
+      background: #fff;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* === Section === */
+    .courses-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 8%;
+      flex-wrap: wrap;
+      gap: 110px;
+    }
+
+    .courses-left {
+      position: relative;
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .main-img {
+      width: 100%;
+      border-bottom-right-radius: 200px;
+      border-top-left-radius: 200px;
+      overflow: hidden;
+    }
+
+    .main-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .floating-img {
+      position: absolute;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .float1 {
+      width: 150px;
+      height: 150px;
+      top: 10%;
+      right: -60px;
+      border-top-left-radius: 150px;
+      border-top-right-radius: 150px;
+      border-bottom-left-radius: 0;
+    }
+
+    .float2 {
+      width: 90px;
+      height: 90px;
+      bottom: -40px;
+      right: 20%;
+    }
+
+    .floating-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .courses-right {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .courses-right h4 {
+      color: #0008a5;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .courses-right h1 {
+      font-size: 2.2rem;
+      line-height: 1.3;
+      font-weight: 700;
+      color: #1b1b1b;
+      margin-bottom: 15px;
+    }
+
+    .courses-right p {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 25px;
+      max-width: 400px;
+    }
+
+    .read-btn {
+      background-color: #02006e;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+
+    .read-btn:hover {
+      background-color: #c75045;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 992px) {
+      .courses-section {
+        flex-direction: column;
+        text-align: left;
+        gap: 40px;
+      }
+
+      .courses-right {
+        order: -1;
+      }
+
+      .courses-right p {
+        margin: 0 auto 25px;
+      }
+
+      .main-img {
+        border-radius: 5px;
+      }
+
+      .float1 {
+        right: 10%;
+        top: -20px;
+      }
+
+      .float2 {
+        bottom: -30px;
+        left: 30%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- CTA Section -->
-  <section class="bg-blue-600 text-white py-12 mt-1">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-xl sm:text-2xl font-bold mb-4">Ready to Transform Your Career?</h2>
-      <p class="text-sm sm:text-base mb-6 max-w-2xl mx-auto">Join thousands of students who've accelerated their careers with our intensive bootcamp programs.</p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <a href="https://www.faizcomputerinstitute.com/faizcontact.html">
-        <button class="border border-white text-white rounded-lg px-6 py-2.5 text-sm hover:bg-blue-700 transition font-medium">
-          Speak to an Advisor
-        </button></a>
+
+  <!-- 🔹 Responsive Preloader -->
+  <div id="preloader">
+    <h1>Hi, welcome to the site</h1>
+    <div class="loader-circle"></div>
+  </div>
+
+  <!-- 🔹 Main Section -->
+  <section class="courses-section">
+    <div class="courses-left">
+      <div class="main-img">
+        <img src="https://images.pexels.com/photos/5905703/pexels-photo-5905703.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Student studying">
       </div>
+      <div class="floating-img float1">
+        <img src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Smiling student with globe">
+      </div>
+      <div class="floating-img float2">
+        <img src="https://images.pexels.com/photos/3184399/pexels-photo-3184399.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Teacher portrait">
+      </div>
+    </div>
+
+    <div class="courses-right">
+      <h4>About Our Courses</h4>
+      <h1>Explore Thousands<br>of Creative Classes</h1>
+      <p>Dramatically supply transparent deliverables by dynamically syndicating forward-thinking information. Seamlessly leverage innovation to empower your learning journey.</p>
+      <a href="#" class="read-btn">Read More</a>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-50 text-gray-600">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-      <div class="space-y-4">
-        <a href="#" class="text-blue-700 font-extrabold text-2xl select-none hover:text-blue-800 transition block">Faiz Computer Institute.</a>
-        <p class="text-xs text-gray-500">Empowering careers through immersive education since 2002.</p>
-        
-        <div class="flex items-center space-x-4 pt-2">
-          <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-blue-600 transition">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" aria-label="Twitter" class="text-gray-500 hover:text-blue-400 transition">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-pink-600 transition">
-            <i class="fab fa-instagram"></i>
-          </a>
-          
-        </div>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Company</h5>
-        <ul class="space-y-2 text-xs">
-          <li><a class="hover:text-blue-600 transition" href="#">About Us</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Blog</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Affiliates</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Resources</h5>
-        <ul class="space-y-2 text-xs">
-          <li><a class="hover:text-blue-600 transition" href="#">Help Center</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Scholarships</a></li>
-          
-        </ul>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Support</h5>
-        <ul class="space-y-2 text-xs">
-          <li><a class="hover:text-blue-600 transition" href="#">Contact Us</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">FAQ</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Privacy Policy</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Terms of Service</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Contact</h5>
-        <ul class="space-y-3 text-xs">
-          <li class="flex items-start">
-            <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3"></i>
-            <span>Charan Plaza, Infront Of Masjid, Telibagh, Lucknow</span>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-phone-alt text-blue-600 mr-3"></i>
-            <a class="hover:text-blue-600 transition" href="tel:+919721896891">+91 9721896891</a>
-            <a class="hover:text-blue-600 transition" href="tel:+917007862136">+91 7007862136</a>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-envelope text-blue-600 mr-3"></i>
-            <a class="hover:text-blue-600 transition" href="mailto:hello@upskill.com">Faizcomputerinstitutes@gmail.com</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-      <div class="mb-3 md:mb-0">
-        &copy; 2025 Faiz Computer Institute. All rights reserved.
-      </div>
-      <div class="flex space-x-4">
-        <a href="#" class="hover:text-blue-600 transition">Privacy Policy</a>
-        <a href="#" class="hover:text-blue-600 transition">Terms of Service</a>
-        
-      </div>
-    </div>
-  </footer>
-  </body>
-  </html>
+  <script>
+    // Smooth preloader fade-out
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.classList.add("fade-out");
+        setTimeout(() => preloader.style.display = "none", 800);
+      }, 1500);
+    });
+  </script>
+
+</body>
+</html>
