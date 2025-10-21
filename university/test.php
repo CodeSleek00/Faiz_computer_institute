@@ -91,9 +91,9 @@ $categories = ['Graduation', 'Post Graduation', 'Diploma'];
 
         <div class="course-grid">
             <?php while($c = $courses->fetch_assoc()): 
-                $imagePath = !empty($c['image']) && file_exists("../uploads/course_images/".$c['image']) 
-                    ? "../uploads/course_images/".$c['image'] 
-                    : "../uploads/course_images/default.jpg"; // fallback image
+                $imagePath = !empty($c['image']) && file_exists("../uploads/".$c['image']) 
+                    ? "../uploads/".$c['image'] 
+                    : "../uploads/default.jpg"; // fallback image
             ?>
             <div class="course-card">
                 <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($c['course_name']) ?>">
