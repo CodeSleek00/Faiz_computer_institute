@@ -1,5 +1,14 @@
 <?php
 include '../db/db_connect.php';
+$selected_category = isset($_GET['category']) ? $_GET['category'] : 'All';
+
+if($selected_category != 'All'){
+    $query = "SELECT * FROM university_courses WHERE category='$selected_category'";
+} else {
+    $query = "SELECT * FROM university_courses";
+}
+
+$courses = $conn->query($query);
 
 // Category and search filters
 $selected_category = isset($_GET['category']) ? $_GET['category'] : 'All';
