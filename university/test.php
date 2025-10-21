@@ -103,8 +103,7 @@ a.view-link:hover {text-decoration:underline;}
     <?php showCourseSection($conn, 'Graduation');?>
 </div>
 <h1>dvd</h1>
- <?php showCourseSection($conn, 'Diploma');?>
-    showCourseSection($conn, 'Post Graduation');
-
+    <?php showCourseSection($conn, 'Diploma');?>
+    <?php showCourseSection($conn, 'Post Graduation');?>
 </body>
 </html>
