@@ -46,10 +46,12 @@ $documents_stmt->close();
 <?php } else { echo "<p>No syllabus added yet.</p>"; } ?>
 
 <h2>Documents</h2>
-<?php if($documents_result->num_rows > 0){ ?>
+
+<h2>Syllabus</h2>
+<?php if($syllabus_result->num_rows > 0){ ?>
 <ul>
-    <?php while($d = $documents_result->fetch_assoc()){ ?>
-        <li><a href="../uploads/documents/<?= urlencode($d['document_name']) ?>" target="_blank"><?= htmlspecialchars($d['document_name']) ?></a></li>
+    <?php while($s = $syllabus_result->fetch_assoc()){ ?>
+        <li><?= htmlspecialchars($s['document_name']) ?></li>
     <?php } ?>
 </ul>
-<?php } else { echo "<p>No documents uploaded yet.</p>"; } ?>
+<?php } else { echo "<p>No Document added yet.</p>"; } ?>
