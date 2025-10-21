@@ -1,10 +1,10 @@
 <?php
 include '../db/db_connect.php';
 $id = $_GET['id'];
-$course = $conn->query("SELECT * FROM courses WHERE id=$id")->fetch_assoc();
+$course = $conn->query("SELECT * FROM university_courses WHERE id=$id")->fetch_assoc();
 
-$syllabus = $conn->query("SELECT * FROM course_syllabus WHERE course_id=$id");
-$documents = $conn->query("SELECT * FROM course_documents WHERE course_id=$id");
+$syllabus = $conn->query("SELECT * FROM university_course_syllabus WHERE course_id=$id");
+$documents = $conn->query("SELECT * FROM university_course_documents WHERE course_id=$id");
 ?>
 
 <h1><?= $course['course_name'] ?></h1>
