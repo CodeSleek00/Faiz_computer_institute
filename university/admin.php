@@ -8,6 +8,9 @@ if(isset($_POST['add_course'])){
     $duration = $_POST['duration'];
     $company = $_POST['company'];
     $home_section = $_POST['home_section'] ?? 'none';
+    $category = $_POST['category'];
+$stmt = $conn->prepare("INSERT INTO university_courses (course_name, description, duration, image, university, home_section, category) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sssssss",$name,$desc,$duration,$image,$company,$home_section,$category);
 
     // image upload
     $image = '';
@@ -70,6 +73,12 @@ $courses = $conn->query("SELECT id, course_name FROM university_courses");
 
     <br>
     <input type="file" name="image"><br>
+    <label>Category:</label>
+<select name="category" required>
+    <option value="Graduation">Graduation</option>
+    <option value="Post Graduation">Post Graduation</option>
+    <option value="Diploma">Diploma</option>
+</select>
     <button type="submit" name="add_course">Add Course</button>
 </form>
 
