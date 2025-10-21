@@ -100,10 +100,16 @@ a.view-link:hover {text-decoration:underline;}
 <div class="container">
     <h1>Explore Our Courses</h1>
 
-    <?php showCourseSection($conn, 'Graduation');?>
+    <?php 
+    // You can freely reorder or add more categories here
+    showCourseSection($conn, 'Graduation'); 
+
+    echo '<h1>dvd</h1>'; // This line now properly stays inside the container
+
+    showCourseSection($conn, 'Diploma'); 
+    showCourseSection($conn, 'Post Graduation'); 
+    ?>
 </div>
-<h1>dvd</h1>
-    <?php showCourseSection($conn, 'Diploma');?>
-    <?php showCourseSection($conn, 'Post Graduation');?>
+
 </body>
 </html>
