@@ -103,8 +103,7 @@ a.view-link:hover {text-decoration:underline;}
     <?php 
     // 👇 You can freely reorder or add any section here
     showCourseSection($conn, 'Graduation');
-    showCourseSection($conn, 'Diploma');
-    showCourseSection($conn, 'Post Graduation');
+   
 
     // Example: add new category
     // showCourseSection($conn, 'Certification');
