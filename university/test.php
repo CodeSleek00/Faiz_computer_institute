@@ -65,14 +65,13 @@ body {background:#f7f8fa;color:#333;}
 .courses-university-carousel::-webkit-scrollbar-thumb {background:#ccc;border-radius:4px;}
 .courses-university-carousel::-webkit-scrollbar-track {background:#f0f0f0;border-radius:4px;}
 
-/* Card */
+/* Card - 4 per view */
 .courses-university-card {
-    max-width:300px;
+    flex: 0 0 calc((100% - 60px)/4); /* 4 cards per row + 3 gaps */
     background:white;
     border-radius:16px;
     box-shadow:0 3px 10px rgba(0,0,0,0.1);
     overflow:hidden;
-    flex-shrink:0;
     transition:all 0.3s ease;
 }
 .courses-university-card:hover {transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,0.15);}
@@ -84,9 +83,27 @@ body {background:#f7f8fa;color:#333;}
 .courses-university-view-link {color:#007bff;text-decoration:none;font-weight:500;}
 .courses-university-view-link:hover {text-decoration:underline;}
 
+/* Path Section */
+.courses-university-path-container {display:flex;flex-wrap:wrap;margin:60px 0;background:#e3f2fd;border-radius:16px;padding:40px;}
+.courses-university-path-left {flex:1;min-width:280px;margin-right:20px;}
+.courses-university-path-left h1 {font-size:2rem;margin-bottom:10px;}
+.courses-university-path-left p {font-size:1rem;color:#555;}
+.courses-university-path-right {flex:1;min-width:280px;}
+.courses-university-path-right p {font-size:1rem;color:#333;margin-bottom:20px;}
+.courses-university-path-btn {
+    background:#007bff;color:white;padding:10px 20px;border:none;border-radius:8px;font-size:1rem;cursor:pointer;transition:0.3s;
+}
+.courses-university-path-btn:hover {background:#0056b3;}
+
+/* Responsive */
+@media(max-width:900px){
+    .courses-university-card { flex: 0 0 calc((100% - 40px)/2); } /* 2 cards */
+}
 @media(max-width:600px){
     .courses-university-title{font-size:1.6rem;}
-   
+    .courses-university-card { flex: 0 0 100%; } /* 1 card */
+    .courses-university-path-container {flex-direction:column;}
+    .courses-university-path-left, .courses-university-path-right {margin-right:0;margin-bottom:20px;}
 }
 </style>
 </head>
@@ -99,7 +116,16 @@ body {background:#f7f8fa;color:#333;}
     showCourseSection($conn, 'Graduation'); 
     ?>
 
-    
+    <div class="courses-university-path-container">
+        <div class="courses-university-path-left">
+            <h1>Your Path<br>to Wellness</h1>
+            <p>Explore your inner world and gain insights</p>
+        </div>
+        <div class="courses-university-path-right">
+            <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
+            <button class="courses-university-path-btn">Book Appointment</button>
+        </div>
+    </div>
 
     <?php 
     showCourseSection($conn, 'Diploma'); 
