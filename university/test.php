@@ -18,18 +18,41 @@ $categories = ['Graduation', 'Post Graduation', 'Diploma'];
     .course-section {margin-bottom:60px;}
     .section-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
     .section-header h2 {font-size:1.5rem;color:#333;}
-    .course-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+    .course-grid {
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+        gap:20px;
+    }
     .course-card {
         background:white;
         border-radius:16px;
         box-shadow:0 3px 10px rgba(0,0,0,0.1);
-        padding:20px;
+        overflow:hidden;
         transition:all 0.3s ease;
     }
-    .course-card:hover {transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,0,0,0.15);}
-    .course-card h3 {font-size:1.1rem;margin-bottom:10px;color:#222;}
-    .course-card p {font-size:0.9rem;color:#555;margin-bottom:10px;}
-    .course-card .duration {font-size:0.85rem;color:#777;}
+    .course-card:hover {
+        transform:translateY(-5px);
+        box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    }
+    .course-card img {
+        width:100%;
+        height:180px;
+        object-fit:cover;
+    }
+    .course-content {
+        padding:20px;
+    }
+    .course-content h3 {
+        font-size:1.1rem;
+        margin-bottom:10px;
+        color:#222;
+    }
+    .course-content p {
+        font-size:0.9rem;
+        color:#555;
+        margin-bottom:10px;
+    }
+    .duration {font-size:0.85rem;color:#777;}
     .show-more-btn {
         background:#007bff;
         color:white;
@@ -41,9 +64,14 @@ $categories = ['Graduation', 'Post Graduation', 'Diploma'];
         transition:0.3s;
     }
     .show-more-btn:hover {background:#0056b3;}
+    a.view-link {
+        color:#007bff;
+        text-decoration:none;
+        font-weight:500;
+    }
+    a.view-link:hover {text-decoration:underline;}
     @media(max-width:600px){
         h1{font-size:1.6rem;}
-        .course-card{padding:15px;}
     }
 </style>
 </head>
@@ -62,12 +90,19 @@ $categories = ['Graduation', 'Post Graduation', 'Diploma'];
         </div>
 
         <div class="course-grid">
-            <?php while($c = $courses->fetch_assoc()): ?>
+            <?php while($c = $courses->fetch_assoc()): 
+                $imagePath = !empty($c['image']) && file_exists("../uploads/course_images/".$c['image']) 
+                    ? "../uploads/course_images/".$c['image'] 
+                    : "../uploads/course_images/default.jpg"; // fallback image
+            ?>
             <div class="course-card">
-                <h3><?= htmlspecialchars($c['course_name']) ?></h3>
-                <p><?= substr($c['description'], 0, 80) ?>...</p>
-                <p class="duration"><strong>Duration:</strong> <?= $c['duration'] ?></p>
-                <a href="view.php?id=<?= $c['id'] ?>" style="color:#007bff;text-decoration:none;">View Details →</a>
+                <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($c['course_name']) ?>">
+                <div class="course-content">
+                    <h3><?= htmlspecialchars($c['course_name']) ?></h3>
+                    <p><?= substr($c['description'], 0, 80) ?>...</p>
+                    <p class="duration"><strong>Duration:</strong> <?= $c['duration'] ?></p>
+                    <a href="view.php?id=<?= $c['id'] ?>" class="view-link">View Details →</a>
+                </div>
             </div>
             <?php endwhile; ?>
         </div>
