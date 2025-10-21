@@ -16,13 +16,13 @@ if(isset($_POST['add_course'])){
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
-    $stmt = $conn->prepare("INSERT INTO university_courses (course_name, description, duration, image, company, home_section) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO university_courses (course_name, description, duration, image, university, home_section) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss",$name,$desc,$duration,$image,$company,$home_section);
     $stmt->execute();
     $course_id = $stmt->insert_id;
     $stmt->close();
 
-    echo "Course added! Now add syllabus & documents.";
+    echo "<p style='color:green;'>Course added! Now add syllabus & documents.</p>";
 }
 
 // Syllabus Add
@@ -38,23 +38,22 @@ if(isset($_POST['add_syllabus'])){
             $stmt->close();
         }
     }
-    echo "Syllabus added!";
+    echo "<p style='color:green;'>Syllabus added!</p>";
 }
 
-// Document Upload
+// Document Add
 if(isset($_POST['add_document'])){
-    $course_id = $_POST['course_id'];
-    if(isset($_FILES['document']) && $_FILES['document']['name'] != ''){
-        $doc_name = $_FILES['document']['name'];
-        $doc_path = 'uploads/documents/'.time().'_'.$doc_name;
-        move_uploaded_file($_FILES['document']['tmp_name'],$doc_path);
-
-        $stmt = $conn->prepare("INSERT INTO university_course_documents (course_id, document_name) VALUES (?, ?)");
-        $stmt->bind_param("is",$course_id,$doc_name);
-        $stmt->execute();
-        $stmt->close();
-
-        echo "Document uploaded!";
+    $course_id = $_POST['course_id_doc'];
+    if(!empty($_POST['documents'])){
+        foreach($_POST['documents'] as $doc){
+            if(trim($doc) != ""){
+                $stmt = $conn->prepare("INSERT INTO university_course_documents (course_id, document_name) VALUES (?, ?)");
+                $stmt->bind_param("is", $course_id, $doc);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }
+        echo "<p style='color:green;'>Documents added!</p>";
     }
 }
 
@@ -94,16 +93,31 @@ $courses = $conn->query("SELECT id, course_name FROM university_courses");
 </form>
 
 <hr>
-<h2>Upload Document</h2>
-<form method="POST" enctype="multipart/form-data">
-    <select name="course_id" required>
+<h2>Add Documents</h2>
+<form method="POST">
+    <select name="course_id_doc" required>
         <option value="">Select Course</option>
         <?php
-        $courses2 = $conn->query("SELECT id, course_name FROM courses");
+        $courses2 = $conn->query("SELECT id, course_name FROM university_courses");
         while($row = $courses2->fetch_assoc()){ ?>
             <option value="<?= $row['id'] ?>"><?= $row['course_name'] ?></option>
         <?php } ?>
     </select><br>
-    <input type="file" name="document" required><br>
-    <button type="submit" name="add_document">Upload Document</button>
+    <div id="documents">
+        <input type="text" name="documents[]" placeholder="Document name (e.g., Certificate)">
+    </div>
+    <button type="button" class="add-btn" onclick="addDocument()">+ Add Document</button><br><br>
+    <button type="submit" name="add_document">Upload Documents</button>
 </form>
+
+<script>
+function addDocument(){
+    const div = document.getElementById('documents');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.name = 'documents[]';
+    input.placeholder = 'Document name';
+    div.appendChild(document.createElement('br'));
+    div.appendChild(input);
+}
+</script>
