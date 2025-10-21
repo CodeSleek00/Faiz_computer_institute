@@ -100,15 +100,11 @@ a.view-link:hover {text-decoration:underline;}
 <div class="container">
     <h1>Explore Our Courses</h1>
 
-    <?php 
-    // 👇 You can freely reorder or add any section here
-    showCourseSection($conn, 'Graduation');
-   
-
-    // Example: add new category
-    // showCourseSection($conn, 'Certification');
-    ?>
+    <?php showCourseSection($conn, 'Graduation');?>
 </div>
+<h1>dvd</h1>
+ <?php showCourseSection($conn, 'Diploma');?>
+    showCourseSection($conn, 'Post Graduation');
 
 </body>
 </html>
