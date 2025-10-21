@@ -88,7 +88,7 @@ body {background:#f7f8fa;color:#333;}
     display:flex;
     flex-wrap:wrap;
     margin:60px 0;
-    background:#e3f2fd;
+   
     border-radius:16px;
     padding:40px;}
 .courses-university-path-left {flex:1;min-width:280px;margin-right:20px;}
