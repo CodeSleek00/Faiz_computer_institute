@@ -70,7 +70,7 @@ function showCourseSection($conn, $category, $limit = 4) {
      <nav>
         <div class="nav-left">
            
-            Faiz Computer Institute
+           <a href="../index.php" style="text-decoration: none;"> Faiz Computer Institute</a>
         </div>
 
         <div class="nav-center">
