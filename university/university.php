@@ -280,7 +280,6 @@ function showCourseSection($conn, $category, $limit = 4) {
     </div>
 
     <?php 
-    showCourseSection($conn, 'Diploma'); 
     showCourseSection($conn, 'Post Graduation'); 
     ?>
 </div>
