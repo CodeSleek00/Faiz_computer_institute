@@ -72,5 +72,5 @@ mobileHeaders.forEach(header => {
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => preloader.style.display = "none", 800);
-      }, 1500);
+      }, 1000);
     });
