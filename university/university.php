@@ -1,10 +1,42 @@
-<?php include 'db/db_connect.php'; ?>
+<?php
+include '../db/db_connect.php';
+
+function showCourseSection($conn, $category, $limit = 4) {
+    $courses = $conn->query("SELECT * FROM university_courses WHERE category='$category' LIMIT $limit");
+    ?>
+    <div class="courses-university-section">
+        <div class="courses-university-header">
+            <h2><?= htmlspecialchars($category) ?></h2>
+            <button class="courses-university-show-more-btn" onclick="window.location.href='courses.php?category=<?= urlencode($category) ?>'">Show More</button>
+        </div>
+
+        <div class="courses-university-carousel">
+            <?php while($c = $courses->fetch_assoc()):
+                $imagePath = !empty($c['image']) && file_exists("../uploads/".$c['image']) 
+                    ? "../uploads/".$c['image'] 
+                    : "../uploads/default.jpg";
+            ?>
+            <div class="courses-university-card">
+                <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($c['course_name']) ?>">
+                <div class="courses-university-content">
+                    <h3><?= htmlspecialchars($c['course_name']) ?></h3>
+                    <p><?= substr($c['description'], 0, 80) ?>...</p>
+                    <p class="courses-university-duration"><strong>Duration:</strong> <?= $c['duration'] ?></p>
+                    <a href="view.php?id=<?= $c['id'] ?>" class="courses-university-view-link">View Details →</a>
+                </div>
+            </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+    <?php
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="university.css?">
+    <link rel="stylesheet" href="university.css?v=12">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="../images/logo.png">
@@ -228,7 +260,29 @@
   </div>
 
 </div></div>
-<h1>ds</h1>
 
+<div class="courses-university-container">
+    <h1 class="courses-university-title">Explore Our Courses</h1>
+
+    <?php 
+    showCourseSection($conn, 'Graduation'); 
+    ?>
+
+    <div class="courses-university-path-container">
+        <div class="courses-university-path-left">
+            <h1>Your Path to Wellness</h1>
+            <p>Explore your inner world and gain insights</p>
+        </div>
+        <div class="courses-university-path-right">
+            <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
+            <button class="courses-university-path-btn">Book Appointment</button>
+        </div>
+    </div>
+
+    <?php 
+    showCourseSection($conn, 'Diploma'); 
+    showCourseSection($conn, 'Post Graduation'); 
+    ?>
+</div>
    <script src="university.js"></script>
 
