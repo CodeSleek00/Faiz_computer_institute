@@ -234,7 +234,7 @@ function showCourseSection($conn, $category, $limit = 4) {
       <p>SIntegral University is one of the Oldest Recognized Private university in Uttar Pradesh</p>
     </div>
     <img src="../images/image.png" alt="Couples">
-     <button class="card-btn">Enroll Now</button>
+    <a href="courses.php" style="text-decoration: none;color:black;"><button class="card-btn">View Courses</button></a> 
   </div>
 
   <div class="card" style="background-color: #ffffff;">
@@ -245,7 +245,7 @@ function showCourseSection($conn, $category, $limit = 4) {
       <p>Parul University in Vadodara, Gujarat, is a leading private institution known for its modern education and research opportunities.</p>
     </div>
     <img src="../images/image copy.png" alt="Couples">
-      <button class="card-btn">Enroll Now</button>
+     <a href="courses.php" style="text-decoration: none;color:black;"><button class="card-btn">View Courses</button></a> 
   </div>
 
   <div class="card" style="background-color: #ffffff;">
@@ -256,7 +256,7 @@ function showCourseSection($conn, $category, $limit = 4) {
       <p>Manglayatan University in Aligarh, Uttar Pradesh, is a private institution known for quality education development.</p>
     </div>
     <img src="../images/image copy 2.png" alt="Couples">
-        <button class="card-btn">Enroll Now</button>
+     <a href="courses.php" style="text-decoration: none;color:black;"><button class="card-btn">View Courses</button></a> 
   </div>
 
 </div></div>
@@ -270,12 +270,12 @@ function showCourseSection($conn, $category, $limit = 4) {
 
     <div class="courses-university-path-container">
         <div class="courses-university-path-left">
-            <h1>Your Path to Wellness</h1>
-            <p>Explore your inner world and gain insights</p>
+            <h1>Unlock Endless Opportunities </h1>
+            <p>with Quality Educations</p>
         </div>
         <div class="courses-university-path-right">
-            <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
-            <button class="courses-university-path-btn">Book Appointment</button>
+            <p>Join a learning journey that blends knowledge, innovation, and real-world experience. Explore our diverse range of programs — from technology to business and arts — and take the first step toward a successful and fulfilling career.</p>
+            <a href="courses.php" style="text-decoration:none;color:black;"><button class="courses-university-path-btn">View Courses</button></a>
         </div>
     </div>
 
