@@ -139,14 +139,14 @@ function showCourseSection($conn, $category, $limit = 4) {
         
         <div class="mobile-menu-item">
             <div class="mobile-menu-header-item" data-target="mobileRoles">
-                <span>Explore Roles</span>
+                <span>Explore</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileRoles">
-                <a href="#"><i class="fas fa-code"></i> Software Developer</a>
-                <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
-                <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
-                <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+                <a href="#"><i class="fas fa-code"></i> Computer Courses</a>
+                <a href="#"><i class="fas fa-paint-brush"></i> University Courses</a>
+                <a href="#"><i class="fas fa-chart-bar"></i> Schooling</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Free Courses</a>
             </div>
         </div>
         
