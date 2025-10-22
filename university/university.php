@@ -216,9 +216,9 @@ function showCourseSection($conn, $category, $limit = 4) {
 
     <div class="courses-right">
       <h4>About Our Courses</h4>
-      <h1>Explore Thousands<br>of Creative Classes</h1>
-      <p>Dramatically supply transparent deliverables by dynamically syndicating forward-thinking information. Seamlessly leverage innovation to empower your learning journey.</p>
-      <a href="#" class="read-btn">Read More</a>
+      <h1>EEmpower Your Future with World-Class Education</h1>
+      <p>Discover a wide range of undergraduate and postgraduate programs designed to shape your skills, knowledge, and career. From arts and commerce to technology and management — build your dream future with expert faculty, modern infrastructure, and hands-on learning experiences.</p>
+      <a href="courses.php" class="read-btn">Read More</a>
     </div>
   
   </section>  <hr><div class="cards">
