@@ -79,11 +79,11 @@ function showCourseSection($conn, $category, $limit = 4) {
             </button>
             <div class="dropdown" id="dropdownMenu">
                 <div class="dropdown-column">
-                    <h4>Explore Roles</h4>
-                    <a href="#"><i class="fas fa-code"></i> Software Developer</a>
-                    <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
-                    <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
-                    <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+                    <h4>Explore </h4>
+                   <a href="#"><i class="fas fa-code"></i> Computer Courses</a>
+                <a href="#"><i class="fas fa-paint-brush"></i> University Courses</a>
+                <a href="#"><i class="fas fa-chart-bar"></i> Schooling</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Free Courses</a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Online Degree</h4>
