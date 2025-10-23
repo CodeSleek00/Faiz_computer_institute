@@ -1,5 +1,4 @@
-    
-        const mobileToggle = document.getElementById('mobileToggle');
+const mobileToggle = document.getElementById('mobileToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileClose = document.getElementById('mobileClose');
 const overlay = document.getElementById('overlay');
