@@ -1,107 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Path to Wellness</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css?v=1.42">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Expert Guidance Section</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
-    .path {
+    body {
+      background-color: #f8f9fb;
+      color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .text-section {
+      flex: 1 1 350px;
+    }
+
+    .text-section h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .text-section p {
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .buttons button {
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    .buttons .primary {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .buttons .primary:hover {
+      background: #1d4ed8;
+    }
+
+    .buttons .secondary {
+      border: 1px solid #ccc;
+      background: transparent;
+    }
+
+    .buttons .secondary:hover {
+      background: #f2f2f2;
+    }
+
+    .image-section {
+      flex: 1 1 400px;
+      position: relative;
+    }
+
+    .image-section img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #fff;
-      padding: 40px;
+      cursor: pointer;
     }
 
-    .path-container {
+    .play-btn::before {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 14px solid #2563eb;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+
+    .stats {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1000px;
-      width: 100%;
+      justify-content: space-around;
       flex-wrap: wrap;
-      gap: 40px;
+      background: #f9fafb;
+      padding: 25px 20px;
+      border-top: 1px solid #eee;
     }
 
-    .path-left {
-      flex: 1;
-      min-width: 280px;
+    .stat {
+      text-align: center;
+      margin: 10px;
+      flex: 1 1 150px;
     }
 
-    .path-left h1 {
-      font-size: 3.2rem;
-      font-weight: 700;
-      line-height: 1.2;
-      color: #000;
+    .stat h2 {
+      font-size: 1.5rem;
+      color: #111;
+      margin-bottom: 5px;
     }
 
-    .path-left p {
-      margin-top: 10px;
+    .stat p {
       color: #555;
       font-size: 0.95rem;
     }
 
-    .path-right {
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .path-right p {
-      color: #555;
-      line-height: 1.6;
-      font-size: 1rem;
-      margin-bottom: 25px;
-    }
-
-    .path-btn {
-      background-color: #000;
-      color: #fff;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .path-btn:hover {
-      background-color: #333;
-      transform: translateY(-2px);
-    }
-
     @media (max-width: 768px) {
-      .path-container {
+      .content {
         flex-direction: column;
         text-align: center;
       }
-
-      .path-left h1 {
-        font-size: 2.2rem;
+      .text-section {
+        flex: 0px;
+      }
+      .image-section {
+        flex: 0;
+      }
+      .buttons {
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
-<div class="path">
-  <div class="path-container">
-    <div class="path-left">
-      <h1>Your Path<br>to Wellness</h1>
-      <p>Explore your inner world and gain insights</p>
+  <div class="container">
+    <div class="content">
+      <div class="text-section">
+        <h1>Expert guidance,<br> tailored solution</h1>
+        <p>
+          Easily adapt to changes and scale your operations with our flexible infrastructure,
+          designed to support your business growth.
+        </p>
+        <div class="buttons">
+          <button class="primary">Get Started →</button>
+          <button class="secondary">Free trial</button>
+        </div>
+      </div>
+
+      <div class="image-section">
+        <img src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=900&q=80" alt="Business Discussion">
+        <div class="play-btn"></div>
+      </div>
     </div>
 
-    <div class="path-right">
-      <p>We believe in the transformative power of therapy. Our compassionate team of experienced therapists is here to guide you on your journey toward healing, growth, and self-discovery.</p>
-      <button class="path-btn">Book Appointment</button>
+    <div class="stats">
+      <div class="stat">
+        <h2 data-target="95">0%</h2>
+        <p>Complete customer satisfaction</p>
+      </div>
+      <div class="stat">
+        <h2 data-target="10">0+</h2>
+        <p>Innovation and valuable insight</p>
+      </div>
+      <div class="stat">
+        <h2 data-target="10">0m</h2>
+        <p>Highly efficient financial strategies</p>
+      </div>
+      <div class="stat">
+        <h2 data-target="50">0m</h2>
+        <p>Users worldwide, providing them with</p>
+      </div>
     </div>
   </div>
-</div>
+
+  <script>
+    // Counter animation function
+    function runCounters() {
+      const counters = document.querySelectorAll('.stat h2');
+      counters.forEach(counter => {
+        counter.innerText = '0'; // Reset to 0 before starting
+        const target = +counter.getAttribute('data-target');
+        const suffix = counter.textContent.replace(/[0-9]/g, '').trim(); // Keep suffix like %, +, m
+        const speed = 50;
+
+        let count = 0;
+        const updateCount = () => {
+          const increment = target / speed;
+          if (count < target) {
+            count += increment;
+            counter.innerText = Math.ceil(count) + suffix;
+            setTimeout(updateCount, 30);
+          } else {
+            counter.innerText = target + suffix;
+          }
+        };
+        updateCount();
+      });
+    }
+
+    // Run when page loads
+    runCounters();
+
+    // Run again whenever user switches back to the tab
+    document.addEventListener("visibilitychange", function() {
+      if (document.visibilityState === "visible") {
+        runCounters();
+      }
+    });
+  </script>
 </body>
 </html>
