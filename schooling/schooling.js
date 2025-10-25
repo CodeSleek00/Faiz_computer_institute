@@ -74,3 +74,36 @@ mobileHeaders.forEach(header => {
         setTimeout(() => preloader.style.display = "none", 800);
       }, 1000);
     });
+     // Counter animation function
+    function runCounters() {
+      const counters = document.querySelectorAll('.stat h2');
+      counters.forEach(counter => {
+        counter.innerText = '0'; // Reset to 0 before starting
+        const target = +counter.getAttribute('data-target');
+        const suffix = counter.textContent.replace(/[0-9]/g, '').trim(); // Keep suffix like %, +, m
+        const speed = 50;
+
+        let count = 0;
+        const updateCount = () => {
+          const increment = target / speed;
+          if (count < target) {
+            count += increment;
+            counter.innerText = Math.ceil(count) + suffix;
+            setTimeout(updateCount, 30);
+          } else {
+            counter.innerText = target + suffix;
+          }
+        };
+        updateCount();
+      });
+    }
+
+    // Run when page loads
+    runCounters();
+
+    // Run again whenever user switches back to the tab
+    document.addEventListener("visibilitychange", function() {
+      if (document.visibilityState === "visible") {
+        runCounters();
+      }
+    });
