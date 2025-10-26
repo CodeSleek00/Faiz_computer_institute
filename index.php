@@ -23,10 +23,10 @@
     <header>
         <div class="head">
             <ul class="head1">
-                <a href=""><li>For Individual</li></a>
-                <a href=""><li>For University Courses</li></a>
-                <a href=""><li>For High School & Intermediate Courses</li></a>
-                <a href=""><li>For Free Courses</li></a>
+                <a href="index.php"><li>For Individual</li></a>
+                <a href="university/university.php"><li>For University Courses</li></a>
+                <a href="schooling/school.html"><li>For High School & Intermediate Courses</li></a>
+                <a href="free/free.html"><li>For Free Courses</li></a>
             </ul>
         </div>
     </header>
