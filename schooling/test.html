@@ -1,387 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Care Section</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Chemical Solutions</title>
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
-    body {
-     
-    }
-
-    .care-section {
+    .forms {
+      background-color: #f6f9fc;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 80px 8%;
-      gap: 50px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .form-container {
+      display: flex;
       flex-wrap: wrap;
-      
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      background: #f6f9fc;
+      max-width: 1000px;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
     }
 
-    .content-left {
-      flex: 1;
-      min-width: 320px;
+    .form-left {
+      flex: 1 1 45%;
+      padding: 60px 40px;
     }
 
-    .content-left h1 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 40px;
-      line-height: 1.3;
-      color: #1a1a1a;
-    }
-
-    .content-left h1 span {
-      color: #4a6cf7;
-    }
-
-    .accordion-item {
-      border-bottom: 1px solid #eaeaea;
+    .form-left h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #111827;
       margin-bottom: 10px;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: all 0.3s ease;
     }
 
-    .accordion-item:hover {
-      background: #f9f9f9;
-    }
-
-    .accordion-header {
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-size: 1.1rem;
-      font-weight: 600;
-      padding: 18px 20px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
-      color: #333;
-    }
-
-    .accordion-header:hover {
-      color: #4a6cf7;
-      background: #f5f8ff;
-    }
-
-    .accordion-header::after {
-      content: '⌄';
-      font-size: 1.5rem;
-      transition: transform 0.3s ease;
-      color: #888;
-    }
-
-    .accordion-item.active .accordion-header::after {
-      transform: rotate(180deg);
-      color: #4a6cf7;
-    }
-
-    .accordion-item.active .accordion-header {
-      color: #4a6cf7;
-      background: #f5f8ff;
-    }
-
-    .accordion-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
-
-    .accordion-item.active .accordion-body {
-      max-height: 300px;
-    }
-
-    .accordion-body p {
-      color: #555;
+    .form-left p {
       font-size: 0.95rem;
-      line-height: 1.6;
-      padding: 0 20px 20px;
+      color: #6b7280;
+      margin-bottom: 30px;
     }
 
-    .content-right {
-      flex: 1;
-      min-width: 320px;
-      position: relative;
-      text-align: center;
+    .form-contact-info {
+      margin-top: 20px;
     }
 
-    .circle-bg {
-      width: 350px;
-      height: 350px;
-      background: #e7f0ff;
-      border-radius: 50%;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .main-img {
-      position: absolute;
-      top: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-    }
-
-    .floating-card {
-      position: absolute;
+    .form-contact-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: #fff;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      padding: 12px 16px;
-      border-radius: 12px;
-      min-width: 230px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      z-index: 2;
+      margin-bottom: 15px;
     }
 
-    .floating-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    .form-contact-item i {
+      font-size: 24px;
+      color: #2563eb;
+      margin-right: 12px;
     }
 
-    .floating-card .icon {
-      font-size: 1.4rem;
+    .form-contact-item div {
+      font-size: 0.9rem;
+      color: #374151;
     }
 
-    .floating-card h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .floating-card span {
+    .form-contact-item div span {
+      display: block;
       font-size: 0.8rem;
-      color: #777;
+      color: #6b7280;
     }
 
-    /* Card color accents */
-    .green { top: 40px; right: 0; border-left: 5px solid #7cd992; }
-    .purple { top: 120px; right: -40px; border-left: 5px solid #b893f6; }
-    .orange { top: 200px; right: 20px; border-left: 5px solid #f8c07c; }
-
-    /* Mobile-first responsive design */
-    @media (max-width: 1200px) {
-      .care-section {
-        padding: 60px 5%;
-      }
+    .form-right {
+      flex: 1 1 55%;
+      background: white;
+      border-radius: 24px 0 0 24px;
+      padding: 40px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
 
-    @media (max-width: 900px) {
-      .care-section {
+    .form-main {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background-color: #f9fafb;
+      transition: border 0.2s;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: #2563eb;
+      outline: none;
+      background-color: #fff;
+    }
+
+    .form-textarea {
+      resize: none;
+      height: 100px;
+    }
+
+    .form-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 30px;
+      background-color: #2563eb;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .form-button:hover {
+      background-color: #1e40af;
+    }
+
+    .form-button i {
+      background: white;
+      color: #2563eb;
+      border-radius: 50%;
+      padding: 6px;
+    }
+
+    @media (max-width: 850px) {
+      .form-container {
         flex-direction: column;
-        text-align: center;
-        padding: 40px 5%;
-        gap: 30px;
       }
-      
-      .content-left h1 {
-        font-size: 2rem;
-        margin-bottom: 30px;
+
+      .form-left, .form-right {
+        flex: 1 1 100%;
+        border-radius: 0;
+        padding: 40px 20px;
       }
-      
-      .content-right {
-        margin-top: 40px;
-        width: 100%;
-      }
-      
-      .circle-bg {
-        width: 280px;
-        height: 280px;
-      }
-      
-      .main-img {
-        width: 180px;
-        top: 20px;
-      }
-      
-      /* Floating cards become a horizontal scrollable carousel */
-      .floating-cards-container {
-        display: flex;
-        overflow-x: auto;
-        gap: 15px;
-        padding: 20px 0;
+
+      .form-right {
+        border-radius: 16px;
         margin-top: 20px;
-        scrollbar-width: none; /* Firefox */
-      }
-      
-      .floating-cards-container::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Edge */
-      }
-      
-      .floating-card {
-        position: static;
-        flex: 0 0 auto;
-        width: 220px;
-        margin: 0;
-      }
-      
-      .accordion-header {
-        padding: 18px 0;
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .content-left h1 {
-        font-size: 1.75rem;
-      }
-      
-      .circle-bg {
-        width: 240px;
-        height: 240px;
-      }
-      
-      .main-img {
-        width: 150px;
-        top: 15px;
-      }
-      
-      .floating-card {
-        width: 200px;
-        padding: 10px 14px;
-      }
-      
-      .floating-card h4 {
-        font-size: 0.9rem;
-      }
-      
-      .accordion-header {
-        font-size: 0.95rem;
-      }
-      
-      .accordion-body p {
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .content-left h1 {
-        font-size: 1.5rem;
-      }
-      
-      .circle-bg {
-        width: 200px;
-        height: 200px;
-      }
-      
-      .main-img {
-        width: 130px;
-        top: 10px;
       }
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+<div class="forms">
+  <div class="form-container">
+    <div class="form-left">
+      <p style="font-size:0.8rem; color:#6b7280;">WE’RE HERE TO HELP YOU</p>
+      <h2>Discuss Your Chemical Solution Needs</h2>
+      <p>Are you looking for top-quality chemical solutions tailored to your needs? Reach out to us.</p>
 
-  <section class="care-section">
-    <div class="content-left">
-      <h1>We will take care of your<br><span>everything</span></h1>
-
-      <div class="accordion">
-        <div class="accordion-item">
-          <button class="accordion-header">Anti-Loss Technology</button>
-          <div class="accordion-body">
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              It has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-            </p>
+      <div class="form-contact-info">
+        <div class="form-contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <div>
+            <span>E-mail</span>
+            soluvent***@gmail.com
           </div>
         </div>
-
-        <div class="accordion-item">
-          <button class="accordion-header">Exchange Easily</button>
-          <div class="accordion-body">
-            <p>Exchange your items easily and securely anytime with our streamlined process designed for your convenience.</p>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <button class="accordion-header">Fully Encrypted</button>
-          <div class="accordion-body">
-            <p>Your data is always protected with our advanced encryption technology, ensuring complete privacy and security.</p>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <button class="accordion-header">Plenty of Options</button>
-          <div class="accordion-body">
-            <p>Choose from a wide range of features designed for your convenience and tailored to your specific needs.</p>
+        <div class="form-contact-item">
+          <i class="fa-solid fa-phone"></i>
+          <div>
+            <span>Phone number</span>
+            +123 - 456 - 7890
           </div>
         </div>
       </div>
     </div>
 
-    <div class="content-right">
-      <div class="circle-bg"></div>
-      <img src="https://cdn-icons-png.flaticon.com/512/4140/4140037.png" alt="Person" class="main-img">
-
-      <!-- Wrapping floating cards in a container for mobile -->
-      <div class="floating-cards-container">
-        <div class="floating-card green">
-          <div class="icon">🗂️</div>
-          <div>
-            <h4>Managing Projects & Tasks</h4>
-            <span>Tue, 15 Sep</span>
-          </div>
-        </div>
-
-        <div class="floating-card purple">
-          <div class="icon">🗓️</div>
-          <div>
-            <h4>Set Schedule with Calendar</h4>
-            <span>Tue, 15 Sep</span>
-          </div>
-        </div>
-
-        <div class="floating-card orange">
-          <div class="icon">⭐</div>
-          <div>
-            <h4>Awesome & Noteworthy App</h4>
-            <span>Tue, 15 Sep</span>
-          </div>
-        </div>
-      </div>
+    <div class="form-right">
+      <!-- ✅ Replace 'your_form_id_here' with your actual Formspree endpoint -->
+      <form class="form-main" action="https://formspree.io/f/your_form_id_here" method="POST">
+        <input type="text" name="name" class="form-input" placeholder="Jane Smith" required>
+        <input type="email" name="email" class="form-input" placeholder="jane@framer.com" required>
+        <select name="industry" class="form-select" required>
+          <option value="">Select...</option>
+          <option value="Chemicals">Chemicals</option>
+          <option value="Pharmaceutical">Pharmaceutical</option>
+          <option value="Manufacturing">Manufacturing</option>
+          <option value="Other">Other</option>
+        </select>
+        <textarea name="message" class="form-textarea" placeholder="Type your message" required></textarea>
+        <button type="submit" class="form-button"><i class="fa-solid fa-arrow-right"></i> Get a Solution</button>
+      </form>
     </div>
-  </section>
-
-  <script>
-    // Accordion logic - all items start closed
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const item = header.parentElement;
-        const isActive = item.classList.contains('active');
-        
-        // Close all accordion items
-        document.querySelectorAll('.accordion-item').forEach(i => {
-          i.classList.remove('active');
-        });
-        
-        // If the clicked item wasn't active, open it
-        if (!isActive) {
-          item.classList.add('active');
-        }
-      });
-    });
-  </script>
-
+  </div>
+</div>
 </body>
 </html>
