@@ -61,7 +61,7 @@
                     <a href="university/view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
                     <a href="university/view.php?id=19"><i class="fas fa-book"></i> BBA</a>
                     <a href="university/view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
-                    <a href="university/university.php">More<i class="fa-thin fa-arrow-right"></i></a>
+                    <a href="university/university.php">More<i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Trending Courses</h4>
@@ -131,7 +131,7 @@
                     <a href="university/view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
                     <a href="university/view.php?id=19"><i class="fas fa-book"></i> BBA</a>
                     <a href="university/view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
-                    <a href="university/university.php">More<i class="fa-thin fa-arrow-right"></i></a>
+                    <a href="university/university.php">More<i class="fa-solid fa-arrow-right"> </i></a>
             </div>
         </div>
         
@@ -168,7 +168,7 @@
         
         <div class="mobile-free">
             <i class="fas fa-gift"></i>
-            <span>Free Courses</span>
+           <a href="free/free.html"> <span>Free Courses</span></a>
         </div>
     </div>
 
