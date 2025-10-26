@@ -809,6 +809,7 @@
       .content-right {
         margin-top: 40px;
         width: 100%;
+        display: none;
       }
       
       .circle-bg {
