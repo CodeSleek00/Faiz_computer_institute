@@ -40,7 +40,7 @@
      <nav>
         <div class="nav-left">
            
-            Faiz Computer Institute
+            <a href="index.php" style="text-decoration: none; color: #00167a;"></a>Faiz Computer Institute
         </div>
 
         <div class="nav-center">
@@ -49,18 +49,19 @@
             </button>
             <div class="dropdown" id="dropdownMenu">
                 <div class="dropdown-column">
-                    <h4>Explore Roles</h4>
-                    <a href="#"><i class="fas fa-code"></i> Software Developer</a>
-                    <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
-                    <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
-                    <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+                    <h4>Explore </h4>
+                    <a href="index.php"><i class="fa-thin fa-circle-user"></i> Individual </a>
+                   <a href="university/university.php"><i class="fa-thin fa-building-columns"></i>University</a>
+                    <a href="schooling/school.html"><i class="fa-thin fa-school"></i> Schooling</a>
+                    <a href="free/free.html"><i class="fa-thin fa-money-check"></i>  Free</a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Online Degree</h4>
-                    <a href="#"><i class="fas fa-graduation-cap"></i> BCA</a>
-                    <a href="#"><i class="fas fa-user-graduate"></i> MCA</a>
-                    <a href="#"><i class="fas fa-book"></i> BBA</a>
-                    <a href="#"><i class="fas fa-briefcase"></i> MBA</a>
+                    <a href="university/view.php?id=18"><i class="fas fa-graduation-cap"></i> BCA</a>
+                    <a href="university/view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
+                    <a href="university/view.php?id=19"><i class="fas fa-book"></i> BBA</a>
+                    <a href="university/view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
+                    <a href="university/university.php">More<i class="fa-thin fa-arrow-right"></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Trending Courses</h4>
@@ -82,7 +83,7 @@
         <div class="nav-right">
             <div class="auth-buttons">
                 <button class="login-btn">Login</button>
-                <button class="signup-btn">Free Courses</button>
+              <a href="free/free.html" style="text-decoration: none;">  <button class="signup-btn">Free Courses</button></a>
             </div>
             
         </div>
@@ -109,14 +110,14 @@
         
         <div class="mobile-menu-item">
             <div class="mobile-menu-header-item" data-target="mobileRoles">
-                <span>Explore Roles</span>
+                <span>Explore</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileRoles">
-                <a href="#"><i class="fas fa-code"></i> Software Developer</a>
-                <a href="#"><i class="fas fa-paint-brush"></i> Web Designer</a>
-                <a href="#"><i class="fas fa-chart-bar"></i> Data Analyst</a>
-                <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+                 <a href="index.php"><i class="fa-thin fa-circle-user"></i> Individual </a>
+                   <a href="university/university.php"><i class="fa-thin fa-building-columns"></i>University</a>
+                    <a href="schooling/school.html"><i class="fa-thin fa-school"></i> Schooling</a>
+                    <a href="free/free.html"><i class="fa-thin fa-money-check"></i>  Free</a>
             </div>
         </div>
         
@@ -126,10 +127,11 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileDegree">
-                <a href="#"><i class="fas fa-graduation-cap"></i> BCA</a>
-                <a href="#"><i class="fas fa-user-graduate"></i> MCA</a>
-                <a href="#"><i class="fas fa-book"></i> BBA</a>
-                <a href="#"><i class="fas fa-briefcase"></i> MBA</a>
+               <a href="university/view.php?id=18"><i class="fas fa-graduation-cap"></i> BCA</a>
+                    <a href="university/view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
+                    <a href="university/view.php?id=19"><i class="fas fa-book"></i> BBA</a>
+                    <a href="university/view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
+                    <a href="university/university.php">More<i class="fa-thin fa-arrow-right"></i></a>
             </div>
         </div>
         
