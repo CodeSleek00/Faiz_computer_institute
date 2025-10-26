@@ -107,3 +107,20 @@ mobileHeaders.forEach(header => {
         runCounters();
       }
     });
+      // Accordion logic - all items start closed
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // Close all accordion items
+        document.querySelectorAll('.accordion-item').forEach(i => {
+          i.classList.remove('active');
+        });
+        
+        // If the clicked item wasn't active, open it
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });

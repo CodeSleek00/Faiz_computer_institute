@@ -1,310 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bento Grid Layout</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Care Section</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
-            color: #333;
-        }
+    body {
+     
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 800px;
-        }
+    .care-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 80px 8%;
+      gap: 50px;
+      flex-wrap: wrap;
+      
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+    .content-left {
+      flex: 1;
+      min-width: 320px;
+    }
 
-        .subtitle {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
+    .content-left h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+      line-height: 1.3;
+      color: #1a1a1a;
+    }
 
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(150px, auto);
-            gap: 20px;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-        }
+    .content-left h1 span {
+      color: #4a6cf7;
+    }
 
-        .bento-item {
-            border-radius: 16px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
+    .accordion-item {
+      border-bottom: 1px solid #eaeaea;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
 
-        .bento-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
+    .accordion-item:hover {
+      background: #f9f9f9;
+    }
 
-        .bento-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
-        }
+    .accordion-header {
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      color: #333;
+    }
 
-        .item-1 {
-            grid-column: span 2;
-            grid-row: span 2;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-        }
+    .accordion-header:hover {
+      color: #4a6cf7;
+      background: #f5f8ff;
+    }
 
-        .item-2 {
-            grid-column: span 1;
-            grid-row: span 1;
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-        }
+    .accordion-header::after {
+      content: '⌄';
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+      color: #888;
+    }
 
-        .item-3 {
-            grid-column: span 1;
-            grid-row: span 1;
-            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
-        }
+    .accordion-item.active .accordion-header::after {
+      transform: rotate(180deg);
+      color: #4a6cf7;
+    }
 
-        .item-4 {
-            grid-column: span 2;
-            grid-row: span 1;
-            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-        }
+    .accordion-item.active .accordion-header {
+      color: #4a6cf7;
+      background: #f5f8ff;
+    }
 
-        .item-5 {
-            grid-column: span 1;
-            grid-row: span 1;
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-        }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
 
-        .item-6 {
-            grid-column: span 1;
-            grid-row: span 1;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        }
+    .accordion-item.active .accordion-body {
+      max-height: 300px;
+    }
 
-        .item-7 {
-            grid-column: span 2;
-            grid-row: span 1;
-            background: linear-gradient(135deg, #a3bded 0%, #6991c7 100%);
-        }
+    .accordion-body p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      padding: 0 20px 20px;
+    }
 
-        .item-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+    .content-right {
+      flex: 1;
+      min-width: 320px;
+      position: relative;
+      text-align: center;
+    }
 
-        .item-content {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            opacity: 0.9;
-        }
+    .circle-bg {
+      width: 350px;
+      height: 350px;
+      background: #e7f0ff;
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+    }
 
-        .item-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
+    .main-img {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+    }
 
-        .item-icon {
-            font-size: 1.5rem;
-            opacity: 0.7;
-        }
+    .floating-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 12px 16px;
+      border-radius: 12px;
+      min-width: 230px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      z-index: 2;
+    }
 
-        .item-btn {
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+    .floating-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
 
-        .item-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
+    .floating-card .icon {
+      font-size: 1.4rem;
+    }
 
-        footer {
-            margin-top: 3rem;
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
-        }
+    .floating-card h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
 
-        @media (max-width: 1024px) {
-            .bento-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+    .floating-card span {
+      font-size: 0.8rem;
+      color: #777;
+    }
 
-        @media (max-width: 768px) {
-            .bento-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+    /* Card color accents */
+    .green { top: 40px; right: 0; border-left: 5px solid #7cd992; }
+    .purple { top: 120px; right: -40px; border-left: 5px solid #b893f6; }
+    .orange { top: 200px; right: 20px; border-left: 5px solid #f8c07c; }
 
-        @media (max-width: 480px) {
-            .bento-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .bento-item {
-                grid-column: span 1 !important;
-            }
-        }
-    </style>
+    /* Mobile-first responsive design */
+    @media (max-width: 1200px) {
+      .care-section {
+        padding: 60px 5%;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .care-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 5%;
+        gap: 30px;
+      }
+      
+      .content-left h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+      
+      .content-right {
+        margin-top: 40px;
+        width: 100%;
+      }
+      
+      .circle-bg {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .main-img {
+        width: 180px;
+        top: 20px;
+      }
+      
+      /* Floating cards become a horizontal scrollable carousel */
+      .floating-cards-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 20px 0;
+        margin-top: 20px;
+        scrollbar-width: none; /* Firefox */
+      }
+      
+      .floating-cards-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+      }
+      
+      .floating-card {
+        position: static;
+        flex: 0 0 auto;
+        width: 220px;
+        margin: 0;
+      }
+      
+      .accordion-header {
+        padding: 18px 0;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .content-left h1 {
+        font-size: 1.75rem;
+      }
+      
+      .circle-bg {
+        width: 240px;
+        height: 240px;
+      }
+      
+      .main-img {
+        width: 150px;
+        top: 15px;
+      }
+      
+      .floating-card {
+        width: 200px;
+        padding: 10px 14px;
+      }
+      
+      .floating-card h4 {
+        font-size: 0.9rem;
+      }
+      
+      .accordion-header {
+        font-size: 0.95rem;
+      }
+      
+      .accordion-body p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .content-left h1 {
+        font-size: 1.5rem;
+      }
+      
+      .circle-bg {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .main-img {
+        width: 130px;
+        top: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Bento Grid Layout</h1>
-        <p class="subtitle">A modern, responsive grid with interactive elements</p>
-    </header>
 
-    <div class="bento-grid">
-        <div class="bento-item item-1">
-            <div>
-                <h2 class="item-title">Creative Design</h2>
-                <p class="item-content">Explore innovative design concepts and visual storytelling techniques that captivate audiences.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">🎨</span>
-                <button class="item-btn">Learn More</button>
-            </div>
+  <section class="care-section">
+    <div class="content-left">
+      <h1>We will take care of your<br><span>everything</span></h1>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">Anti-Loss Technology</button>
+          <div class="accordion-body">
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              It has been the industry's standard dummy text ever since the 1500s,
+              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            </p>
+          </div>
         </div>
 
-        <div class="bento-item item-2">
-            <div>
-                <h2 class="item-title">User Experience</h2>
-                <p class="item-content">Creating intuitive interfaces that users love.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">👥</span>
-                <button class="item-btn">Explore</button>
-            </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Exchange Easily</button>
+          <div class="accordion-body">
+            <p>Exchange your items easily and securely anytime with our streamlined process designed for your convenience.</p>
+          </div>
         </div>
 
-        <div class="bento-item item-3">
-            <div>
-                <h2 class="item-title">Development</h2>
-                <p class="item-content">Building robust and scalable solutions.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">💻</span>
-                <button class="item-btn">View Code</button>
-            </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Fully Encrypted</button>
+          <div class="accordion-body">
+            <p>Your data is always protected with our advanced encryption technology, ensuring complete privacy and security.</p>
+          </div>
         </div>
 
-        <div class="bento-item item-4">
-            <div>
-                <h2 class="item-title">Content Strategy</h2>
-                <p class="item-content">Crafting compelling narratives that engage and convert your audience.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">📝</span>
-                <button class="item-btn">Read More</button>
-            </div>
+        <div class="accordion-item">
+          <button class="accordion-header">Plenty of Options</button>
+          <div class="accordion-body">
+            <p>Choose from a wide range of features designed for your convenience and tailored to your specific needs.</p>
+          </div>
         </div>
-
-        <div class="bento-item item-5">
-            <div>
-                <h2 class="item-title">Analytics</h2>
-                <p class="item-content">Data-driven insights for better decisions.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">📊</span>
-                <button class="item-btn">See Data</button>
-            </div>
-        </div>
-
-        <div class="bento-item item-6">
-            <div>
-                <h2 class="item-title">Marketing</h2>
-                <p class="item-content">Reach your target audience effectively.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">📢</span>
-                <button class="item-btn">Campaigns</button>
-            </div>
-        </div>
-
-        <div class="bento-item item-7">
-            <div>
-                <h2 class="item-title">Project Management</h2>
-                <p class="item-content">Streamlined workflows and efficient collaboration tools for teams of all sizes.</p>
-            </div>
-            <div class="item-footer">
-                <span class="item-icon">📅</span>
-                <button class="item-btn">Get Started</button>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <footer>
-        <p>Bento Grid Layout &copy; 2023 | Responsive Design</p>
-    </footer>
+    <div class="content-right">
+      <div class="circle-bg"></div>
+      <img src="https://cdn-icons-png.flaticon.com/512/4140/4140037.png" alt="Person" class="main-img">
 
-    <script>
-        // Add interactivity to the bento items
-        document.querySelectorAll('.bento-item').forEach(item => {
-            item.addEventListener('click', function() {
-                this.style.transform = 'scale(0.98)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
+      <!-- Wrapping floating cards in a container for mobile -->
+      <div class="floating-cards-container">
+        <div class="floating-card green">
+          <div class="icon">🗂️</div>
+          <div>
+            <h4>Managing Projects & Tasks</h4>
+            <span>Tue, 15 Sep</span>
+          </div>
+        </div>
 
-        // Add animation to buttons
-        document.querySelectorAll('.item-btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.stopPropagation(); // Prevent triggering the parent item click
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-                
-                // Show a simple alert for demonstration
-                const itemTitle = this.closest('.bento-item').querySelector('.item-title').textContent;
-                alert(`You clicked on: ${itemTitle}`);
-            });
+        <div class="floating-card purple">
+          <div class="icon">🗓️</div>
+          <div>
+            <h4>Set Schedule with Calendar</h4>
+            <span>Tue, 15 Sep</span>
+          </div>
+        </div>
+
+        <div class="floating-card orange">
+          <div class="icon">⭐</div>
+          <div>
+            <h4>Awesome & Noteworthy App</h4>
+            <span>Tue, 15 Sep</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Accordion logic - all items start closed
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // Close all accordion items
+        document.querySelectorAll('.accordion-item').forEach(i => {
+          i.classList.remove('active');
         });
-    </script>
+        
+        // If the clicked item wasn't active, open it
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
