@@ -303,3 +303,12 @@ indicators2.forEach(ind => {
         const walk = (x - startX) * 2; // scroll speed
         scrollArea.scrollLeft = scrollLeft - walk;
     });
+
+ // Smooth preloader fade-out
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.classList.add("fade-out");
+        setTimeout(() => preloader.style.display = "none", 800);
+      }, 1000);
+    });
