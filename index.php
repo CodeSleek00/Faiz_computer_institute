@@ -23,7 +23,7 @@
    <div id="preloader">
     <h1>
     Faiz Computer Institute
-        <br>University Courses
+        
     </h1>
     <div class="loader-circle"></div>
   </div>
