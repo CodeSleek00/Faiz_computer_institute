@@ -45,11 +45,15 @@ if ($amount < $coupon['min_amount']) {
 }
 
 // discount calculate
-if ($coupon['discount_type'] === 'flat') {
+// discount calculate
+if ($coupon['discount_type'] === 'amount') {
   $discount = $coupon['discount_value'];
-} else {
+} elseif ($coupon['discount_type'] === 'percent') {
   $discount = ($amount * $coupon['discount_value']) / 100;
+} else {
+  $discount = 0;
 }
+
 
 $newAmount = max(0, $amount - $discount);
 
