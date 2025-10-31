@@ -1,46 +1,64 @@
 <?php
 include 'db_connect.php';
 
-$coupon = $_POST['coupon'] ?? '';
-$amount = floatval($_POST['amount'] ?? 0);
+$code = strtoupper(trim($_POST['coupon'] ?? ''));
+$amount = $_POST['amount'] ?? 0;
 $course = $_POST['course'] ?? '';
 
-$response = ['success' => false, 'message' => 'Invalid coupon code.'];
-
-if ($coupon == '') {
-    $response['message'] = "Please enter a coupon code.";
-    echo json_encode($response);
-    exit;
+if ($code == '') {
+  echo json_encode(["success" => false, "message" => "Please enter a coupon code."]);
+  exit;
 }
 
-// ✅ Check coupon in database
-$stmt = $conn->prepare("SELECT * FROM coupons WHERE coupon_code = ? AND (course_name = ? OR course_name = 'ALL') LIMIT 1");
-$stmt->bind_param("ss", $coupon, $course);
-$stmt->execute();
-$result = $stmt->get_result();
+$sql = "SELECT * FROM coupons WHERE code='$code' AND status='active'";
+$result = mysqli_query($conn, $sql);
 
-if ($row = $result->fetch_assoc()) {
-    $discount = floatval($row['discount_amount']);
-    $max_uses = intval($row['max_uses']);
-    $used_count = intval($row['used_count']);
+if (mysqli_num_rows($result) == 0) {
+  echo json_encode(["success" => false, "message" => "No coupon found."]);
+  exit;
+}
 
-    if ($used_count >= $max_uses) {
-        $response['message'] = "Sorry! This coupon has reached its usage limit.";
-    } else {
-        $newAmount = max($amount - $discount, 0); // 👈 prevent negative amount
-        $response = [
-            'success' => true,
-            'message' => "Coupon '{$coupon}' applied successfully!",
-            'discount' => $discount,
-            'newAmount' => $newAmount
-        ];
+$coupon = mysqli_fetch_assoc($result);
 
-        // Update usage
-        $conn->query("UPDATE coupons SET used_count = used_count + 1 WHERE coupon_code = '$coupon'");
-    }
+// check expiry
+if (strtotime($coupon['expiry_date']) < time()) {
+  echo json_encode(["success" => false, "message" => "Coupon expired."]);
+  exit;
+}
+
+// usage limit check
+if ($coupon['used_count'] >= $coupon['max_usage']) {
+  echo json_encode(["success" => false, "message" => "Coupon usage limit reached."]);
+  exit;
+}
+
+// course check
+if ($coupon['course_applicable'] !== 'All' && $coupon['course_applicable'] !== $course) {
+  echo json_encode(["success" => false, "message" => "Coupon not valid for this course."]);
+  exit;
+}
+
+// minimum amount
+if ($amount < $coupon['min_amount']) {
+  echo json_encode(["success" => false, "message" => "Minimum amount not met."]);
+  exit;
+}
+
+// discount calculate
+if ($coupon['discount_type'] === 'flat') {
+  $discount = $coupon['discount_value'];
 } else {
-    $response['message'] = "No such coupon found.";
+  $discount = ($amount * $coupon['discount_value']) / 100;
 }
 
-echo json_encode($response);
-?>
+$newAmount = max(0, $amount - $discount);
+
+// increase usage
+mysqli_query($conn, "UPDATE coupons SET used_count = used_count + 1 WHERE id = {$coupon['id']}");
+
+echo json_encode([
+  "success" => true,
+  "discount" => $discount,
+  "newAmount" => $newAmount,
+  "message" => "Coupon applied successfully!"
+]);
