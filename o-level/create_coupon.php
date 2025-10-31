@@ -1,52 +1,50 @@
 <?php
-include 'db_connect.php';
+// create_coupon.php
+require 'db_connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $code = strtoupper(trim($_POST['code']));
     $discount_type = $_POST['discount_type'];
-    $discount_value = $_POST['discount_value'];
-    $min_amount = $_POST['min_amount'];
+    $discount_value = floatval($_POST['discount_value']);
+    $min_amount = floatval($_POST['min_amount']);
+    $max_usage = intval($_POST['max_usage']);
     $expiry_date = $_POST['expiry_date'];
-    $course_type = $_POST['course_type'];
+    $course_applicable = $_POST['course_applicable'] ?? 'custom_enroll';
 
-    $sql = "INSERT INTO coupons (code, discount_type, discount_value, min_amount, expiry_date, course_type)
-            VALUES ('$code', '$discount_type', '$discount_value', '$min_amount', '$expiry_date', '$course_type')";
-    
-    if (mysqli_query($conn, $sql)) {
-        echo "<script>alert('Coupon Created Successfully!');</script>";
+    $sql = "INSERT INTO coupons (code, discount_type, discount_value, min_amount, max_usage, course_applicable, expiry_date)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ssdiiss", $code, $discount_type, $discount_value, $min_amount, $max_usage, $course_applicable, $expiry_date);
+    if (mysqli_stmt_execute($stmt)) {
+        $msg = "Coupon created successfully.";
     } else {
-        echo "<script>alert('Error creating coupon: " . mysqli_error($conn) . "');</script>";
+        $msg = "Error: " . mysqli_error($conn);
     }
 }
 ?>
-
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Create Coupon</title>
-  <style>
-    body { font-family: Poppins, sans-serif; padding: 40px; background: #f7f9ff;}
-    form { background: white; padding: 25px; border-radius: 10px; max-width: 500px; margin: auto;}
-    input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px;}
-    button { background: #4a63ff; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;}
-  </style>
+<head><meta charset="utf-8"><title>Create Coupon</title>
+<style>body{font-family:Poppins, sans-serif;padding:30px;background:#f7f9ff}form{background:#fff;padding:20px;border-radius:10px;max-width:600px;margin:auto}input,select{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc}button{background:#4a63ff;color:#fff;padding:10px;border-radius:8px;border:none;cursor:pointer}</style>
 </head>
 <body>
-  <h2 style="text-align:center;">Create a New Coupon Code</h2>
-  <form method="POST">
-    <input type="text" name="code" placeholder="Coupon Code (e.g. OLEVEL50)" required>
-    <select name="discount_type" required>
-      <option value="amount">Flat Amount Off</option>
-      <option value="percent">Percentage Off</option>
-    </select>
-    <input type="number" name="discount_value" placeholder="Discount Value (e.g. 500 or 10)" required>
-    <input type="number" name="min_amount" placeholder="Min Purchase Amount to Apply" required>
-    <input type="date" name="expiry_date" required>
-    <select name="course_type">
-      <option value="custom_enroll">Custom Enrollment</option>
-      <option value="o_level">O Level</option>
-    </select>
-    <button type="submit">Create Coupon</button>
-  </form>
+<h2 style="text-align:center">Create Coupon</h2>
+<?php if(!empty($msg)): ?><p style="text-align:center;color:green;"><?=htmlspecialchars($msg)?></p><?php endif; ?>
+<form method="post">
+  <input name="code" placeholder="Coupon Code (e.g. OLEVEL100)" required>
+  <select name="discount_type" required>
+    <option value="amount">Flat Amount Off</option>
+    <option value="percent">Percentage Off</option>
+  </select>
+  <input name="discount_value" type="number" step="0.01" placeholder="Discount value (e.g. 1500 or 10)" required>
+  <input name="min_amount" type="number" step="0.01" placeholder="Minimum order amount to apply (e.g. 2000)" value="0">
+  <input name="max_usage" type="number" placeholder="Maximum uses (e.g. 50)" value="10" required>
+  <input name="expiry_date" type="date" required>
+  <select name="course_applicable">
+    <option value="custom_enroll">Custom Enroll</option>
+    <option value="o_level">O Level</option>
+  </select>
+  <button type="submit">Create Coupon</button>
+</form>
 </body>
 </html>
