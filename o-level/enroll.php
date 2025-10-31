@@ -79,6 +79,7 @@ $price = $_GET['price'] ?? '0';
     #couponMsg {
       font-size: 13px;
       margin-top: 8px;
+      color: green;
     }
   </style>
 </head>
@@ -102,12 +103,11 @@ $price = $_GET['price'] ?? '0';
     <textarea id="address" placeholder="Full Address" required></textarea>
 
     <!-- ✅ Coupon Section -->
-   <div style="margin-bottom:15px;">
-  <input type="text" id="couponCode" placeholder="Enter Coupon Code">
-  <button type="button" onclick="applyCoupon()">Apply Coupon</button>
-  <p id="couponMsg" style="font-size:13px;color:green;"></p>
-</div>
-
+    <div class="coupon-section">
+      <input type="text" id="couponCode" placeholder="Enter Coupon Code">
+      <button type="button" onclick="applyCoupon()">Apply</button>
+      <p id="couponMsg"></p>
+    </div>
 
     <label><input type="checkbox" id="agreement" required> I agree to the terms and conditions.</label>
 
@@ -118,33 +118,44 @@ $price = $_GET['price'] ?? '0';
 <script>
 let finalAmount = parseFloat(document.getElementById('price').value);
 
-document.getElementById('applyCoupon').addEventListener('click', function() {
-  const code = document.getElementById('couponCode').value.trim();
+function applyCoupon() {
+  const coupon = document.getElementById('couponCode').value.trim();
+  const amount = document.getElementById('price').value;
   const course = document.getElementById('plan').value;
-  const amount = finalAmount;
 
-  if (!code) return alert('Please enter a coupon code.');
+  if (!coupon) {
+    alert("Please enter a coupon code.");
+    return;
+  }
 
   fetch('apply_coupon.php', {
     method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: `coupon_code=${code}&course=${course}&amount=${amount}`
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `coupon=${coupon}&amount=${amount}&course=${course}`
   })
   .then(res => res.json())
   .then(data => {
     const msg = document.getElementById('couponMsg');
     if (data.success) {
-      msg.style.color = 'green';
-      msg.innerText = data.message + " Discount: ₹" + data.discount;
-      finalAmount = data.new_amount;
-      document.getElementById('displayPrice').innerText = finalAmount.toFixed(2);
-      document.getElementById('price').value = finalAmount;
+      document.getElementById('price').value = data.newAmount;
+      document.getElementById('displayPrice').innerText = data.newAmount.toFixed(2);
+      finalAmount = data.newAmount;
+
+      // 🟢 clear and display detailed message
+      msg.style.color = "green";
+      msg.innerHTML = `
+        ✅ <b>${data.message}</b><br>
+        Coupon Applied: <b>${coupon}</b><br>
+        Discount: ₹${data.discount}<br>
+        New Payable Amount: ₹${data.newAmount.toFixed(2)}
+      `;
     } else {
-      msg.style.color = 'red';
-      msg.innerText = data.message;
+      msg.style.color = "red";
+      msg.innerHTML = "❌ " + data.message;
     }
-  });
-});
+  })
+  .catch(() => alert("Error applying coupon"));
+}
 
 function startPayment() {
   const name = document.getElementById('name').value.trim();
@@ -167,14 +178,8 @@ function startPayment() {
     "handler": function (response){
       saveEnrollment(name, email, phone, address, plan, price, response.razorpay_payment_id);
     },
-    "prefill": {
-        "name": name,
-        "email": email,
-        "contact": phone
-    },
-    "theme": {
-        "color": "#4a63ff"
-    }
+    "prefill": { name, email, contact: phone },
+    "theme": { color: "#4a63ff" }
   };
   const rzp = new Razorpay(options);
   rzp.open();
@@ -192,36 +197,6 @@ function saveEnrollment(name, email, phone, address, plan, price, payment_id){
   };
   xhr.send(`name=${name}&email=${email}&phone=${phone}&address=${address}&plan=${plan}&price=${price}&payment_id=${payment_id}`);
 }
-function applyCoupon() {
-  const coupon = document.getElementById('couponCode').value.trim();
-  const amount = document.getElementById('price').value;
-  const course = document.getElementById('plan').value;
-
-  if (!coupon) {
-    alert("Please enter a coupon code.");
-    return;
-  }
-
-  fetch('apply_coupon.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `coupon=${coupon}&amount=${amount}&course=${course}`
-  })
-  .then(res => res.json())
-  .then(data => {
-    const msg = document.getElementById('couponMsg');
-    if (data.success) {
-      document.getElementById('price').value = data.newAmount;
-      msg.textContent = data.message + " ₹" + data.discount + " off!";
-      msg.style.color = "green";
-    } else {
-      msg.textContent = data.message;
-      msg.style.color = "red";
-    }
-  })
-  .catch(() => alert("Error applying coupon"));
-}
-
 </script>
 
 </body>
