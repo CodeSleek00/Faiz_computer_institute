@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <input type="text" name="code" placeholder="Coupon Code" required>
   
   <select name="discount_type" required>
-    <option value="flat">Flat</option>
+    <option value="amount">Flat</option>
     <option value="percent">Percentage</option>
   </select>
   
