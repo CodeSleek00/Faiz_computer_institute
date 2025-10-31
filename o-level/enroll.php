@@ -102,12 +102,12 @@ $price = $_GET['price'] ?? '0';
     <textarea id="address" placeholder="Full Address" required></textarea>
 
     <!-- ✅ Coupon Section -->
-    <div class="coupon-section">
-      <label><strong>Have a Coupon Code?</strong></label>
-      <input type="text" id="couponCode" placeholder="Enter coupon code">
-      <button type="button" id="applyCoupon">Apply</button>
-      <p id="couponMsg"></p>
-    </div>
+   <div style="margin-bottom:15px;">
+  <input type="text" id="couponCode" placeholder="Enter Coupon Code">
+  <button type="button" onclick="applyCoupon()">Apply Coupon</button>
+  <p id="couponMsg" style="font-size:13px;color:green;"></p>
+</div>
+
 
     <label><input type="checkbox" id="agreement" required> I agree to the terms and conditions.</label>
 
@@ -192,6 +192,36 @@ function saveEnrollment(name, email, phone, address, plan, price, payment_id){
   };
   xhr.send(`name=${name}&email=${email}&phone=${phone}&address=${address}&plan=${plan}&price=${price}&payment_id=${payment_id}`);
 }
+function applyCoupon() {
+  const coupon = document.getElementById('couponCode').value.trim();
+  const amount = document.getElementById('price').value;
+  const course = document.getElementById('plan').value;
+
+  if (!coupon) {
+    alert("Please enter a coupon code.");
+    return;
+  }
+
+  fetch('apply_coupon.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `coupon=${coupon}&amount=${amount}&course=${course}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    const msg = document.getElementById('couponMsg');
+    if (data.success) {
+      document.getElementById('price').value = data.newAmount;
+      msg.textContent = data.message + " ₹" + data.discount + " off!";
+      msg.style.color = "green";
+    } else {
+      msg.textContent = data.message;
+      msg.style.color = "red";
+    }
+  })
+  .catch(() => alert("Error applying coupon"));
+}
+
 </script>
 
 </body>
