@@ -1,6 +1,5 @@
 <?php
-// custom_enroll.php
-// Include db_connect if you need for server-side values (not necessary here)
+include 'db_connect.php';
 ?>
 <!doctype html>
 <html>
@@ -25,8 +24,8 @@
 
   <div>
     <input id="name" placeholder="Full Name" required>
-    <input id="email" placeholder="Email" required>
-    <input id="phone" placeholder="Phone number" required>
+    <input id="email" type="email" placeholder="Email" required>
+    <input id="phone" type="tel" placeholder="Phone number" required>
     <textarea id="address" placeholder="Full address" rows="2"></textarea>
   </div>
 
@@ -57,7 +56,7 @@
   <label><input id="agreement" type="checkbox"> I agree to terms & conditions</label>
   <div style="height:10px"></div>
 
-  <button id="payBtn" onclick="createOrder()" >Proceed to Pay</button>
+  <button id="payBtn" onclick="createOrder()">Proceed to Pay</button>
   <div id="msg" style="margin-top:12px;color:#b00020"></div>
 </div>
 
@@ -69,7 +68,7 @@ const EXTRAS2_PRICE = 10000;
 let baseAmount = 0;
 let discount = 0;
 let couponCode = null;
-let reservationKey = null; // from apply_coupon
+let reservationKey = null;
 let reservationExpiresAt = null;
 
 function calculateBase(){
@@ -81,13 +80,14 @@ function calculateBase(){
 }
 
 document.querySelectorAll('.module, #extras1, #extras2').forEach(el => el.addEventListener('change', () => {
-  discount = 0; couponCode = null; reservationKey = null; reservationExpiresAt = null; document.getElementById('coupon_status').innerText = '';
+  discount = 0; couponCode = null; reservationKey = null; reservationExpiresAt = null; 
+  document.getElementById('coupon_status').innerText = '';
   updateUI();
 }));
 
 function updateUI(){
-  const total = calculateBase() - discount;
-  document.getElementById('total_amount').innerText = Math.max(0, total.toFixed(2));
+  const total = Math.max(0, calculateBase() - discount);
+  document.getElementById('total_amount').innerText = total.toFixed(2);
 }
 
 updateUI();
@@ -98,31 +98,36 @@ async function applyCoupon(){
   const amountNow = calculateBase();
   if(amountNow <= 0) { alert('Select some modules/extras first'); return; }
 
-  // send AJAX
   const form = new URLSearchParams();
-  form.append('code', code);
+  form.append('coupon', code); // ✅ correct key
   form.append('amount', amountNow);
-  form.append('user', document.getElementById('phone').value.trim()); // optional identifier
+  form.append('course', 'custom_enroll');
 
   const resp = await fetch('apply_coupon.php', {
     method: 'POST',
     headers: {'Content-Type':'application/x-www-form-urlencoded'},
     body: form.toString()
   });
+
   const data = await resp.json();
+  const status = document.getElementById('coupon_status');
   if(data.success){
     discount = parseFloat(data.discount);
     couponCode = code;
     reservationKey = data.reservation_key;
     reservationExpiresAt = data.expires_at;
-    document.getElementById('coupon_status').innerText = `Coupon applied. Discount ₹${discount}. Reservation valid until ${reservationExpiresAt}.`;
+    status.style.color = "green";
+    status.innerHTML = `
+      ✅ ${data.message}<br>
+      Coupon: <b>${code}</b><br>
+      Discount: ₹${discount}<br>
+      New Payable: ₹${data.newAmount}
+    `;
     updateUI();
   } else {
     discount = 0;
-    couponCode = null;
-    reservationKey = null;
-    reservationExpiresAt = null;
-    document.getElementById('coupon_status').innerText = data.message || 'Coupon could not be applied';
+    status.style.color = "red";
+    status.innerText = data.message || "Coupon could not be applied";
     updateUI();
   }
 }
@@ -153,7 +158,6 @@ async function createOrder(){
     reservation_key: reservationKey
   };
 
-  // create order on server -> returns razorpay order data
   document.getElementById('payBtn').disabled = true;
   document.getElementById('payBtn').innerText = 'Please wait...';
 
@@ -170,7 +174,6 @@ async function createOrder(){
     return;
   }
 
-  // open Razorpay checkout with returned order id
   const options = {
     key: data.razorpay_key,
     amount: data.amount,
@@ -179,7 +182,6 @@ async function createOrder(){
     description: "Custom course payment",
     order_id: data.razorpay_order_id,
     handler: async function(response) {
-      // verify payment on server
       const verifyResp = await fetch('payment_success_custom.php', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
@@ -195,7 +197,7 @@ async function createOrder(){
         alert('Payment successful! Your ID: ' + vdata.student_id + ' Password: (your phone)');
         window.location.href = 'thankyou.php?cid=' + encodeURIComponent(vdata.student_id);
       } else {
-        alert('Payment verified failed: ' + (vdata.message || 'Contact admin'));
+        alert('Payment verification failed: ' + (vdata.message || 'Contact admin'));
         window.location.href = 'index.php';
       }
     },
@@ -203,7 +205,7 @@ async function createOrder(){
     theme: { color: "#4a63ff" }
   };
   const rzp = new Razorpay(options);
-  rzp.on('payment.failed', function(resp){
+  rzp.on('payment.failed', function(){
     alert('Payment failed or cancelled');
     window.location.href = 'index.php';
   });
