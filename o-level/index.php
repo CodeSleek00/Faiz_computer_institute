@@ -205,4 +205,55 @@
 
     
     </div>
+    <h1>Start Your O Level Preparation (Online/Offline)</h1>
+  <p class="o-level-subtitle">Transparent pricing tailored to your needs, ensuring affordability without compromising on quality.</p>
+
+  <div class="o-level-pricing">
+    <div class="o-level-card">
+      <div class="o-level-plan-title">Basic Access</div>
+      <div class="o-level-plan-subtitle">O Level</div>
+      <button class="o-level-btn" onclick="window.location.href='enroll.php?plan=Basic Access&price=6000'">Enroll Now</button>
+      <div class="o-level-price">₹6,000</div>
+      <ul class="o-level-features">
+        <li>Access to all Subject Video Lectures</li>
+        <li>150+ Mock Test</li>
+        <li>Live-Session</li>
+        <li>Online Notes & Important Points</li>
+        <li>Ultimate Portal Access</li>
+        <li class="o-level-cut">This plan does not include registration, Exam Form Submission, Project, any kind of Certificate</li>
+      </ul>
+    </div>
+
+    <div class="o-level-card o-level-best">
+      <div class="o-level-plan-title">Advanced Access</div>
+      <div class="o-level-plan-subtitle">O Level</div>
+      <button class="o-level-btn" onclick="window.location.href='enroll.php?plan=Advanced Access&price=17000'">Enroll Now</button>
+      <div class="o-level-price">₹17,000</div>
+      <ul class="o-level-features">
+        <li>Access to all Subject Video Lectures</li>
+        <li>150+ Mock Test</li>
+        <li>Live-Session</li>
+        <li>Online Notes & Important Points</li>
+        <li>Ultimate Portal Access</li>
+        <li>Registration</li>
+        <li>Exam Form Submission</li>
+        <li>Project</li>
+        <li>Certificate Included (if Pass)</li>
+      </ul>
+    </div>
+
+    <div class="o-level-card">
+      <div class="o-level-plan-title">Customizable Access</div>
+      <div class="o-level-plan-subtitle">Price Varies According to Your Customisation</div>
+      <button class="o-level-btn" onclick="location.href='custom_enroll.php'">Enroll Now</button>
+      <div class="o-level-price">₹1500-₹17,000</div>
+      <ul class="o-level-features">
+        <li>Custom course</li>
+        <li>Dedicated Videos</li>
+        <li>Live Sessions</li>
+        <li>Strategic and Consulting sessions bi-weekly</li>
+        <li>Payment plan based on milestones</li>
+      </ul>
+    </div>
+  </div>
     <script src="olevel.js"></script>

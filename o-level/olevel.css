@@ -821,3 +821,68 @@ body {
         display: flex;
       }
     }
+     h1 { text-align: center; font-size: 28px; margin-bottom: 8px; }
+    p.o-level-subtitle { text-align: center; color: #707070; font-size: 15px; }
+    
+    .o-level-pricing { 
+      display: flex; 
+      justify-content: center; 
+      gap: 25px; 
+      flex-wrap: wrap; 
+      max-width: 1100px; 
+      margin: auto; 
+    }
+
+    .o-level-card { 
+      background: #fff; 
+      border-radius: 20px; 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
+      width: 320px; 
+      padding: 30px; 
+      transition: all 0.3s ease; 
+      border: 2px solid transparent; 
+    }
+
+    .o-level-card:hover { transform: translateY(-5px); border-color: #c3d0ff; }
+    .o-level-card.o-level-best { background: linear-gradient(145deg, #edf3ff, #fff); border: 2px solid #c3d0ff; }
+
+    .o-level-plan-title { font-size: 22px; font-weight: 600; margin-bottom: 5px; }
+    .o-level-plan-subtitle { color: #6b6b6b; font-size: 14px; margin-bottom: 15px; }
+    .o-level-price { font-size: 26px; font-weight: 700; margin: 15px 0; }
+
+    .o-level-btn { 
+      background: #4a63ff; 
+      color: #fff; 
+      border: none; 
+      padding: 12px 20px; 
+      border-radius: 10px; 
+      font-size: 15px; 
+      cursor: pointer; 
+      width: 100%; 
+      transition: 0.3s; 
+    }
+    .o-level-btn:hover { background: #324ae0; }
+
+    .o-level-features { list-style: none; padding: 0; margin-top: 20px; }
+    .o-level-features li { 
+      margin: 8px 0; 
+      font-size: 14px; 
+      color: #4b4b4b; 
+      display: flex; 
+      align-items: center; 
+    }
+
+    .o-level-features li::before { 
+      content: "✔"; 
+      color: #4a63ff; 
+      font-weight: bold; 
+      margin-right: 8px; 
+    }
+
+    .o-level-features li.o-level-cut { color: #a0a0a0; }
+    .o-level-features li.o-level-cut::before { content: ""; color: #ff4c4c; font-weight: bold; }
+
+    @media (max-width: 768px) { 
+      .o-level-pricing { flex-direction: column; align-items: center; } 
+      .o-level-card { width: 100%; max-width: 370px; } 
+    }
