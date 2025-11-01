@@ -197,7 +197,7 @@ $price = $_GET['price'] ?? '0';
         <p id="couponMsg"></p>
       </div>
 
-      <label><input type="checkbox" id="agreement" style="width:10%" required> I agree to the terms and conditions.</label>
+      <label><input type="checkbox" id="agreement" style="width:5%" required> I agree to the terms and conditions.</label>
       <button type="button" onclick="startPayment()">Proceed to Pay</button>
     </form>
   </div>
