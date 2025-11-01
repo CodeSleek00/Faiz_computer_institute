@@ -205,7 +205,7 @@
 
     
     </div>
-    <h1>Start Your O Level Preparation (Online/Offline)</h1>
+    <h1 class="o-level-title">Start Your O Level Preparation (Online/Offline)</h1>
   <p class="o-level-subtitle">Transparent pricing tailored to your needs, ensuring affordability without compromising on quality.</p>
 
   <div class="o-level-pricing">
