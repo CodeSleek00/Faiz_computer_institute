@@ -13,7 +13,7 @@ include 'db_connect.php';
 
   body{
     font-family:'Poppins',sans-serif;
-    background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+    background:
                url('../images/background.png') center/cover no-repeat;
     min-height:100vh;
     display:flex;
