@@ -60,7 +60,6 @@ tr:hover{
     <th>ID</th>
     <th>Student ID</th>
     <th>Name</th>
-    <th>Price</th>
     <th>Extras</th>
     <th>Email</th>
     <th>Phone</th>
@@ -80,7 +79,6 @@ tr:hover{
     <td><?= $r['id'] ?></td>
     <td><?= htmlspecialchars($r['student_id']) ?></td>
     <td><?= htmlspecialchars($r['name']) ?></td>
-    <td><?= htmlspecialchars($r['price']) ?></td>
     <td><?= htmlspecialchars($r['extras']) ?></td>
     <td><?= htmlspecialchars($r['email']) ?></td>
     <td><?= htmlspecialchars($r['phone']) ?></td>
