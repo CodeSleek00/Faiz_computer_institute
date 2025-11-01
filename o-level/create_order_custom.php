@@ -30,7 +30,7 @@ if ($res) {
     $row = mysqli_fetch_assoc($res);
     if ($row && $row['mx'] !== null) $next_num = intval($row['mx']) + 1001;
 }
-$student_id = "Faiz-Custom-" . $next_num;
+$student_id = "Faiz-OLEVEL-" . $next_num;
 
 // Insert pending enrollment
 $stmt = mysqli_prepare($conn, "INSERT INTO custom_enrollments (student_id, name, email, phone, address, selected_modules, extras, total_amount, coupon_code, coupon_reservation_key, discount_amount, final_amount, payment_status, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)");
