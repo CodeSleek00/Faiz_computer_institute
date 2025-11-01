@@ -22,7 +22,7 @@ $price = $_GET['price'] ?? '0';
           rgba(255,255,255,0.7),
           rgba(255,255,255,0.7)
         ),
-        url('images/bg.jpg') no-repeat center center/cover;
+        url('../images/background.jpg') no-repeat center center/cover;
       min-height: 100vh;
       display: flex;
       justify-content: center;
