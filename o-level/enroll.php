@@ -71,7 +71,7 @@ $price = $_GET['price'] ?? '0';
     }
 
     input, textarea {
-      width: 100%;
+     
       padding: 12px;
       margin: 10px 0;
       border-radius: 8px;
@@ -79,6 +79,9 @@ $price = $_GET['price'] ?? '0';
       font-size: 14px;
       outline: none;
       transition: 0.3s;
+    }
+    textarea {
+      width: 100%;
     }
     input:focus, textarea:focus {
       border-color: #4a63ff;
