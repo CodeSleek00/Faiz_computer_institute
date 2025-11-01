@@ -14,7 +14,7 @@ include 'db_connect.php';
   body{
     font-family:'Poppins',sans-serif;
     background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
-               url('https://images.unsplash.com/photo-1584697964192-19b6b8ecb07a?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+               url('..images/background.png') center/cover no-repeat;
     min-height:100vh;
     display:flex;
     justify-content:center;
