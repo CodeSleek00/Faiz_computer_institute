@@ -1,6 +1,6 @@
 <?php
 require 'db_connect.php';
-$res = mysqli_query($conn, "SELECT * FROM enrollments ORDER BY created_at DESC");
+$res = mysqli_query($conn, "SELECT * FROM olevel_enrollments ORDER BY created_at DESC");
 ?>
 <!doctype html>
 <html>
