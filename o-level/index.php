@@ -307,7 +307,7 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
     </div>
     <div class="modal-body">
       <div class="modal-description">
-        <p id="modalCourseDescription"></p>
+     
       </div>
       <div class="modal-features">
         <h3 class="modal-features-title">What you'll learn</h3>
