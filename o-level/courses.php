@@ -42,19 +42,19 @@ body {
 .page-header {
   background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
   color: var(--primary-white);
-  padding: 3rem 1.5rem;
+  padding: 2rem 1rem;
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .page-title {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .page-subtitle {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 400;
   max-width: 600px;
   margin: 0 auto;
@@ -64,13 +64,13 @@ body {
 .courses-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem 3rem;
+  padding: 0 1rem 2rem;
 }
 
 .courses-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .course-card {
@@ -85,13 +85,13 @@ body {
 }
 
 .course-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
   box-shadow: var(--shadow-medium);
 }
 
 .course-image-container {
   position: relative;
-  height: 200px;
+  height: 140px;
   overflow: hidden;
 }
 
@@ -108,75 +108,84 @@ body {
 
 .course-type-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
   background-color: var(--accent-color);
   color: var(--primary-white);
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .course-content {
-  padding: 1.5rem;
+  padding: 1rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
 .course-title {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   color: var(--text-dark);
-  line-height: 1.4;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .course-meta {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
   color: var(--text-light);
 }
 
 .course-videos {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 
 .course-price {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary-blue);
-  margin: 0.5rem 0 1rem;
+  margin: 0.25rem 0 0.75rem;
 }
 
 .course-description {
   color: var(--text-light);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .course-actions {
   display: flex;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
   text-align: center;
-  flex: 1;
+  width: 100%;
 }
 
 .btn-primary {
@@ -217,7 +226,7 @@ body {
   background-color: var(--primary-white);
   border-radius: var(--border-radius);
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow-medium);
@@ -236,14 +245,14 @@ body {
 }
 
 .modal-header {
-  padding: 1.5rem 1.5rem 0;
+  padding: 1.25rem 1.25rem 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
 .modal-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-dark);
   margin-right: 1rem;
@@ -270,19 +279,19 @@ body {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 .modal-description {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .modal-features {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .modal-features-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: var(--text-dark);
@@ -293,10 +302,11 @@ body {
 }
 
 .modal-feature-item {
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .modal-feature-item::before {
@@ -310,65 +320,129 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   padding-top: 1rem;
   border-top: 1px solid var(--border-light);
 }
 
 .modal-price {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--primary-blue);
 }
 
 .modal-actions {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .btn-full {
-  flex: 1;
+  width: 100%;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .page-title {
-    font-size: 2rem;
-  }
-  
-  .courses-grid {
-    grid-template-columns: 2fr;
-    gap: 1.5rem;
-  }
-  
-  .course-actions {
-    flex-direction: column;
-  }
-  
-  .modal-actions {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 480px) {
+/* Tablet and Desktop Styles */
+@media (min-width: 768px) {
   .page-header {
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
+    margin-bottom: 2.5rem;
   }
   
   .page-title {
-    font-size: 1.75rem;
+    font-size: 2.5rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1.1rem;
   }
   
   .courses-container {
-    padding: 0 1rem 2rem;
+    padding: 0 1.5rem 3rem;
   }
   
-  .modal-body {
-    padding: 1rem;
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .course-image-container {
+    height: 180px;
+  }
+  
+  .course-type-badge {
+    top: 12px;
+    right: 12px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .course-content {
+    padding: 1.5rem;
+  }
+  
+  .course-title {
+    font-size: 1.25rem;
+  }
+  
+  .course-meta {
+    font-size: 0.875rem;
+  }
+  
+  .course-videos {
+    gap: 0.5rem;
+  }
+  
+  .course-price {
+    font-size: 1.5rem;
+    margin: 0.5rem 0 1rem;
+  }
+  
+  .course-description {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .course-actions {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    width: auto;
+    flex: 1;
+  }
+  
+  .modal-content {
+    max-width: 600px;
   }
   
   .modal-header {
-    padding: 1rem 1rem 0;
+    padding: 1.5rem 1.5rem 0;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .modal-feature-item {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+  
+  .modal-actions {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 1024px) {
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 }
 </style>
@@ -377,7 +451,7 @@ body {
 
 <header class="page-header">
   <h1 class="page-title">Premium Learning Courses</h1>
-  <p class="page-subtitle">Expand your knowledge with our expertly crafted courses designed for your growth and success</p>
+  <p class="page-subtitle">Expand your knowledge with our expertly crafted courses</p>
 </header>
 
 <main class="courses-container">
@@ -403,8 +477,8 @@ body {
         <p class="course-description"><?= htmlspecialchars($c['description']) ?></p>
         <div class="course-price">₹<?= htmlspecialchars($c['price']) ?></div>
         <div class="course-actions">
-          <button class="btn btn-outline" onclick="showCourseDetails(`<?= htmlspecialchars($c['name']) ?>`, `<?= htmlspecialchars($c['description']) ?>`, <?= $c['price'] ?>, '<?= htmlspecialchars($c['type']) ?>')">View Details</button>
-          <button class="btn btn-primary" onclick="enrollNow(`<?= htmlspecialchars($c['name']) ?>`, <?= $c['price'] ?>)">Enroll Now</button>
+          <button class="btn btn-outline" onclick="showCourseDetails(`<?= htmlspecialchars($c['name']) ?>`, `<?= htmlspecialchars($c['description']) ?>`, <?= $c['price'] ?>, '<?= htmlspecialchars($c['type']) ?>')">Details</button>
+          <button class="btn btn-primary" onclick="enrollNow(`<?= htmlspecialchars($c['name']) ?>`, <?= $c['price'] ?>)">Enroll</button>
         </div>
       </div>
     </div>
