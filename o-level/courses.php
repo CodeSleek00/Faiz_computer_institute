@@ -31,15 +31,13 @@ h2 {
   background: #fff;
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
   text-align: center;
 }
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 .card img {
   width: 70px;
@@ -72,25 +70,66 @@ button {
 button:hover {
   background: #333;
 }
-.details {
-  margin-top: 15px;
+
+/* --- Popup Modal Styles --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
   display: none;
-  animation: fadeIn 0.4s ease-in-out;
-  text-align: left;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
+.modal {
+  background: #fff;
+  border-radius: 14px;
+  padding: 25px 30px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+  animation: zoomIn 0.3s ease;
+  position: relative;
 }
-ul {
-  padding-left: 15px;
-  margin: 8px 0 14px;
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
-ul li {
-  margin: 6px 0;
-  font-size: 14px;
+.modal h3 {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 20px;
+  color: #111;
+}
+.modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 15px;
+}
+.modal ul li {
+  margin: 8px 0;
+  font-size: 15px;
   color: #444;
   line-height: 1.4;
+}
+.modal button {
+  width: 100%;
+  background: #000;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.close-btn:hover {
+  color: #000;
 }
 </style>
 </head>
@@ -100,36 +139,60 @@ ul li {
 
 <div class="container">
 <?php while($row = $courses->fetch_assoc()): ?>
-  <div class="card" id="card-<?= $row['id'] ?>">
+  <div class="card">
     <img src="<?= $row['image'] ?: 'https://via.placeholder.com/70' ?>" alt="">
     <h3><?= htmlspecialchars($row['name']) ?></h3>
     <p class="price">₹<?= number_format($row['price'], 2) ?></p>
-    <button onclick="toggleDetails(<?= $row['id'] ?>)">View Details</button>
-
-    <div class="details" id="details-<?= $row['id'] ?>">
-      <ul>
-        <li><strong>Type:</strong> <?= htmlspecialchars($row['type']) ?></li>
-        <li><strong>Duration:</strong> <?= htmlspecialchars($row['duration']) ?></li>
-        <li><strong>Description:</strong> <?= nl2br(htmlspecialchars($row['description'])) ?></li>
-        <li><strong>Price:</strong> ₹<?= number_format($row['price'], 2) ?></li>
-      </ul>
-      <button onclick="enrollNow('<?= $row['id'] ?>','<?= $row['price'] ?>','<?= htmlspecialchars($row['name']) ?>')">
-        Proceed to Payment
-      </button>
-    </div>
+    <button onclick="openModal(
+      '<?= htmlspecialchars(addslashes($row['name'])) ?>',
+      '<?= htmlspecialchars(addslashes($row['type'])) ?>',
+      '<?= htmlspecialchars(addslashes($row['duration'])) ?>',
+      '<?= htmlspecialchars(addslashes($row['description'])) ?>',
+      '<?= $row['price'] ?>',
+      '<?= $row['id'] ?>'
+    )">View Details</button>
   </div>
 <?php endwhile; ?>
 </div>
 
+<!-- Popup Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="courseModal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <ul>
+      <li><strong>Type:</strong> <span id="modalType"></span></li>
+      <li><strong>Duration:</strong> <span id="modalDuration"></span></li>
+      <li><strong>Description:</strong> <span id="modalDesc"></span></li>
+      <li><strong>Price:</strong> ₹<span id="modalPrice"></span></li>
+    </ul>
+    <button id="modalEnrollBtn">Proceed to Payment</button>
+  </div>
+</div>
+
 <script>
-function toggleDetails(id) {
-  const section = document.getElementById("details-" + id);
-  section.style.display = (section.style.display === "block") ? "none" : "block";
+function openModal(name, type, duration, description, price, id){
+  document.getElementById("modalTitle").innerText = name;
+  document.getElementById("modalType").innerText = type;
+  document.getElementById("modalDuration").innerText = duration;
+  document.getElementById("modalDesc").innerText = description;
+  document.getElementById("modalPrice").innerText = price;
+  
+  const btn = document.getElementById("modalEnrollBtn");
+  btn.onclick = function(){
+    enrollNow(id, price, name);
+  };
+
+  document.getElementById("modalOverlay").style.display = "flex";
 }
 
-function enrollNow(courseId, amount, name) {
+function closeModal(){
+  document.getElementById("modalOverlay").style.display = "none";
+}
+
+function enrollNow(courseId, amount, name){
   var options = {
-    key: "rzp_live_pA6jgjncp78sq7", // corrected key
+    key: "rzp_live_pA6jgjncp78sq7",
     amount: amount * 100,
     currency: "INR",
     name: "Pyaara Store",
@@ -139,10 +202,10 @@ function enrollNow(courseId, amount, name) {
       fetch("verify_payment.php", {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "payment_id=" + response.razorpay_payment_id + "&course_id=" + courseId
-      }).then(res => res.text()).then(data => alert(data));
+        body: "payment_id="+response.razorpay_payment_id+"&course_id="+courseId
+      }).then(res=>res.text()).then(data=>alert(data));
     },
-    theme: { color: "#111" }
+    theme: { color: "#000" }
   };
   var rzp = new Razorpay(options);
   rzp.open();
