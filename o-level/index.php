@@ -328,3 +328,14 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 </div>
 
     <script src="olevel.js"></script>
+    <script>
+
+ // Smooth preloader fade-out
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.classList.add("fade-out");
+        setTimeout(() => preloader.style.display = "none", 800);
+      }, 1000);
+    });
+    </script>
