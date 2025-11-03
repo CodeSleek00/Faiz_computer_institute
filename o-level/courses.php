@@ -45,7 +45,7 @@ button{background:#000;color:#fff;border:none;padding:10px 20px;border-radius:10
 <script>
 function enrollNow(courseId, amount, name){
   var options = {
-    key: "rzp_live_pA6jgjncp78sq7", // your live Razorpay key
+    key: "rzp_lve_pA6jgjncp78sq7", // your live Razorpay key
     amount: amount * 100,
     currency: "INR",
     name: "Pyaara Store",
