@@ -336,6 +336,6 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
       setTimeout(() => {
         preloader.classList.add("fade-out");
         setTimeout(() => preloader.style.display = "none", 800);
-      }, 1000);
+      }, 100);
     });
     </script>
