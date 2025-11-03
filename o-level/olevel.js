@@ -67,14 +67,6 @@ mobileHeaders.forEach(header => {
     });
 });
 
- // Smooth preloader fade-out
-    window.addEventListener("load", () => {
-      const preloader = document.getElementById("preloader");
-      setTimeout(() => {
-        preloader.classList.add("fade-out");
-        setTimeout(() => preloader.style.display = "none", 800);
-      }, 1000);
-    });
     let currentCourse = "";
 let currentPrice = 0;
 
@@ -140,3 +132,12 @@ function enrollNow(courseName, amount) {
   var rzp1 = new Razorpay(options);
   rzp1.open();
 }
+
+ // Smooth preloader fade-out
+    window.addEventListener("load", () => {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.classList.add("fade-out");
+        setTimeout(() => preloader.style.display = "none", 800);
+      }, 1000);
+    });
