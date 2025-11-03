@@ -162,7 +162,7 @@ body {
 .course-description {
   color: var(--text-light);
   font-size: 0.8rem;
-  margin-bottom: 1rem;
+  
   flex-grow: 1;
   display: -webkit-box;
   -webkit-line-clamp: 2;
