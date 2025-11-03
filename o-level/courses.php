@@ -398,7 +398,7 @@ body {
   
   .course-description {
     font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+  
   }
   
   .course-actions {
