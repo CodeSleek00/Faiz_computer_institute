@@ -141,7 +141,6 @@ body {
 .course-meta {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
   font-size: 0.8rem;
   color: var(--text-light);
 }
