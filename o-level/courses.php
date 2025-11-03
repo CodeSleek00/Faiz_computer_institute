@@ -337,7 +337,7 @@ body {
   }
   
   .courses-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
     gap: 1.5rem;
   }
   
