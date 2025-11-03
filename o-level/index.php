@@ -241,7 +241,7 @@
         <li>Project</li>
         <li>Certificate Included (if Pass)</li>
         <li>CCC Whole Syllabus Covered</li>
-        <li>Scholarship upto ₹12000</li>
+        <li><b>Scholarship upto ₹12000</b></li>
       </ul>
     </div>
 
