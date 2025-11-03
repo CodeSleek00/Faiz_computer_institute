@@ -473,7 +473,6 @@ body {
             <span><?= htmlspecialchars($c['total_videos']) ?> Videos</span>
           </div>
         </div>
-        <p class="course-description"><?= htmlspecialchars($c['description']) ?></p>
         <div class="course-price">₹<?= htmlspecialchars($c['price']) ?></div>
         <div class="course-actions">
           <button class="btn btn-outline" onclick="showCourseDetails(`<?= htmlspecialchars($c['name']) ?>`, `<?= htmlspecialchars($c['description']) ?>`, <?= $c['price'] ?>, '<?= htmlspecialchars($c['type']) ?>')">Details</button>
