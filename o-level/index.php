@@ -220,6 +220,7 @@
         <li>Live-Session</li>
         <li>Online Notes & Important Points</li>
         <li>Ultimate Portal Access</li>
+        <li>CCC Whole Syllabus Covered</li>
         <li class="o-level-cut">This plan does not include registration, Exam Form Submission, Project, any kind of Certificate</li>
       </ul>
     </div>
@@ -239,6 +240,8 @@
         <li>Exam Form Submission</li>
         <li>Project</li>
         <li>Certificate Included (if Pass)</li>
+        <li>CCC Whole Syllabus Covered</li>
+        <li>Scholarship upto ₹12000</li>
       </ul>
     </div>
 
