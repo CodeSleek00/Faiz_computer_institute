@@ -3,7 +3,7 @@ require 'db_connect.php';
 require 'vendor/autoload.php';
 use Razorpay\Api\Api;
 
-$keyId = "rzp_live_pA6jgjncp78sq7";
+$keyId = "rzp_lve_pA6jgjncp78sq7";
 $keySecret = "YOUR_RAZORPAY_SECRET";
 
 $api = new Api($keyId, $keySecret);
