@@ -3,13 +3,9 @@ require 'db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $name = $_POST['name'];
-  $category = $_POST['category'];
   $type = $_POST['type'];
   $duration = $_POST['duration'];
-  $level = $_POST['level'];
   $price = $_POST['price'];
-  $location = $_POST['location'];
-  $tags = $_POST['tags'];
   $description = $_POST['description'];
 
   $image = "";
@@ -19,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image = $target;
   }
 
-  $conn->query("INSERT INTO single_courses (name, category, type, duration, level, price, location, tags, description, image) 
-  VALUES ('$name','$category','$type','$duration','$level','$price','$location','$tags','$description','$image')");
+  $conn->query("INSERT INTO single_courses (name, type, duration, price, description, image) 
+  VALUES ('$name','$type','$duration','$price','$description','$image')");
   echo "<script>alert('Course Added Successfully!');window.location='add_course.php';</script>";
 }
 ?>
@@ -42,14 +38,10 @@ button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:10
 <h2 style="text-align:center;">Add Single Course</h2>
 <form method="POST" enctype="multipart/form-data">
   <input type="text" name="name" placeholder="Course Name" required>
-  <input type="text" name="category" placeholder="Category (e.g. Design, Programming)">
   <input type="text" name="type" placeholder="Type (Online/Offline)">
   <input type="text" name="duration" placeholder="Duration (e.g. 6 Weeks)">
-  <input type="text" name="level" placeholder="Level (Beginner/Advanced)">
   <input type="number" step="0.01" name="price" placeholder="Price (INR)" required>
-  <input type="text" name="location" placeholder="Location (if offline)">
-  <input type="text" name="tags" placeholder="Tags (comma separated)">
-  <textarea name="description" placeholder="Course Description"></textarea>
+  <textarea name="description" placeholder="Course Description" rows="5"></textarea>
   <input type="file" name="image">
   <button type="submit">Add Course</button>
 </form>
