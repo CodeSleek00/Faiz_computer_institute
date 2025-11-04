@@ -338,4 +338,4 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
         setTimeout(() => preloader.style.display = "none", 800);
       }, 100);
     });
-    </script>
+    </script> 
