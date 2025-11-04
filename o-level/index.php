@@ -22,13 +22,7 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
  
 </head>
 <body>
-   <div id="preloader">
-    <h1>
-    Faiz Computer Institute
-        O Level
-    </h1>
-    <div class="loader-circle"></div>
-  </div>
+  
     <header>
         <div class="head">
             <ul class="head1">
