@@ -256,41 +256,6 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
     </div>
   </div>
 
-<header class="page-header">
-  <h1 class="page-title">Premium Learning Courses</h1>
-  <p class="page-subtitle">Expand your knowledge with our expertly crafted courses</p>
-</header>
-
-<main class="courses-container">
-  <div class="courses-grid">
-    <?php while($c = $courses->fetch_assoc()): ?>
-    <div class="course-card">
-      <div class="course-image-container">
-        <?php if($c['image']): ?>
-          <img src="<?= htmlspecialchars($c['image']) ?>" alt="<?= htmlspecialchars($c['name']) ?>" class="course-image">
-        <?php else: ?>
-          <img src="https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image" alt="Course Image" class="course-image">
-        <?php endif; ?>
-        <span class="course-type-badge"><?= htmlspecialchars($c['type']) ?></span>
-      </div>
-      <div class="course-content">
-        <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
-        <div class="course-meta">
-          <div class="course-videos">
-            <span>📹</span>
-            <span><?= htmlspecialchars($c['total_videos']) ?> Videos</span>
-          </div>
-        </div>
-        <div class="course-price">₹<?= htmlspecialchars($c['price']) ?></div>
-        <div class="course-actions">
-          <button class="btn btn-outline" onclick="showCourseDetails(`<?= htmlspecialchars($c['name']) ?>`, `<?= htmlspecialchars($c['description']) ?>`, <?= $c['price'] ?>, '<?= htmlspecialchars($c['type']) ?>')">Details</button>
-          <button class="btn btn-primary" onclick="enrollNow(`<?= htmlspecialchars($c['name']) ?>`, <?= $c['price'] ?>)">Enroll</button>
-        </div>
-      </div>
-    </div>
-    <?php endwhile; ?>
-  </div>
-</main>
 
 
     <script src="olevel.js"></script>
