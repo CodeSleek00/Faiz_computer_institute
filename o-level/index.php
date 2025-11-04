@@ -256,10 +256,140 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
     </div>
   </div>
 
+<header class="page-header">
+  <h1 class="page-title">Premium Learning Courses</h1>
+  <p class="page-subtitle">Expand your knowledge with our expertly crafted courses</p>
+</header>
+
+<main class="courses-container">
+  <div class="courses-grid">
+    <?php while($c = $courses->fetch_assoc()): ?>
+    <div class="course-card">
+      <div class="course-image-container">
+        <?php if($c['image']): ?>
+          <img src="<?= htmlspecialchars($c['image']) ?>" alt="<?= htmlspecialchars($c['name']) ?>" class="course-image">
+        <?php else: ?>
+          <img src="https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image" alt="Course Image" class="course-image">
+        <?php endif; ?>
+        <span class="course-type-badge"><?= htmlspecialchars($c['type']) ?></span>
+      </div>
+      <div class="course-content">
+        <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
+        <div class="course-meta">
+          <div class="course-videos">
+            <span>📹</span>
+            <span><?= htmlspecialchars($c['total_videos']) ?> Videos</span>
+          </div>
+        </div>
+        <div class="course-price">₹<?= htmlspecialchars($c['price']) ?></div>
+        <div class="course-actions">
+          <button class="btn btn-outline" onclick="showCourseDetails(`<?= htmlspecialchars($c['name']) ?>`, `<?= htmlspecialchars($c['description']) ?>`, <?= $c['price'] ?>, '<?= htmlspecialchars($c['type']) ?>')">Details</button>
+          <button class="btn btn-primary" onclick="enrollNow(`<?= htmlspecialchars($c['name']) ?>`, <?= $c['price'] ?>)">Enroll</button>
+        </div>
+      </div>
+    </div>
+    <?php endwhile; ?>
+  </div>
+</main>
+
+<!-- Course Details Modal -->
+<div class="modal-overlay" id="courseDetailsModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalCourseTitle"></h2>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-description">
+       <p id="modalCourseDescription"></p>
+      </div>
+      <div class="modal-features">
+        <h3 class="modal-features-title">What you'll learn</h3>
+        <ul class="modal-features-list" id="modalFeaturesList"></ul>
+      </div>
+      <div class="modal-price-section">
+        <div>
+          <span>Course Price:</span>
+          <div class="modal-price" id="modalCoursePrice"></div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline btn-full" onclick="closeModal()">Continue Browsing</button>
+        <button class="btn btn-primary btn-full" id="modalEnrollBtn">Enroll Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentCourse = "";
+let currentPrice = 0;
+
+function showCourseDetails(name, description, price, type) {
+  currentCourse = name;
+  currentPrice = price;
+  
+  document.getElementById('modalCourseTitle').textContent = name;
+  document.getElementById('modalCourseDescription').textContent = description;
+  document.getElementById('modalCoursePrice').textContent = `₹${price}`;
+  
+  // Convert description into features list
+  const featuresList = document.getElementById('modalFeaturesList');
+  featuresList.innerHTML = '';
+  
+  // Split description by commas and create list items
+  const features = description.split(',').map(item => item.trim());
+  features.forEach(feature => {
+    if (feature) {
+      const li = document.createElement('li');
+      li.className = 'modal-feature-item';
+      li.textContent = feature;
+      featuresList.appendChild(li);
+    }
+  });
+  
+  // Update enroll button
+  const enrollBtn = document.getElementById('modalEnrollBtn');
+  enrollBtn.onclick = function() {
+    enrollNow(name, price);
+  };
+  
+  // Show modal
+  document.getElementById('courseDetailsModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('courseDetailsModal').style.display = 'none';
+}
+
+// Close modal when clicking outside the content
+document.getElementById('courseDetailsModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+// Razorpay integration
+function enrollNow(courseName, amount) {
+  var options = {
+    "key": "rzp_live_pA6jgjncp78sq7",
+    "amount": amount * 100,
+    "currency": "INR",
+    "name": "Pyaara Store",
+    "description": courseName,
+    "handler": function (response) {
+      alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+      window.location.href = 'thank_you.php';
+    },
+    "theme": {"color": "#1e40af"}
+  };
+  
+  var rzp1 = new Razorpay(options);
+  rzp1.open();
+}
+</script>
+
 
 
     <script src="olevel.js"></script>
-    <script>
-
-
-    </script> 
+    
