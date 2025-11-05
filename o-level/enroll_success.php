@@ -147,7 +147,7 @@ button.secondary {
 
     <div class="receipt">
       <strong>Faiz Computer</strong><br>
-      <span style="font-size:13px;color:#777;">Enrollment Receipt • <?= date('d M Y, H:i') ?></span>
+      <span style="font-size:13px;color:#777;">Enrollment Receipt • <?= date('d M Y') ?></span>
       <hr style="margin:10px 0;border:none;border-top:1px solid #eef2ff">
       <p><strong>Name:</strong> <?= htmlspecialchars($data['name']) ?></p>
       <p><strong>Plan:</strong> <?= htmlspecialchars($data['plan']) ?></p>
