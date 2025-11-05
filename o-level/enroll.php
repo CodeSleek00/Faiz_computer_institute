@@ -271,19 +271,22 @@ function startPayment() {
   const rzp = new Razorpay(options);
   rzp.open();
 }
-
 function saveEnrollment(name, email, phone, address, plan, price, payment_id){
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "enroll_action.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.onload = function() {
     if (xhr.status === 200) {
-      alert("Enrollment successful! Check your email for login details.");
-      window.location.href = "index.php";
+      if (xhr.responseText.trim() === "success") {
+        window.location.href = "enroll_success.php";
+      } else {
+        alert("Error: " + xhr.responseText);
+      }
     }
   };
   xhr.send(`name=${name}&email=${email}&phone=${phone}&address=${address}&plan=${plan}&price=${price}&payment_id=${payment_id}`);
 }
+
 </script>
 </body>
 </html>
