@@ -27,7 +27,7 @@ if (!$enr) {
     exit;
 }
 
-$RAZORPAY_KEY_SECRET = "XXXXXXXXXXXX"; // replace with same secret used earlier
+$RAZORPAY_KEY_SECRET = "W2wBaETyh0J8UlE55tPSkEPc"; // replace with same secret used earlier
 
 // verify signature
 $generated_signature = hash_hmac('sha256', $razorpay_order_id . '|' . $razorpay_payment_id, $RAZORPAY_KEY_SECRET);
