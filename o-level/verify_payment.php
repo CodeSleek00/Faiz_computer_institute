@@ -3,7 +3,7 @@ require 'db_connect.php';
 require 'src/Razorpay.php';
 use Razorpay\Api\Api;
 
-$keyId = "rzp_test_Rc7TynjHcNrEfB";
+$keyId = "";
 $keySecret = "W2wBaETyh0J8UlE55tPSkEPc";
 
 $api = new Api($keyId, $keySecret);
