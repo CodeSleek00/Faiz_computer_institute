@@ -283,13 +283,13 @@ async function createOrder(){
         })
       });
       const vdata = await verifyResp.json();
-      if(vdata.status === 'success'){
-        alert('Payment successful! Your ID: ' + vdata.student_id + ' Password: (your phone)');
-        window.location.href = 'thankyou.php?cid=' + encodeURIComponent(vdata.student_id);
-      } else {
-        alert('Payment verification failed: ' + (vdata.message || 'Contact admin'));
-        window.location.href = 'index.php';
-      }
+      if (vdata.status === 'success') {
+  window.location.href = 'thankyou.php?cid=' + encodeURIComponent(vdata.student_id) + '&name=' + encodeURIComponent(name);
+} else {
+  alert('Payment verification failed: ' + (vdata.message || 'Contact admin'));
+  window.location.href = 'index.php';
+}
+
     },
     prefill: { name, email, contact: phone },
     theme: { color: "#4a63ff" }
