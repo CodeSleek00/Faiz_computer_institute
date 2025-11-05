@@ -257,7 +257,7 @@ function startPayment() {
   if (!name || !email || !phone || !address) return alert('Please fill all the fields.');
 
   const options = {
-    "key": "YOUR_RAZORPAY_KEY_ID",
+    "key": "rzp_test_Rc7TynjHcNrEfB",
     "amount": price * 100,
     "currency": "INR",
     "name": "O Level Enrollment",
