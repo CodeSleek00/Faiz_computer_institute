@@ -76,7 +76,7 @@ td:nth-child(4) {
     <th>Address</th>
     
     <th> Password</th>
-    <th>Created At</th>
+   
   </tr>
 
   <?php if (mysqli_num_rows($res) > 0): ?>
@@ -92,7 +92,7 @@ td:nth-child(4) {
         <td><?= nl2br(htmlspecialchars($r['address'])) ?></td>
     
         <td><?= htmlspecialchars($r['password']) ?></td>
-        <td><?= htmlspecialchars($r['created_at']) ?></td>
+       
       </tr>
     <?php endwhile; ?>
   <?php else: ?>
