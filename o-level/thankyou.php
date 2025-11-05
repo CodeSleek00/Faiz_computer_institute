@@ -77,7 +77,7 @@ $name = $_GET['name'] ?? 'Student';
     <p>Thank you, <b><?php echo htmlspecialchars($name); ?></b></p>
     <p>Your Student ID:</p>
     <div class="id-box"><?php echo htmlspecialchars($student_id); ?></div>
-    <p>Password: <b>Your Phone Number</b></p>
+    <p>Password: <b><?= htmlspecialchars($data['password']) ?></b></p>
     <button class="btn" onclick="window.location.href='index.php'">Go to Home</button>
   </div>
 
