@@ -87,7 +87,7 @@ if ($student_id !== '') {
 
         <div class="box">
           <div class="label">Login Password</div>
-          <div class="val">Your phone number (<?php echo htmlspecialchars($phone ?: 'hidden'); ?>)</div>
+          <div class="val"><?php echo htmlspecialchars($phone ?: 'hidden'); ?></div>
         </div>
 
         <div class="box">
@@ -100,10 +100,7 @@ if ($student_id !== '') {
           <div class="val"><?php echo $amount !== null ? '₹'.number_format((float)$amount,2) : '—'; ?></div>
         </div>
 
-        <div class="box">
-          <div class="label">Payment ID</div>
-          <div class="val"><?php echo htmlspecialchars($payment_id ?? '—'); ?></div>
-        </div>
+       
       </div>
 
       <div class="receipt" id="receipt">
@@ -112,7 +109,7 @@ if ($student_id !== '') {
             <strong>Faiz Computer</strong>
             <div class="small">Enrollment Receipt</div>
           </div>
-          <div class="small"><?php echo date('d M Y, H:i'); ?></div>
+          <div class="small"><?php echo date('d M Y'); ?></div>
         </div>
 
         <hr style="margin:12px 0;border:none;border-top:1px solid #f1f4ff">
@@ -121,7 +118,7 @@ if ($student_id !== '') {
         <p style="margin:6px 0"><strong>Student ID:</strong> <?php echo htmlspecialchars($student_id); ?></p>
         <p style="margin:6px 0"><strong>Plan:</strong> <?php echo htmlspecialchars($plan_name ?: 'O Level / Custom'); ?></p>
         <p style="margin:6px 0"><strong>Amount Paid:</strong> <?php echo $amount !== null ? '₹'.number_format((float)$amount,2) : '—'; ?></p>
-        <p style="margin:6px 0"><strong>Payment ID:</strong> <?php echo htmlspecialchars($payment_id ?? '—'); ?></p>
+       
       </div>
 
       <div class="actions">
