@@ -75,7 +75,7 @@ td:nth-child(4) {
     <th>Phone</th>
     <th>Address</th>
     <th>Payment</th>
-    <th>Razorpay Payment ID</th>
+    <th> Password</th>
     <th>Created At</th>
   </tr>
 
@@ -91,7 +91,7 @@ td:nth-child(4) {
         <td><?= htmlspecialchars($r['phone']) ?></td>
         <td><?= nl2br(htmlspecialchars($r['address'])) ?></td>
         <td><span class="status <?= htmlspecialchars($r['payment_status']) ?>"><?= strtoupper($r['payment_status']) ?></span></td>
-        <td><?= htmlspecialchars($r['razorpay_payment_id']) ?></td>
+        <td><?= htmlspecialchars($r['password']) ?></td>
         <td><?= htmlspecialchars($r['created_at']) ?></td>
       </tr>
     <?php endwhile; ?>
