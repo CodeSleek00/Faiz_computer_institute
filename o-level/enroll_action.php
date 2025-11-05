@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $student_id = "Faiz-Olevel-" . ($last_id + 1);
     $password = $phone; // password same as phone (as you want)
 
-    $sql = "INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status, payment_id, password)
-            VALUES ('$student_id', '$name', '$email', '$phone', '$address', '$plan', '$price', 'Paid', '$payment_id', '$password')";
+    $sql = "INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
+            VALUES ('$student_id', '$name', '$email', '$phone', '$address', '$plan', '$price', 'Paid',  '$password')";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION['enroll_success'] = [
@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'phone' => $phone,
             'plan' => $plan,
             'amount' => $price,
-            'payment_id' => $payment_id,
             'password' => $password
         ];
         echo "success";
