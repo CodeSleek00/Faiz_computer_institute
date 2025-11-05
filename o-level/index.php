@@ -373,7 +373,7 @@ document.getElementById('courseDetailsModal').addEventListener('click', function
 // Razorpay integration
 function enrollNow(courseName, amount) {
   var options = {
-    "key": "rzp_live_pA6jgjncp78sq7",
+    "key": "rzp_test_Rc7TynjHcNrEfB",
     "amount": amount * 100,
     "currency": "INR",
     "name": "Pyaara Store",
