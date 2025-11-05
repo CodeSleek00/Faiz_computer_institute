@@ -74,7 +74,7 @@ td:nth-child(4) {
     <th>Email</th>
     <th>Phone</th>
     <th>Address</th>
-    <th>Payment</th>
+    
     <th> Password</th>
     <th>Created At</th>
   </tr>
@@ -90,7 +90,7 @@ td:nth-child(4) {
         <td><?= htmlspecialchars($r['email']) ?></td>
         <td><?= htmlspecialchars($r['phone']) ?></td>
         <td><?= nl2br(htmlspecialchars($r['address'])) ?></td>
-        <td><span class="status <?= htmlspecialchars($r['payment_status']) ?>"><?= strtoupper($r['payment_status']) ?></span></td>
+    
         <td><?= htmlspecialchars($r['password']) ?></td>
         <td><?= htmlspecialchars($r['created_at']) ?></td>
       </tr>
