@@ -1,6 +1,6 @@
 <?php
 require 'db_connect.php';
-require 'src/Razorpay.php';
+require '../src/Razorpay.php';
 use Razorpay\Api\Api;
 
 $keyId = "rzp_test_Rc7TynjHcNrEfB";

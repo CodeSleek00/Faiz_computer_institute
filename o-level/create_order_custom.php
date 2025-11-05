@@ -43,8 +43,8 @@ if (!$ok) {
 $enrollment_id = mysqli_insert_id($conn);
 
 // create razorpay order
-$RAZORPAY_KEY_ID = "rzp_test_XXXXXXXXXX"; // replace
-$RAZORPAY_KEY_SECRET = "XXXXXXXXXXXX"; // replace
+$RAZORPAY_KEY_ID = "rzp_test_Rc7TynjHcNrEfB"; // replace
+$RAZORPAY_KEY_SECRET = "W2wBaETyh0J8UlE55tPSkEPc"; // replace
 
 $amount_paise = intval(round($final_amount * 100));
 
