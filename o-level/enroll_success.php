@@ -78,7 +78,6 @@ button:hover {
     <p><strong>Enrollment ID:</strong> <?= htmlspecialchars($data['student_id']) ?></p>
     <p><strong>Plan:</strong> <?= htmlspecialchars($data['plan']) ?></p>
     <p><strong>Amount Paid:</strong> ₹<?= htmlspecialchars($data['amount']) ?></p>
-    <p><strong>Payment ID:</strong> <?= htmlspecialchars($data['payment_id']) ?></p>
     <p><strong>Login Email:</strong> <?= htmlspecialchars($data['email']) ?></p>
     <p><strong>Password:</strong> <?= htmlspecialchars($data['password']) ?></p>
   </div>
