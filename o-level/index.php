@@ -376,7 +376,7 @@ function enrollNow(courseName, amount) {
     "key": "rzp_test_Rc7TynjHcNrEfB",
     "amount": amount * 100,
     "currency": "INR",
-    "name": "Pyaara Store",
+    "name": "Faiz Computer Institute",
     "description": courseName,
     "handler": function (response) {
       alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
