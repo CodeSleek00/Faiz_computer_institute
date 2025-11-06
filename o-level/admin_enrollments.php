@@ -70,13 +70,14 @@ td:nth-child(4) {
     <th>Student ID</th>
     <th>Plan</th>
     <th>Amount</th>
+    <th>EMI Mode</th>
+    <th>EMI Months</th>
+    <th>Remaining</th>
     <th>Name</th>
     <th>Email</th>
     <th>Phone</th>
     <th>Address</th>
-    
-    <th> Password</th>
-   
+    <th>Password</th>
   </tr>
 
   <?php if (mysqli_num_rows($res) > 0): ?>
@@ -86,17 +87,20 @@ td:nth-child(4) {
         <td><?= htmlspecialchars($r['student_id']) ?></td>
         <td><?= htmlspecialchars($r['plan_name']) ?></td>
         <td>₹<?= htmlspecialchars($r['amount']) ?></td>
+        <td><?= htmlspecialchars(ucfirst($r['emi_mode'] ?? 'no')) ?></td>
+        <td><?= htmlspecialchars($r['emi_months'] ?? '-') ?></td>
+        <td>
+          <?= $r['emi_mode'] == 'yes' ? '₹' . htmlspecialchars($r['emi_remaining']) : '-' ?>
+        </td>
         <td><?= htmlspecialchars($r['name']) ?></td>
         <td><?= htmlspecialchars($r['email']) ?></td>
         <td><?= htmlspecialchars($r['phone']) ?></td>
         <td><?= nl2br(htmlspecialchars($r['address'])) ?></td>
-    
         <td><?= htmlspecialchars($r['password']) ?></td>
-       
       </tr>
     <?php endwhile; ?>
   <?php else: ?>
-    <tr><td colspan="11" style="text-align:center; padding:15px;">No enrollments found.</td></tr>
+    <tr><td colspan="12" style="text-align:center; padding:15px;">No enrollments found.</td></tr>
   <?php endif; ?>
 </table>
 
