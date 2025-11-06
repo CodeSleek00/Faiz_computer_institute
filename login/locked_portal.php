@@ -1,16 +1,13 @@
 <?php
 session_start();
-// Optional: keep student_name for showing message, then destroy session
-$student_name = $_SESSION['student_name'] ?? '';
-// Do NOT destroy if you want them to be able to return without login after unlocking
-// But it's safer to destroy session so they must re-login after unlock
-session_unset();
-session_destroy();
+if (!isset($_SESSION['locked'])) {
+  header("Location: login.php");
+  exit();
+}
+$name = $_SESSION['student_name'] ?? 'Student';
 ?>
 <!DOCTYPE html>
-<html>
-<!-- the rest of your locked_portal HTML -->
-
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
