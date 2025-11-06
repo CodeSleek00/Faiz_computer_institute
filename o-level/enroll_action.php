@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $address     = mysqli_real_escape_string($conn, $_POST['address']);
     $plan        = mysqli_real_escape_string($conn, $_POST['plan']);
     $price       = mysqli_real_escape_string($conn, $_POST['price']);
-    $payment_id  = mysqli_real_escape_string($conn, $_POST['payment_id']);
+   
 
     // EMI fields (new)
     $emi_mode     = mysqli_real_escape_string($conn, $_POST['emi_mode'] ?? 'no');
@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Insert enrollment data (with EMI fields)
     $sql = "INSERT INTO olevel_enrollments 
-            (student_id, name, email, phone, address, plan_name, amount, payment_status, password, payment_id, emi_mode, emi_months, emi_remaining) 
+            (student_id, name, email, phone, address, plan_name, amount, payment_status, password, emi_mode, emi_months, emi_remaining) 
             VALUES 
-            ('$student_id', '$name', '$email', '$phone', '$address', '$plan', '$price', 'Paid', '$password', '$payment_id', '$emi_mode', '$emi_months', '$emi_remaining')";
+            ('$student_id', '$name', '$email', '$phone', '$address', '$plan', '$price', 'Paid', '$password', '$emi_mode', '$emi_months', '$emi_remaining')";
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION['enroll_success'] = [
