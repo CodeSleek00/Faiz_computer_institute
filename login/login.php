@@ -1,34 +1,77 @@
 <?php
 session_start();
-if(isset($_SESSION['user_id'])){
-  header("Location: portal.php");
-  exit;
+if (isset($_SESSION['student_id'])) {
+  header("Location: dashboard.php");
+  exit();
 }
-$error = $_GET['error'] ?? '';
 ?>
 <!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><title>Login - Student Portal</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Student Login - O Level</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body{font-family:Arial, sans-serif;background:#f3f6ff;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
-  .box{background:#fff;padding:30px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.08);width:360px}
-  input{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc}
-  button{width:100%;padding:10px;background:#3452ff;color:#fff;border:none;border-radius:6px;cursor:pointer}
-  .err{color:#c0392b;margin-top:8px}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f4f6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.login-box {
+  background: #fff;
+  padding: 30px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover {
+  background: #0056b3;
+}
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
 </style>
 </head>
 <body>
-<div class="box">
+
+<div class="login-box">
   <h2>Student Login</h2>
-  <form action="login_action.php" method="POST">
-    <input type="text" name="student_id" placeholder="Student ID (e.g. OLEV20250001)" required>
-    <input type="password" name="password" placeholder="Password" required>
+  <?php if (isset($_GET['error'])): ?>
+    <div class="error"><?= htmlspecialchars($_GET['error']) ?></div>
+  <?php endif; ?>
+  <form method="POST" action="login_action.php">
+    <input type="text" name="student_id" placeholder="Enter Student ID" required>
+    <input type="password" name="password" placeholder="Enter Password" required>
     <button type="submit">Login</button>
   </form>
-  <?php if($error): ?>
-    <p class="err">Invalid Student ID or Password</p>
-  <?php endif; ?>
-  <p style="margin-top:12px;font-size:14px;">Not enrolled? <a href="enroll.php">Enroll Now</a></p>
 </div>
+
 </body>
 </html>

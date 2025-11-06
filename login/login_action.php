@@ -2,40 +2,34 @@
 session_start();
 require 'db_connect.php';
 
-$student_id = trim($_POST['student_id'] ?? '');
-$password   = $_POST['password'] ?? '';
+$student_id = $_POST['student_id'] ?? '';
+$password = $_POST['password'] ?? '';
 
-if(!$student_id || !$password){
-  header("Location: login.php?error=1"); exit;
+if (empty($student_id) || empty($password)) {
+  header("Location: login.php?error=Please fill all fields");
+  exit();
 }
 
-$stmt = $conn->prepare("SELECT id, name, password FROM users WHERE email = ?");
-
-$stmt->bind_param("s",$student_id);
+$stmt = $conn->prepare("SELECT id, student_id, name, password FROM olevel_enrollments WHERE student_id = ?");
+$stmt->bind_param("s", $student_id);
 $stmt->execute();
-$res = $stmt->get_result();
+$result = $stmt->get_result();
 
-if($res->num_rows == 0){
-  header("Location: login.php?error=1"); exit;
+if ($result->num_rows === 1) {
+  $row = $result->fetch_assoc();
+
+  // If passwords are plain text in DB (not hashed)
+  if ($password === $row['password']) {
+    $_SESSION['student_id'] = $row['student_id'];
+    $_SESSION['student_name'] = $row['name'];
+    header("Location: dashboard.php");
+    exit();
+  } else {
+    header("Location: login.php?error=Incorrect Password");
+    exit();
+  }
+
+} else {
+  header("Location: login.php?error=Student ID not found");
+  exit();
 }
-
-$user = $res->fetch_assoc();
-$stmt->close();
-
-if(!isset($user['password_hash']) || !password_verify($password, $user['password_hash'])){
-  header("Location: login.php?error=1"); exit;
-}
-
-// successful login
-$_SESSION['user_id'] = $user['id'];
-$_SESSION['user_name'] = $user['name'];
-$_SESSION['student_id'] = $student_id;
-
-if($user['must_change_password']){
-  // redirect to change password page (implement below) or show prompt
-  header("Location: change_password.php?first_time=1");
-  exit;
-}
-
-header("Location: portal.php");
-exit;
