@@ -19,10 +19,12 @@ if ($result->num_rows === 1) {
   $row = $result->fetch_assoc();
 
   if ((int)$row['is_locked'] === 1) {
-    // Student is locked
-    header("Location: login.php?error=Account+is+locked.+Contact+admin.");
+    $_SESSION['locked'] = true;
+    $_SESSION['student_name'] = $row['name'];
+    header("Location: locked_portal.php");
     exit();
-  }
+}
+
 
   // If you are storing plain text passwords (not recommended)
   if ($password === $row['password']) {
