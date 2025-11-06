@@ -1,5 +1,7 @@
 <?php
 require 'db_connect.php';
+
+// Fetch enrollments
 $res = mysqli_query($conn, "SELECT * FROM olevel_enrollments ORDER BY created_at DESC");
 ?>
 <!doctype html>
@@ -50,19 +52,31 @@ tr:hover {
   font-size: 13px;
   text-transform: uppercase;
 }
-.paid { background: #28a745; }
-.pending { background: #ffc107; color: #000; }
-.failed { background: #dc3545; }
+.locked { background: #dc3545; }   /* red */
+.unlocked { background: #28a745; } /* green */
+.action-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.lock { background:#e04b4b; color:#fff; }
+.unlock { background:#28a745; color:#fff; }
 td:nth-child(1),
 td:nth-child(2),
 td:nth-child(3),
 td:nth-child(4) {
   font-weight: 500;
 }
+.form-inline { display:inline-block; margin:0; padding:0; }
+.note { font-size:13px; color:#666; margin-top:12px; }
 </style>
 </head>
 <body>
 <h2>O-Level Enrollments</h2>
+
+<div class="note">Click <strong>Lock</strong> to disable portal access for a student. Click <strong>Unlock</strong> to enable access again.</div>
 
 <table>
   <tr>
@@ -77,11 +91,14 @@ td:nth-child(4) {
     <th>Email</th>
     <th>Phone</th>
     <th>Address</th>
-    <th>Password</th>
+    <th>Pass</th>
+    <th>Status</th>
+    <th>Action</th>
   </tr>
 
   <?php if (mysqli_num_rows($res) > 0): ?>
     <?php while($r = mysqli_fetch_assoc($res)): ?>
+      <?php $locked = (int)$r['is_locked']; ?>
       <tr>
         <td><?= htmlspecialchars($r['id']) ?></td>
         <td><?= htmlspecialchars($r['student_id']) ?></td>
@@ -89,18 +106,42 @@ td:nth-child(4) {
         <td>₹<?= htmlspecialchars($r['amount']) ?></td>
         <td><?= htmlspecialchars(ucfirst($r['emi_mode'] ?? 'no')) ?></td>
         <td><?= htmlspecialchars($r['emi_months'] ?? '-') ?></td>
-        <td>
-          <?= $r['emi_mode'] == 'yes' ? '₹' . htmlspecialchars($r['emi_remaining']) : '-' ?>
-        </td>
+        <td><?= $r['emi_mode'] == 'yes' ? '₹' . htmlspecialchars($r['emi_remaining']) : '-' ?></td>
         <td><?= htmlspecialchars($r['name']) ?></td>
         <td><?= htmlspecialchars($r['email']) ?></td>
         <td><?= htmlspecialchars($r['phone']) ?></td>
-        <td><?= nl2br(htmlspecialchars($r['address'])) ?></td>
+        <td style="max-width:200px;"><?= nl2br(htmlspecialchars($r['address'])) ?></td>
         <td><?= htmlspecialchars($r['password']) ?></td>
+
+        <!-- Lock status -->
+        <td>
+          <?php if ($locked): ?>
+            <span class="status locked">Locked</span>
+          <?php else: ?>
+            <span class="status unlocked">Active</span>
+          <?php endif; ?>
+        </td>
+
+        <!-- Action (Lock/Unlock) -->
+        <td>
+          <?php if ($locked): ?>
+            <form class="form-inline" method="post" action="lock_action.php">
+              <input type="hidden" name="student_id" value="<?= htmlspecialchars($r['student_id']) ?>">
+              <input type="hidden" name="action" value="unlock">
+              <button class="action-btn unlock" type="submit">Unlock</button>
+            </form>
+          <?php else: ?>
+            <form class="form-inline" method="post" action="lock_action.php" onsubmit="return confirm('Are you sure you want to lock this student?');">
+              <input type="hidden" name="student_id" value="<?= htmlspecialchars($r['student_id']) ?>">
+              <input type="hidden" name="action" value="lock">
+              <button class="action-btn lock" type="submit">Lock</button>
+            </form>
+          <?php endif; ?>
+        </td>
       </tr>
     <?php endwhile; ?>
   <?php else: ?>
-    <tr><td colspan="12" style="text-align:center; padding:15px;">No enrollments found.</td></tr>
+    <tr><td colspan="14" style="text-align:center; padding:15px;">No enrollments found.</td></tr>
   <?php endif; ?>
 </table>
 
