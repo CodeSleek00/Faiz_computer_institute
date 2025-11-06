@@ -9,7 +9,8 @@ if(!$student_id || !$password){
   header("Location: login.php?error=1"); exit;
 }
 
-$stmt = $conn->prepare("SELECT id,name,password_hash,must_change_password FROM olevel_enrollments WHERE student_id=? LIMIT 1");
+$stmt = $conn->prepare("SELECT id, name, password FROM users WHERE email = ?");
+
 $stmt->bind_param("s",$student_id);
 $stmt->execute();
 $res = $stmt->get_result();
