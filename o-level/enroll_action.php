@@ -1,42 +1,40 @@
 <?php
-include 'db_connect.php';
-session_start();
+require 'db_connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $plan = mysqli_real_escape_string($conn, $_POST['plan']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
-    $payment_id = mysqli_real_escape_string($conn, $_POST['payment_id']);
+// Retrieve data
+$name        = $_POST['name']        ?? '';
+$email       = $_POST['email']       ?? '';
+$phone       = $_POST['phone']       ?? '';
+$address     = $_POST['address']     ?? '';
+$plan        = $_POST['plan']        ?? '';
+$price       = $_POST['price']       ?? 0;
+$payment_id  = $_POST['payment_id']  ?? '';
+$emi_mode    = $_POST['emi_mode']    ?? 'no';
+$emi_months  = $_POST['emi_months']  ?? 0;
+$emi_remaining = $_POST['emi_remaining'] ?? 0;
 
-    // Find last ID
-    $res = mysqli_query($conn, "SELECT id FROM olevel_enrollments ORDER BY id DESC LIMIT 1");
-    $last_id = 1000;
-    if ($row = mysqli_fetch_assoc($res)) {
-        $last_id = 1000 + $row['id'];
-    }
-
-    $student_id = "Faiz-Olevel-" . ($last_id + 1);
-    $password = $phone; // password same as phone (as you want)
-
-    $sql = "INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
-            VALUES ('$student_id', '$name', '$email', '$phone', '$address', '$plan', '$price', 'Paid',  '$password')";
-
-    if (mysqli_query($conn, $sql)) {
-        $_SESSION['enroll_success'] = [
-            'student_id' => $student_id,
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,
-            'plan' => $plan,
-            'amount' => $price,
-            'password' => $password
-        ];
-        echo "success";
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
+// Validate inputs
+if (empty($name) || empty($email) || empty($phone) || empty($address) || empty($plan) || empty($payment_id)) {
+    echo "Missing fields";
+    exit;
 }
+
+// Insert into database
+$stmt = $conn->prepare("INSERT INTO olevel_enrollments 
+    (name, email, phone, address, plan, price, payment_id, emi_mode, emi_months, emi_remaining, created_at) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+
+$stmt->bind_param(
+    "sssssdssdd",
+    $name, $email, $phone, $address, $plan, $price, $payment_id, $emi_mode, $emi_months, $emi_remaining
+);
+
+if ($stmt->execute()) {
+    echo "success";
+} else {
+    echo "Database Error: " . $stmt->error;
+}
+
+$stmt->close();
+$conn->close();
 ?>
