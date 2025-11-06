@@ -10,7 +10,7 @@ if (empty($student_id) || empty($password)) {
   exit();
 }
 
-$stmt = $conn->prepare("SELECT id, student_id, name, password FROM olevel_enrollments WHERE student_id = ?");
+$stmt = $conn->prepare("SELECT id, student_id, name, password, is_locked FROM olevel_enrollments WHERE student_id = ?");
 $stmt->bind_param("s", $student_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -18,18 +18,24 @@ $result = $stmt->get_result();
 if ($result->num_rows === 1) {
   $row = $result->fetch_assoc();
 
-  // If passwords are plain text in DB (not hashed)
+  if ((int)$row['is_locked'] === 1) {
+    // Student is locked
+    header("Location: login.php?error=Account+is+locked.+Contact+admin.");
+    exit();
+  }
+
+  // If you are storing plain text passwords (not recommended)
   if ($password === $row['password']) {
     $_SESSION['student_id'] = $row['student_id'];
     $_SESSION['student_name'] = $row['name'];
     header("Location: dashboard.php");
     exit();
   } else {
-    header("Location: login.php?error=Incorrect Password");
+    header("Location: login.php?error=Incorrect+Password");
     exit();
   }
 
 } else {
-  header("Location: login.php?error=Student ID not found");
+  header("Location: login.php?error=Student+ID+not+found");
   exit();
 }
