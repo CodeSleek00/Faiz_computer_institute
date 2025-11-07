@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 
-$students = $conn->query("SELECT * FROM students ORDER BY name ASC");
+$students = $conn->query("SELECT * FROM olevel_enrollments ORDER BY name ASC");
 $courses = $conn->query("SELECT DISTINCT course FROM students");
 ?>
 
