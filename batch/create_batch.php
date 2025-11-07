@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $students = $conn->query("SELECT * FROM olevel_enrollments ORDER BY name ASC");
-$courses = $conn->query("SELECT DISTINCT course FROM olevel_enrollments");
+
 ?>
 
 <!DOCTYPE html>
