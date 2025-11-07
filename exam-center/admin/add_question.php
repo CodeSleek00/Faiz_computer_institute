@@ -1,44 +1,53 @@
 <?php
 include 'db_connect.php';
 
-$exam_id = $_GET['exam_id'];
-$total = $_GET['total'];
-$q_num = isset($_GET['q_num']) ? $_GET['q_num'] : 1;
+$exam_id = $_GET['exam_id'] ?? 0;
+$total = $_GET['total'] ?? 0;
+$q_num = $_GET['q_num'] ?? 1;
+
+if (!$exam_id || !$total) {
+    die("Invalid Exam Information");
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $question = $_POST['question'];
-    $a = $_POST['option_a'];
-    $b = $_POST['option_b'];
-    $c = $_POST['option_c'];
-    $d = $_POST['option_d'];
-    $correct = $_POST['correct_option'];
+    $question = trim($_POST['question']);
+    $a = trim($_POST['option_a']);
+    $b = trim($_POST['option_b']);
+    $c = trim($_POST['option_c']);
+    $d = trim($_POST['option_d']);
+    $correct = strtolower(trim($_POST['correct_option']));
 
-    $stmt = $conn->prepare("INSERT INTO exam_questions (exam_id, question, option_a, option_b, option_c, option_d, correct_option)
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("issssss", $exam_id, $question, $a, $b, $c, $d, $correct);
-    $stmt->execute();
-
-    if ($q_num < $total) {
-        header("Location: add_question.php?exam_id=$exam_id&total=$total&q_num=" . ($q_num + 1));
+    // ✅ Validation
+    if (!in_array($correct, ['a', 'b', 'c', 'd'])) {
+        echo "<script>alert('Correct option must be a, b, c, or d');</script>";
     } else {
-        header("Location: assign_exam.php?exam_id=$exam_id");
+        $stmt = $conn->prepare("INSERT INTO exam_questions 
+            (exam_id, question, option_a, option_b, option_c, option_d, correct_option) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issssss", $exam_id, $question, $a, $b, $c, $d, $correct);
+        $stmt->execute();
+
+        // ✅ Redirect
+        if ($q_num < $total) {
+            header("Location: add_question.php?exam_id=$exam_id&total=$total&q_num=" . ($q_num + 1));
+        } else {
+            header("Location: assign_exam.php?exam_id=$exam_id");
+        }
+        exit;
     }
-    exit;
 }
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Add Exam Question</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="image.png">
-  <link rel="apple-touch-icon" href="image.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4f46e5;
-            --success: #28a745;
+            --success: #16a34a;
             --light-bg: #f3f4f6;
             --white: #ffffff;
             --gray: #6b7280;
@@ -46,9 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -93,12 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             resize: vertical;
         }
 
-        textarea {
-            min-height: 100px;
-        }
+        textarea { min-height: 100px; }
 
-        input:focus,
-        textarea:focus {
+        input:focus, textarea:focus {
             border-color: var(--primary);
             outline: none;
         }
@@ -115,47 +119,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: background 0.3s ease;
         }
 
-        button:hover {
-            background: #218838;
+        button:hover { background: #15803d; }
+
+        .progress {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 15px;
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 20px;
-            }
-
-            .form-box {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
+            body { padding: 20px; }
+            .form-box { padding: 20px; }
+            h2 { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="form-box">
-    <h2>🧾 Question <?= $q_num ?> of <?= $total ?></h2>
+    <h2>🧾 Add Question <?= htmlspecialchars($q_num) ?> / <?= htmlspecialchars($total) ?></h2>
+    <div class="progress">Exam ID: <?= htmlspecialchars($exam_id) ?></div>
+
     <form method="POST">
         <label for="question">Question:</label>
-        <textarea name="question" id="question" required></textarea>
+        <textarea name="question" id="question" placeholder="Enter full question here..." required></textarea>
 
-        <label for="option_a">Option A:</label>
-        <input type="text" name="option_a" id="option_a" required>
+        <label>Option A:</label>
+        <input type="text" name="option_a" placeholder="Enter option A" required>
 
-        <label for="option_b">Option B:</label>
-        <input type="text" name="option_b" id="option_b" required>
+        <label>Option B:</label>
+        <input type="text" name="option_b" placeholder="Enter option B" required>
 
-        <label for="option_c">Option C:</label>
-        <input type="text" name="option_c" id="option_c" required>
+        <label>Option C:</label>
+        <input type="text" name="option_c" placeholder="Enter option C" required>
 
-        <label for="option_d">Option D:</label>
-        <input type="text" name="option_d" id="option_d" required>
+        <label>Option D:</label>
+        <input type="text" name="option_d" placeholder="Enter option D" required>
 
-        <label for="correct_option">Correct Option (a / b / c / d):</label>
-        <input type="text" name="correct_option" id="correct_option" pattern="[abcd]" required>
+        <label for="correct_option">Correct Option:</label>
+        <select name="correct_option" id="correct_option" required>
+            <option value="">-- Select Correct Option --</option>
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+        </select>
 
         <button type="submit">💾 Save & Next</button>
     </form>

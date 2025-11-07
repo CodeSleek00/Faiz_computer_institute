@@ -2,13 +2,14 @@
 include 'db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $exam_name = $_POST['exam_name'];
-    $total_questions = $_POST['total_questions'];
-    $duration = $_POST['duration'];
-    $marks = $_POST['marks'];
+    $exam_name = trim($_POST['exam_name']);
+    $total_questions = (int)$_POST['total_questions'];
+    $marks = (int)$_POST['marks'];
+    $duration = !empty($_POST['duration']) ? (int)$_POST['duration'] : NULL;
+    $plan_type = $_POST['plan_type'];
 
-    $stmt = $conn->prepare("INSERT INTO exams (exam_name, total_questions, duration, marks_per_question) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("siii", $exam_name, $total_questions, $duration, $marks);
+    $stmt = $conn->prepare("INSERT INTO exams (exam_name, total_questions, duration, marks_per_question, plan_type) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("siiis", $exam_name, $total_questions, $duration, $marks, $plan_type);
     $stmt->execute();
 
     $exam_id = $stmt->insert_id;
@@ -18,12 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Create Exam</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="image.png">
-  <link rel="apple-touch-icon" href="image.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -35,9 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             --shadow: 0 8px 24px rgba(0,0,0,0.08);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -69,7 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         input[type="text"],
-        input[type="number"] {
+        input[type="number"],
+        select {
             padding: 12px 15px;
             border: 1px solid #ccc;
             border-radius: var(--radius);
@@ -77,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: border 0.2s;
         }
 
-        input:focus {
+        input:focus, select:focus {
             border-color: var(--primary);
             outline: none;
         }
@@ -98,14 +97,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #4338ca;
         }
 
-        @media (max-width: 480px) {
-            .form-box {
-                padding: 20px;
-            }
+        small {
+            color: var(--gray);
+            font-size: 13px;
+        }
 
-            h2 {
-                font-size: 20px;
-            }
+        @media (max-width: 480px) {
+            .form-box { padding: 20px; }
+            h2 { font-size: 20px; }
         }
     </style>
 </head>
@@ -115,10 +114,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>📝 Create New Exam</h2>
     <form method="POST">
         <input type="text" name="exam_name" placeholder="Enter Exam Name" required>
-        <input type="number" name="total_questions" placeholder="Total Questions" required>
-        <input type="number" name="marks" placeholder="Marks per Question" required>
-        <input type="number" name="duration" placeholder="Duration (in minutes)" required>
+        <input type="number" name="total_questions" placeholder="Total Questions" min="1" required>
+        <input type="number" name="marks" placeholder="Marks per Question" min="1" required>
+        <input type="number" name="duration" placeholder="Duration (in minutes - optional)">
+        
+        <select name="plan_type" required>
+            <option value="">Select Plan to Assign</option>
+            <option value="basic">Basic Plan</option>
+            <option value="custom">Custom Plan</option>
+            <option value="advance">Advance Plan</option>
+        </select>
+
         <button type="submit">➕ Add Questions</button>
+        <small>Duration can be left blank for untimed exams.</small>
     </form>
 </div>
 

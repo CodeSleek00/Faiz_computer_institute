@@ -10,7 +10,7 @@ $student_id = $student['student_id'];
 
 // Fetch all declared exam results for this student
 $sql = "
-    SELECT e.exam_name, e.total_questions, s.score
+    SELECT e.exam_id, e.exam_name, e.total_questions, s.score
     FROM exam_submissions s
     JOIN exams e ON s.exam_id = e.exam_id
     WHERE s.student_id = $student_id AND e.result_declared = 1
@@ -24,7 +24,7 @@ $results = $conn->query($sql);
 <head>
     <title>Your Exam Results</title>
     <link rel="icon" type="image/png" href="image.png">
-  <link rel="apple-touch-icon" href="image.png">
+    <link rel="apple-touch-icon" href="image.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -37,9 +37,7 @@ $results = $conn->query($sql);
             --radius: 10px;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -50,7 +48,7 @@ $results = $conn->query($sql);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: auto;
             background: var(--white);
             border-radius: var(--radius);
@@ -81,9 +79,7 @@ $results = $conn->query($sql);
             gap: 6px;
         }
 
-        .back-btn i {
-            font-size: 14px;
-        }
+        .back-btn i { font-size: 14px; }
 
         table {
             width: 100%;
@@ -105,9 +101,7 @@ $results = $conn->query($sql);
             font-size: 13px;
         }
 
-        tr:hover {
-            background-color: #f3f4f6;
-        }
+        tr:hover { background-color: #f3f4f6; }
 
         .empty-state {
             text-align: center;
@@ -115,21 +109,24 @@ $results = $conn->query($sql);
             color: var(--gray);
         }
 
-        .empty-state i {
-            font-size: 40px;
-            margin-bottom: 10px;
+        .empty-state i { font-size: 40px; margin-bottom: 10px; }
+
+        .details-section {
+            margin-top: 40px;
         }
 
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
+        .details-section h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
 
-            table, th, td {
-                font-size: 14px;
-            }
+        .correct { color: green; font-weight: 600; }
+        .wrong { color: red; font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            table, th, td { font-size: 14px; }
         }
     </style>
 </head>
@@ -158,6 +155,51 @@ $results = $conn->query($sql);
                         <td><?= htmlspecialchars($row['exam_name']) ?></td>
                         <td><?= $row['score'] ?></td>
                         <td><?= $row['total_questions'] ?></td>
+                    </tr>
+
+                    <!-- Show detailed answers for this exam -->
+                    <tr>
+                        <td colspan="3">
+                            <div class="details-section">
+                                <h3>📘 Answer Review for <?= htmlspecialchars($row['exam_name']) ?></h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Question</th>
+                                            <th>Your Answer</th>
+                                            <th>Correct Answer</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $exam_id = $row['exam_id'];
+                                        $q = $conn->query("
+                                            SELECT q.question_text, q.correct_option, a.selected_option
+                                            FROM exam_answers a
+                                            JOIN exam_questions q ON a.question_id = q.question_id
+                                            WHERE a.exam_id = $exam_id AND a.student_id = $student_id
+                                        ");
+                                        if ($q->num_rows > 0) {
+                                            while ($ans = $q->fetch_assoc()) {
+                                                $status = ($ans['selected_option'] == $ans['correct_option']) ? "<span class='correct'>✔ Correct</span>" : "<span class='wrong'>✘ Wrong</span>";
+                                                echo "
+                                                    <tr>
+                                                        <td>".htmlspecialchars($ans['question_text'])."</td>
+                                                        <td>".htmlspecialchars($ans['selected_option'])."</td>
+                                                        <td>".htmlspecialchars($ans['correct_option'])."</td>
+                                                        <td>$status</td>
+                                                    </tr>
+                                                ";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='4' style='text-align:center;color:gray;'>No answer data available</td></tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>
