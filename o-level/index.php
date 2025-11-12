@@ -306,7 +306,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
     </div>
   </div>
 
-<header>
+<header class="single">
   <h1>Premium Learning Courses</h1>
   <p>Enroll securely through Razorpay</p>
 </header>
