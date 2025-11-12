@@ -57,6 +57,7 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
    
     <title>Faiz Computer Institute</title>
    <style>
+    header{background:#1e40af;color:#fff;text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;}
    .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
 .course-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
 .course-card:hover{transform:translateY(-5px);}
