@@ -1,27 +1,31 @@
 <?php
 require 'db_connect.php';
+
+// Fetch courses
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 
-// Handle form + payment in same file
+// If enrollment form submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $course = $_POST['course_name'];
-    $price = $_POST['price'];
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
+    $address = trim($_POST['address']);
+    $course = trim($_POST['course_name']);
+    $price = floatval($_POST['price']);
 
-    // Generate Enrollment ID
+    // Generate next Enrollment ID
     $res = $conn->query("SELECT id FROM olevel_enrollments ORDER BY id DESC LIMIT 1");
-    $next = ($res->num_rows > 0) ? ($res->fetch_assoc()['id'] + 1) : 1001;
+    $next = ($res && $res->num_rows > 0) ? ($res->fetch_assoc()['id'] + 1) : 1001;
     $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
 
-    // Insert into database
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name) VALUES (?,?,?,?,?,?)");
-    $stmt->bind_param("ssssss", $student_id, $name, $email, $phone, $address, $course);
+    // Save to database
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
+        (student_id, name, email, phone, address, plan_name, amount) 
+        VALUES (?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssssssd", $enrollment_id, $name, $email, $phone, $address, $course, $price);
     $stmt->execute();
 
-    // After saving data, show payment modal
+    // Pass data to JS
     echo "<script>
       const enrollmentData = {
         id: '$enrollment_id',
@@ -38,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Courses | Pyaara Store</title>
+<title>Enroll in Premium Courses | Pyaara Store</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -83,7 +87,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 <?php endwhile; ?>
 </div>
 
-<!-- Enrollment Form Modal -->
+<!-- Enrollment Modal -->
 <div class="modal" id="enrollModal">
   <div class="modal-content">
     <span class="close" onclick="closeForm()">&times;</span>
@@ -127,20 +131,19 @@ function openForm(course, price){
 }
 function closeForm(){document.getElementById('enrollModal').style.display='none';}
 
-// Razorpay auto-open if PHP printed enrollmentData
+// Razorpay auto popup if enrollmentData exists
 if(typeof enrollmentData !== 'undefined'){
   startPayment(enrollmentData);
 }
 
 function startPayment(data){
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB",
+    key: "rzp_test_Rc7TynjHcNrEfB", // Replace with your Razorpay key
     amount: data.price * 100,
     currency: "INR",
     name: "Pyaara Store",
     description: data.course,
     handler: function (response){
-      // Save payment ID via AJAX
       fetch('', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -163,16 +166,15 @@ function showThankYou(data){
 </script>
 
 <?php
-// handle payment update (same file)
+// Handle payment update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
     $pid = $_POST['payment_id'];
-    $eid = $_POST['student_id'];
-    $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=? WHERE student_id=?");
+    $eid = $_POST['enrollment_id'];
+    $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=?, payment_status='Success' WHERE student_id=?");
     $stmt->bind_param("ss", $pid, $eid);
     $stmt->execute();
     exit;
 }
 ?>
-
 </body>
 </html>
