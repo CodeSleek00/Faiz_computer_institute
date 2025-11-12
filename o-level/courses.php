@@ -165,7 +165,7 @@ function startPayment() {
 
   let options = {
     key: "rzp_test_Rc7TynjHcNrEfB",
-    amount: price * 100,
+    amount: price,
     currency: "INR",
     name: "Pyaara Store",
     description: data.plan,
