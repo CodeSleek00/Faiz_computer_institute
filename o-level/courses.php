@@ -2,14 +2,14 @@
 require 'db_connect.php';
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 
-// Student ID generator
+// ✅ Student ID generator
 function generateStudentID($conn) {
     $result = $conn->query("SELECT COUNT(*) as total FROM olevel_enrollments");
     $count = $result->fetch_assoc()['total'] ?? 0;
     return "Faiz-OLEVELMOD-" . (1001 + $count);
 }
 
-// Handle form + payment confirmation
+// ✅ Handle form + payment confirmation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
     $student_id = generateStudentID($conn);
     $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $plan_name = mysqli_real_escape_string($conn, $_POST['plan']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
+    $amount = mysqli_real_escape_string($conn, $_POST['amount']);
     $payment_status = "Paid";
 
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status) VALUES (?,?,?,?,?,?,?,?)");
@@ -124,7 +124,7 @@ form input, textarea {
     <ul id="modal-desc"></ul>
     <form id="enrollForm">
       <input type="hidden" name="plan" id="plan">
-      <input type="hidden" name="price" id="price">
+      <input type="hidden" name="amount" id="amount">
       <input type="text" name="name" placeholder="Full Name" required>
       <input type="email" name="email" placeholder="Email Address" required>
       <input type="text" name="phone" placeholder="Phone Number" required>
@@ -161,15 +161,16 @@ function closePopup() {
 function startPayment() {
   const form = document.getElementById("enrollForm");
   const data = Object.fromEntries(new FormData(form));
+  let price = parseInt(data.amount.replace(/[^\d]/g, "")); // remove any ₹ sign
 
   let options = {
     key: "rzp_test_Rc7TynjHcNrEfB",
-    amount: parseInt(data.price) * 100,
+    amount: price * 100,
     currency: "INR",
     name: "Pyaara Store",
     description: data.plan,
     handler: function () {
-      fetch("", {
+      fetch(window.location.href, {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: new URLSearchParams({...data, payment_confirmed: 1})
