@@ -155,7 +155,6 @@ ul {
     <span class="close" onclick="closeModal()">&times;</span>
     <h2 id="modalTitle"></h2>
     <ul id="modalDescription"></ul>
-    <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
     <p><strong>Price:</strong> ₹<span id="modalPrice"></span></p>
     <button class="btn btn-primary" id="modalEnrollBtn">Enroll Now</button>
   </div>
