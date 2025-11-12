@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $payment_status = "Paid";
 
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, price, payment_status) VALUES (?,?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssss", $student_id, $name, $email, $phone, $address, $plan_name, $price, $payment_status);
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status) VALUES (?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssssssss", $student_id, $name, $email, $phone, $address, $plan_name, $amount, $payment_status);
     
     if ($stmt->execute()) {
         echo "success|$student_id";
