@@ -124,7 +124,7 @@ function startPayment(enrollment_id, name, course, amount) {
   closeEnrollmentForm();
 
   var options = {
-    "key": "rzp_live_pA6jgjncp78sq7",
+    "key": "rzp_test_Rc7TynjHcNrEfB",
     "amount": amount * 100,
     "currency": "INR",
     "name": "Pyaara Store",
