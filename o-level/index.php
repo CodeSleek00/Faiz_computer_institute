@@ -2,42 +2,39 @@
 require 'db_connect.php';
 session_start();
 
-// Insert only after payment success
+// ✅ Insert data after payment success
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
-    // Debug: POST data को log करें (बाद में हटा दें)
-    error_log("POST Data: " . print_r($_POST, true));
-
     $name    = mysqli_real_escape_string($conn, $_POST['name']);
     $email   = mysqli_real_escape_string($conn, $_POST['email']);
     $phone   = mysqli_real_escape_string($conn, $_POST['phone']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']);
-    $price   = (float)$_POST['price_val'];  // ← यहीं float में कास्ट
+    $price   = (float)$_POST['price_val'];
 
-    // Generate ID
+    // Generate Student ID
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
     $row = $res->fetch_assoc();
     $next = ($row['last_id'] ?? 1000) + 1;
-    $student_id = "FAIZ-OLEVEL-" . $next;
+    $student_id = "FAIZ-OLEVELMOD-" . $next;
 
     $password = $phone;
+    $payment_status = 'Paid';
 
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-    (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$payment_status = 'Paid';
-$stmt->bind_param("ssssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $payment_status, $password);
+        (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $payment_status, $password);
 
     if ($stmt->execute()) {
-        echo "success";
+        echo "success|$student_id"; // 👈 Return student ID for redirect
     } else {
-        error_log("DB Insert Error: " . $stmt->error);
-        echo "Database error: " . $stmt->error;
+        echo "error|" . $stmt->error;
     }
     $stmt->close();
     exit;
 }
 
+// ✅ Fetch courses
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 ?>
 <!DOCTYPE html>
@@ -309,14 +306,14 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
     </div>
   </div>
 
-<header class="single">
+<header>
   <h1>Premium Learning Courses</h1>
   <p>Enroll securely through Razorpay</p>
 </header>
 
 <div class="course-grid">
 <?php while($c = $courses->fetch_assoc()): 
-    $clean_price = (float)preg_replace('/[^0-9.]/', '', $c['price']); // सिर्फ़ नंबर
+    $clean_price = (float)preg_replace('/[^0-9.]/', '', $c['price']);
 ?>
   <div class="course-card">
     <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course" class="course-image">
@@ -324,10 +321,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
       <p class="course-description"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
       <div class="course-price">₹<?= number_format($clean_price, 0) ?></div>
-      <button class="enroll-btn" 
-              onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>
-        Enroll Now
-      </button>
+      <button class="enroll-btn" onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>Enroll Now</button>
     </div>
   </div>
 <?php endwhile; ?>
@@ -354,15 +348,13 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
   </div>
 </div>
 
-<!-- Thank You Modal -->
-<div class="modal-overlay" id="thankYouModal">
+<!-- Loader -->
+<div class="modal-overlay" id="loadingModal">
   <div class="modal-container" style="text-align:center;">
-    <h2>Payment Successful!</h2>
-    <p>Thank you for enrolling in <b id="thankCourse"></b>.</p>
-    <p>Your enrollment is now confirmed</p>
-    <button onclick="location.reload()" class="enroll-btn">Back to Courses</button>
+    <div class="loader" id="loaderText">Processing your enrollment...</div>
   </div>
 </div>
+
 <script>
 function openForm(course, price){
   const numPrice = parseFloat(price);
@@ -392,12 +384,17 @@ function startPayment(e){
   }
 
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB",
-    amount: Math.round(price * 100), // Razorpay expects paise
+    key: "rzp_test_Rc7TynjHcNrEfB", // 🔑 Replace with your live Razorpay key
+    amount: Math.round(price * 100),
     currency: "INR",
     name: "Pyaara Store",
     description: data.plan_name,
     handler: function (){
+      // Show loading
+      document.getElementById('enrollModal').style.display = 'none';
+      document.getElementById('loadingModal').style.display = 'flex';
+      document.getElementById('loaderText').style.display = 'block';
+
       fetch("", {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
@@ -405,15 +402,19 @@ function startPayment(e){
       })
       .then(res => res.text())
       .then(res => {
-        if (res.trim() === "success") {
-          showThankYou(data);
+        const parts = res.trim().split("|");
+        if (parts[0] === "success" && parts[1]) {
+          const cid = parts[1];
+          window.location.href = "thankyou.php?cid=" + encodeURIComponent(cid);
         } else {
           alert("Enrollment failed. Please contact support.\nResponse: " + res);
+          document.getElementById('loadingModal').style.display = 'none';
         }
       })
       .catch(err => {
         console.error(err);
         alert("Network error. Try again.");
+        document.getElementById('loadingModal').style.display = 'none';
       });
     },
     prefill: {
@@ -428,18 +429,9 @@ function startPayment(e){
   rzp.open();
 }
 
-function showThankYou(data){
-  document.getElementById('enrollModal').style.display = 'none';
-  document.getElementById('thankCourse').textContent = data.plan_name;
-  document.getElementById('thankYouModal').style.display = 'flex';
-}
-
-// Close modals when clicking outside
 window.onclick = function(e) {
   const enrollModal = document.getElementById('enrollModal');
-  const thankModal = document.getElementById('thankYouModal');
   if (e.target === enrollModal) enrollModal.style.display = 'none';
-  if (e.target === thankModal) thankModal.style.display = 'none';
 }
 </script>
 
