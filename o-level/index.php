@@ -57,7 +57,19 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
    
     <title>Faiz Computer Institute</title>
    <style>
-   
+   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
+.course-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
+.course-card:hover{transform:translateY(-5px);}
+.course-image{width:100%;height:160px;object-fit:cover}
+.course-body{padding:1rem;}
+.course-title{margin:0;font-size:1.1rem;}
+.course-price{font-weight:600;color:#1e40af;margin:.5rem 0;}
+.enroll-btn{background:#1e40af;color:#fff;cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weight:500;}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
+.modal-container{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
+.close-btn{float:right;font-size:1.3rem;cursor:pointer;}
+input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
+footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
 </style>
  
 </head>
@@ -309,7 +321,7 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
     <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course" class="course-image">
     <div class="course-body">
       <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
-      <p style="color:#666;font-size:.9rem;"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
+      <p class="course-description"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
       <div class="course-price">₹<?= number_format($clean_price, 0) ?></div>
       <button class="enroll-btn" 
               onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>
@@ -350,7 +362,6 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
     <button onclick="location.reload()" class="enroll-btn">Back to Courses</button>
   </div>
 </div>
-
 <script>
 function openForm(course, price){
   const numPrice = parseFloat(price);
