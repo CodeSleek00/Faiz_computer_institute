@@ -174,6 +174,21 @@ function showThankYou(data){
   document.getElementById('thankEnrollID').textContent = data.id;
   document.getElementById('thankYouModal').style.display='flex';
 }
+handler: function (response) {
+    $.ajax({
+        url: 'verify_payment.php',
+        type: 'POST',
+        data: {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature
+        },
+        success: function (res) {
+            window.location.href = "thank_you.php";
+        }
+    });
+}
+
 </script>
 
 <?php
