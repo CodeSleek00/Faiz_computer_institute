@@ -162,7 +162,7 @@ ul {
   <div class="course-grid">
     <?php while($row = $courses->fetch_assoc()): ?>
     <div class="course-card">
-      <img src="uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
+      <img src="../uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>">
       <h3><?= htmlspecialchars($row['name']) ?></h3>
       <p class="price">₹<?= number_format($row['price'], 2) ?></p>
       <button class="btn btn-outline" onclick='openModal(<?= json_encode($row) ?>)'>View Details</button>
