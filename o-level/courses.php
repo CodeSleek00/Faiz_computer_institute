@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
 
     // Insert into database
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, course_name) VALUES (?,?,?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name) VALUES (?,?,?,?,?,?)");
     $stmt->bind_param("ssssss", $student_id, $name, $email, $phone, $address, $course);
     $stmt->execute();
 
