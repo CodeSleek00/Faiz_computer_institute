@@ -2,59 +2,46 @@
 require 'db_connect.php';
 session_start();
 
-// ✅ 1. Update payment after Razorpay success (AJAX)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
-    $pid = $_POST['payment_id'];
-    $eid = $_POST['enrollment_id'];
-
-    $stmt = $conn->prepare("UPDATE olevel_enrollments 
-        SET payment_id=?, payment_status='Paid' 
-        WHERE student_id=?");
-    $stmt->bind_param("ss", $pid, $eid);
-    $stmt->execute();
-    $stmt->close();
-    exit("success");
-}
-
-// ✅ 2. Fetch available courses
-$courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
-
-// ✅ 3. Handle enrollment form submission (before payment)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $address = trim($_POST['address']);
-    $course = trim($_POST['course_name']);
-    $price = floatval($_POST['price']);
+// After Razorpay payment success → save enrollment
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_id'])) {
+    $name     = mysqli_real_escape_string($conn, $_POST['name']);
+    $email    = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone    = mysqli_real_escape_string($conn, $_POST['phone']);
+    $address  = mysqli_real_escape_string($conn, $_POST['address']);
+    $course   = mysqli_real_escape_string($conn, $_POST['course']);
+    $price    = mysqli_real_escape_string($conn, $_POST['price']);
+    $payment_id = mysqli_real_escape_string($conn, $_POST['payment_id']);
 
     // Generate Enrollment ID
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
     $row = $res->fetch_assoc();
     $next = ($row['last_id'] ?? 1000) + 1;
-    $enrollment_id = "FAIZ-OLEVEL-" . $next;
+    $student_id = "FAIZ-OLEVEL-" . $next;
 
-    // Password = phone
-    $password = $phone;
+    $password = $phone; // phone as password
 
-    // Insert new record (initially pending)
+    // Insert after successful payment
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, payment_status, password) 
-        VALUES (?,?,?,?,?,?,?,?,?)");
-    $status = 'Pending';
-    $stmt->bind_param("sssssssss", $enrollment_id, $name, $email, $phone, $address, $course, $price, $status, $password);
+        (student_id, name, email, phone, address, plan_name, amount, payment_id, payment_status, password) 
+        VALUES (?,?,?,?,?,?,?,?,?,?)");
+    $status = 'Paid';
+    $stmt->bind_param("ssssssdsss", $student_id, $name, $email, $phone, $address, $course, $price, $payment_id, $status, $password);
     $stmt->execute();
     $stmt->close();
 
-    echo "<script>
-      const enrollmentData = {
-        id: '". addslashes($enrollment_id) ."',
-        name: '". addslashes($name) ."',
-        course: '". addslashes($course) ."',
-        price: ". json_encode($price) ."
-      };
-    </script>";
+    $_SESSION['enroll_success'] = [
+        'student_id' => $student_id,
+        'name' => $name,
+        'course' => $course,
+        'price' => $price,
+    ];
+
+    echo "success";
+    exit;
 }
+
+// Fetch available courses
+$courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -62,13 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enroll in Premium Courses | Pyaara Store</title>
+<title>Premium Courses | Pyaara Store</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 body{font-family:'Poppins',sans-serif;margin:0;background:#f8f9fa;}
 header{background:#1e40af;color:#fff;text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;}
-h1{margin:0;font-size:1.8rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
 .card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
 .card:hover{transform:translateY(-5px);}
@@ -78,20 +64,18 @@ h1{margin:0;font-size:1.8rem}
 .price{font-weight:600;color:#1e40af;margin:.5rem 0;}
 button{cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weight:500;}
 .btn-primary{background:#1e40af;color:#fff;}
-.btn-outline{background:#fff;color:#1e40af;border:1px solid #1e40af;}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
 .modal-content{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
-input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
 .close{float:right;font-size:1.3rem;cursor:pointer;}
+input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
 footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
-.note{font-size:.85rem;color:#374151;margin-top:6px;}
 </style>
 </head>
 <body>
 
 <header>
   <h1>Premium Learning Courses</h1>
-  <p>Expand your knowledge with our expertly crafted modules</p>
+  <p>Enroll after secure Razorpay payment</p>
 </header>
 
 <div class="grid">
@@ -102,7 +86,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <h3><?= htmlspecialchars($c['name']) ?></h3>
       <p style="color:#666;font-size:.9rem;"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
       <div class="price">₹<?= htmlspecialchars($c['price']) ?></div>
-      <button class="btn-primary" onclick="openForm('<?= htmlspecialchars($c['name']) ?>', <?= $c['price'] ?>)">Enroll</button>
+      <button class="btn-primary" onclick="openForm('<?= htmlspecialchars($c['name']) ?>', <?= $c['price'] ?>)">Enroll Now</button>
     </div>
   </div>
 <?php endwhile; ?>
@@ -112,9 +96,9 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 <div class="modal" id="enrollModal">
   <div class="modal-content">
     <span class="close" onclick="closeForm()">&times;</span>
-    <h2 style="margin-top:0;">Enroll in <span id="courseTitle"></span></h2>
-    <form method="POST">
-      <input type="hidden" name="course_name" id="courseInput">
+    <h2>Enroll in <span id="courseTitle"></span></h2>
+    <form id="enrollForm" onsubmit="startPayment(event)">
+      <input type="hidden" name="course" id="courseInput">
       <input type="hidden" name="price" id="priceInput">
       <label>Full Name</label>
       <input type="text" name="name" required>
@@ -122,10 +106,9 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <input type="email" name="email" required>
       <label>Phone (This will be your password)</label>
       <input type="text" name="phone" required>
-      <div class="note">Note: Your phone number will be your initial password.</div>
       <label>Address</label>
       <textarea name="address" required></textarea>
-      <button type="submit" name="enroll_submit" class="btn-primary" style="width:100%;">Proceed to Payment</button>
+      <button type="submit" class="btn-primary" style="width:100%;">Proceed to Pay</button>
     </form>
   </div>
 </div>
@@ -138,7 +121,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
     <p>Your Enrollment ID:</p>
     <div style="font-weight:700;color:#1e40af" id="thankEnrollID"></div>
     <br>
-    <button class="btn-outline" onclick="location.reload()">Back to Courses</button>
+    <button onclick="location.reload()" class="btn-primary">Back to Courses</button>
   </div>
 </div>
 
@@ -153,43 +136,43 @@ function openForm(course, price){
 }
 function closeForm(){document.getElementById('enrollModal').style.display='none';}
 
-// ✅ After PHP inserts initial record, this triggers Razorpay
-if(typeof enrollmentData !== 'undefined'){
-  startPayment(enrollmentData);
-}
+function startPayment(e){
+  e.preventDefault();
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form).entries());
 
-function startPayment(data){
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB", // Your Razorpay Key
+    key: "rzp_test_Rc7TynjHcNrEfB", // replace with live key later
     amount: data.price * 100,
     currency: "INR",
     name: "Pyaara Store",
     description: data.course,
     handler: function (response){
-      fetch(window.location.href, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `update_payment=1&payment_id=${response.razorpay_payment_id}&enrollment_id=${encodeURIComponent(data.id)}`
-      })
-      .then(res => res.text())
-      .then(text => {
-        if(text.trim() === "success") showThankYou(data);
-        else alert("Payment update failed: " + text);
+      // Now payment successful → save to database
+      fetch("", {
+        method: "POST",
+        headers: {"Content-Type":"application/x-www-form-urlencoded"},
+        body: new URLSearchParams({...data, payment_id: response.razorpay_payment_id})
+      }).then(res => res.text()).then(res=>{
+        if(res.trim()==="success"){
+          showThankYou(data);
+        } else {
+          alert("Database error: " + res);
+        }
       });
     },
-    prefill: { name: data.name },
+    prefill: { name: data.name, email: data.email, contact: data.phone },
     theme: { color: "#1e40af" }
   };
   const rzp = new Razorpay(options);
   rzp.open();
 }
-
 function showThankYou(data){
+  document.getElementById('enrollModal').style.display='none';
   document.getElementById('thankCourse').textContent = data.course;
-  document.getElementById('thankEnrollID').textContent = data.id;
+  document.getElementById('thankEnrollID').textContent = "Generated after payment ✅";
   document.getElementById('thankYouModal').style.display='flex';
 }
 </script>
-
 </body>
 </html>
