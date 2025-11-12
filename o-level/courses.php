@@ -137,20 +137,20 @@ form input, textarea {
 <script>
 let modal = document.getElementById("popup");
 
-function showDetails(name, desc, price) {
+function showDetails(name, desc, amount) {
   let descList = desc.split(',').map(d => `<li>${d.trim()}</li>`).join('');
-  document.getElementById("modal-title").innerText = name + " - ₹" + price;
+  document.getElementById("modal-title").innerText = name + " - ₹" + amount;
   document.getElementById("modal-desc").innerHTML = descList;
   document.getElementById("plan").value = name;
-  document.getElementById("amount").value = price;
+  document.getElementById("amount").value = amount;
   modal.style.display = "flex";
 }
 
-function openForm(plan, price) {
-  document.getElementById("modal-title").innerText = plan + " - ₹" + price;
+function openForm(plan, amount) {
+  document.getElementById("modal-title").innerText = plan + " - ₹" + amount;
   document.getElementById("modal-desc").innerHTML = "";
   document.getElementById("plan").value = plan;
-  document.getElementById("amount").value = price;
+  document.getElementById("amount").value = amount;
   modal.style.display = "flex";
 }
 
