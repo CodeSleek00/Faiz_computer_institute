@@ -2,39 +2,31 @@
 require 'db_connect.php';
 session_start();
 
-// ✅ Insert data after payment success
+// ✅ Handle database insertion after payment
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
-    $name    = mysqli_real_escape_string($conn, $_POST['name']);
-    $email   = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone   = mysqli_real_escape_string($conn, $_POST['phone']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']);
-    $price   = (float)$_POST['price_val'];
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $planName = mysqli_real_escape_string($conn, $_POST['planName']);
+    $planPrice = mysqli_real_escape_string($conn, $_POST['planPrice']);
 
-    // Generate Student ID
-    $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
-    $row = $res->fetch_assoc();
-    $next = ($row['last_id'] ?? 1000) + 1;
-    $student_id = "FAIZ-OLEVELMOD-" . $next;
+    // Generate unique student ID
+    $latest = $conn->query("SELECT id FROM enrollments ORDER BY id DESC LIMIT 1");
+    $count = ($latest && $latest->num_rows > 0) ? $latest->fetch_assoc()['id'] + 1001 : 1001;
+    $student_id = "FAIZ-OLEVELMOD-" . strtoupper(str_replace(' ', '', $planName)) . "-$count";
 
-    $password = $phone;
-    $payment_status = 'Paid';
-
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $payment_status, $password);
+    $stmt = $conn->prepare("INSERT INTO enrollments (student_id, name, phone, email, plan_name, price, payment_status) VALUES (?, ?, ?, ?, ?, ?, 'Paid')");
+    $stmt->bind_param("sssssd", $student_id, $name, $phone, $email, $planName, $planPrice);
 
     if ($stmt->execute()) {
-        echo "success|$student_id"; // 👈 Return student ID for redirect
+        echo "success|$student_id";
     } else {
-        echo "error|" . $stmt->error;
+        echo "error|" . $conn->error;
     }
-    $stmt->close();
     exit;
 }
 
-// ✅ Fetch courses
+// ✅ Fetch all courses
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 ?>
 <!DOCTYPE html>
@@ -42,126 +34,181 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enroll | Premium Courses</title>
+<title>Premium Courses | Pyaara Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*{font-family:'Poppins',sans-serif;margin:0;padding:0;box-sizing:border-box;}
-body{background:#f8f9fa;}
-header{background:#1e40af;color:#fff;text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
-.course-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
-.course-card:hover{transform:translateY(-5px);}
-.course-image{width:100%;height:160px;object-fit:cover}
-.course-body{padding:1rem;}
-.course-title{margin:0;font-size:1.1rem;}
-.course-price{font-weight:600;color:#1e40af;margin:.5rem 0;}
-.enroll-btn{background:#1e40af;color:#fff;cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weight:500;}
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
-.modal-container{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
-.close-btn{float:right;font-size:1.3rem;cursor:pointer;}
-input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
-footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
-.loader{display:none;text-align:center;padding:20px;font-weight:600;color:#1e40af;}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f4f6fa;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 40px auto;
+}
+h1 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 30px;
+}
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.course-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s;
+}
+.course-card:hover {
+  transform: translateY(-5px);
+}
+.course-card h3 {
+  margin: 10px 0;
+  color: #333;
+}
+.price {
+  color: #0a8a52;
+  font-weight: 600;
+  font-size: 18px;
+}
+.duration {
+  color: #666;
+  margin-bottom: 15px;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin: 5px;
+}
+.btn-primary {
+  background: #007bff;
+  color: #fff;
+}
+.btn-outline {
+  background: transparent;
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 500px;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 16px;
+  position: relative;
+}
+.modal-content h2 {
+  margin-top: 0;
+}
+.close {
+  position: absolute;
+  right: 15px; top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+ul {
+  text-align: left;
+  padding-left: 20px;
+}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>Premium Learning Courses</h1>
-  <p>Enroll securely through Razorpay</p>
-</header>
-
-<div class="course-grid">
-<?php while($c = $courses->fetch_assoc()): 
-    $clean_price = (float)preg_replace('/[^0-9.]/', '', $c['price']);
-?>
-  <div class="course-card">
-    <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course" class="course-image">
-    <div class="course-body">
-      <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
-      <p class="course-description"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
-      <div class="course-price">₹<?= number_format($clean_price, 0) ?></div>
-      <button class="enroll-btn" onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>Enroll Now</button>
+<div class="container">
+  <h1>Premium Courses</h1>
+  <div class="course-grid">
+    <?php while($row = $courses->fetch_assoc()): ?>
+    <div class="course-card">
+      <h3><?= htmlspecialchars($row['name']) ?></h3>
+      <p class="price">₹<?= number_format($row['price'], 2) ?></p>
+      <p class="duration"><?= htmlspecialchars($row['duration']) ?></p>
+      <button class="btn btn-outline" onclick='openModal(<?= json_encode($row) ?>)'>View Details</button>
+      <button class="btn btn-primary" onclick="openEnrollForm('<?= $row['name'] ?>', '<?= $row['price'] ?>')">Enroll Now</button>
     </div>
-  </div>
-<?php endwhile; ?>
-</div>
-
-<!-- Enrollment Modal -->
-<div class="modal-overlay" id="enrollModal">
-  <div class="modal-container">
-    <span class="close-btn" onclick="closeForm()">&times;</span>
-    <h2>Enroll in <span id="courseTitle"></span></h2>
-    <form id="enrollForm" onsubmit="startPayment(event)">
-      <input type="hidden" name="plan_name" id="planInput">
-      <input type="hidden" name="price_val" id="priceInput">
-      <label>Full Name</label>
-      <input type="text" name="name" required>
-      <label>Email</label>
-      <input type="email" name="email" required>
-      <label>Phone (This will be your password)</label>
-      <input type="text" name="phone" required pattern="[0-9]{10}" title="10 digit mobile number">
-      <label>Address</label>
-      <textarea name="address" required></textarea>
-      <button type="submit" class="enroll-btn" style="width:100%;">Proceed to Pay</button>
-    </form>
+    <?php endwhile; ?>
   </div>
 </div>
 
-<!-- Loader -->
-<div class="modal-overlay" id="loadingModal">
-  <div class="modal-container" style="text-align:center;">
-    <div class="loader" id="loaderText">Processing your enrollment...</div>
+<!-- Modal -->
+<div id="detailModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <ul id="modalDescription"></ul>
+    <p><strong>Duration:</strong> <span id="modalDuration"></span></p>
+    <p><strong>Price:</strong> ₹<span id="modalPrice"></span></p>
+    <button class="btn btn-primary" id="modalEnrollBtn">Enroll Now</button>
   </div>
 </div>
-
-<footer>© <?= date('Y') ?> Pyaara Store. All rights reserved.</footer>
 
 <script>
-function openForm(course, price){
-  const numPrice = parseFloat(price);
-  if (isNaN(numPrice) || numPrice <= 0) {
-    alert("Invalid course price!");
-    return;
+let currentCourse = {};
+
+function openModal(course) {
+  currentCourse = course;
+  document.getElementById('modalTitle').textContent = course.name;
+  document.getElementById('modalPrice').textContent = course.price;
+  document.getElementById('modalDuration').textContent = course.duration;
+
+  // Split description by commas and make bullet points
+  const descList = document.getElementById('modalDescription');
+  descList.innerHTML = '';
+  if (course.description) {
+    course.description.split(',').forEach(d => {
+      const li = document.createElement('li');
+      li.textContent = d.trim();
+      descList.appendChild(li);
+    });
   }
-  document.getElementById('courseTitle').textContent = course;
-  document.getElementById('planInput').value = course;
-  document.getElementById('priceInput').value = numPrice;
-  document.getElementById('enrollModal').style.display = 'flex';
+  document.getElementById('modalEnrollBtn').onclick = () => openEnrollForm(course.name, course.price);
+  document.getElementById('detailModal').style.display = 'block';
+}
+function closeModal() {
+  document.getElementById('detailModal').style.display = 'none';
 }
 
-function closeForm(){
-  document.getElementById('enrollModal').style.display = 'none';
-}
-
-function startPayment(e){
-  e.preventDefault();
-  const form = e.target;
-  const data = Object.fromEntries(new FormData(form).entries());
-  
-  const price = parseFloat(data.price_val);
-  if (isNaN(price) || price <= 0) {
-    alert("Invalid price amount!");
+function openEnrollForm(planName, planPrice) {
+  const name = prompt("Enter your full name:");
+  const phone = prompt("Enter your contact number:");
+  const email = prompt("Enter your email address:");
+  if (!name || !phone || !email) {
+    alert("All fields are required!");
     return;
   }
+  const data = { name, phone, email, planName, planPrice };
 
+  // Razorpay setup
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB", // 🔑 Replace with your live Razorpay key
-    amount: Math.round(price * 100),
+    key: "rzp_live_pA6jgjncp78sq7",
+    amount: planPrice * 100,
     currency: "INR",
     name: "Pyaara Store",
-    description: data.plan_name,
-    handler: function (){
-      // Show loading
-      document.getElementById('enrollModal').style.display = 'none';
-      document.getElementById('loadingModal').style.display = 'flex';
-      document.getElementById('loaderText').style.display = 'block';
-
+    description: "Course Enrollment",
+    handler: function () {
       fetch("", {
         method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: new URLSearchParams({...data, payment_confirmed: 1})
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ ...data, payment_confirmed: 1 })
       })
       .then(res => res.text())
       .then(res => {
@@ -170,33 +217,16 @@ function startPayment(e){
           const cid = parts[1];
           window.location.href = "thankyou.php?cid=" + encodeURIComponent(cid);
         } else {
-          alert("Enrollment failed. Please contact support.\nResponse: " + res);
-          document.getElementById('loadingModal').style.display = 'none';
+          alert("Enrollment failed.\nResponse: " + res);
         }
       })
-      .catch(err => {
-        console.error(err);
-        alert("Network error. Try again.");
-        document.getElementById('loadingModal').style.display = 'none';
-      });
+      .catch(err => alert("Network error: " + err));
     },
-    prefill: {
-      name: data.name,
-      email: data.email,
-      contact: data.phone
-    },
-    theme: { color: "#1e40af" }
+    theme: { color: "#007bff" }
   };
-
   const rzp = new Razorpay(options);
   rzp.open();
 }
-
-window.onclick = function(e) {
-  const enrollModal = document.getElementById('enrollModal');
-  if (e.target === enrollModal) enrollModal.style.display = 'none';
-}
 </script>
-
 </body>
 </html>
