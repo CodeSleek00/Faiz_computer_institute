@@ -4,12 +4,15 @@ session_start();
 
 // Insert only after payment success
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
+    // Debug: POST data को log करें (बाद में हटा दें)
+    error_log("POST Data: " . print_r($_POST, true));
+
     $name    = mysqli_real_escape_string($conn, $_POST['name']);
     $email   = mysqli_real_escape_string($conn, $_POST['email']);
     $phone   = mysqli_real_escape_string($conn, $_POST['phone']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']);
-    $price   = mysqli_real_escape_string($conn, $_POST['price_val']);
+    $price   = (float)$_POST['price_val'];  // ← यहीं float में कास्ट
 
     // Generate ID
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
@@ -23,10 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
         (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
         VALUES (?,?,?,?,?,?,?,'Paid',?)");
     $stmt->bind_param("sssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $password);
-    $stmt->execute();
+    
+    if ($stmt->execute()) {
+        echo "success";
+    } else {
+        error_log("DB Insert Error: " . $stmt->error);
+        echo "Database error: " . $stmt->error;
+    }
     $stmt->close();
-
-    echo "success";
     exit;
 }
 
@@ -67,14 +74,19 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 </header>
 
 <div class="grid">
-<?php while($c = $courses->fetch_assoc()): ?>
+<?php while($c = $courses->fetch_assoc()): 
+    $clean_price = (float)preg_replace('/[^0-9.]/', '', $c['price']); // सिर्फ़ नंबर
+?>
   <div class="card">
     <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course">
     <div class="card-body">
       <h3><?= htmlspecialchars($c['name']) ?></h3>
       <p style="color:#666;font-size:.9rem;"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
-      <div class="price">₹<?= htmlspecialchars($c['price']) ?></div>
-      <button class="btn-primary" onclick='openForm(<?= json_encode($c["name"]) ?>, <?= $c["price"] ?>)'>Enroll Now</button>
+      <div class="price">₹<?= number_format($clean_price, 0) ?></div>
+      <button class="btn-primary" 
+              onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>
+        Enroll Now
+      </button>
     </div>
   </div>
 <?php endwhile; ?>
@@ -93,7 +105,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <label>Email</label>
       <input type="email" name="email" required>
       <label>Phone (This will be your password)</label>
-      <input type="text" name="phone" required>
+      <input type="text" name="phone" required pattern="[0-9]{10}" title="10 digit mobile number">
       <label>Address</label>
       <textarea name="address" required></textarea>
       <button type="submit" class="btn-primary" style="width:100%;">Proceed to Pay</button>
@@ -104,9 +116,9 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 <!-- Thank You Modal -->
 <div class="modal" id="thankYouModal">
   <div class="modal-content" style="text-align:center;">
-    <h2>🎉 Payment Successful!</h2>
+    <h2>Payment Successful!</h2>
     <p>Thank you for enrolling in <b id="thankCourse"></b>.</p>
-    <p>Your enrollment is now confirmed ✅</p>
+    <p>Your enrollment is now confirmed</p>
     <button onclick="location.reload()" class="btn-primary">Back to Courses</button>
   </div>
 </div>
@@ -115,48 +127,81 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 
 <script>
 function openForm(course, price){
+  const numPrice = parseFloat(price);
+  if (isNaN(numPrice) || numPrice <= 0) {
+    alert("Invalid course price!");
+    return;
+  }
   document.getElementById('courseTitle').textContent = course;
   document.getElementById('planInput').value = course;
-  document.getElementById('priceInput').value = price;
-  document.getElementById('enrollModal').style.display='flex';
+  document.getElementById('priceInput').value = numPrice;
+  document.getElementById('enrollModal').style.display = 'flex';
 }
-function closeForm(){document.getElementById('enrollModal').style.display='none';}
+
+function closeForm(){
+  document.getElementById('enrollModal').style.display = 'none';
+}
 
 function startPayment(e){
   e.preventDefault();
   const form = e.target;
   const data = Object.fromEntries(new FormData(form).entries());
+  
+  const price = parseFloat(data.price_val);
+  if (isNaN(price) || price <= 0) {
+    alert("Invalid price amount!");
+    return;
+  }
 
   const options = {
     key: "rzp_test_Rc7TynjHcNrEfB",
-    amount: parseInt(data.price_val) * 100,
+    amount: Math.round(price * 100), // Razorpay expects paise
     currency: "INR",
     name: "Pyaara Store",
     description: data.plan_name,
     handler: function (){
       fetch("", {
         method: "POST",
-        headers: {"Content-Type":"application/x-www-form-urlencoded"},
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: new URLSearchParams({...data, payment_confirmed: 1})
-      }).then(res => res.text()).then(res=>{
-        if(res.trim()==="success"){
+      })
+      .then(res => res.text())
+      .then(res => {
+        if (res.trim() === "success") {
           showThankYou(data);
         } else {
-          alert("Database Error: " + res);
+          alert("Enrollment failed. Please contact support.\nResponse: " + res);
         }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Network error. Try again.");
       });
     },
-    prefill: { name: data.name, email: data.email, contact: data.phone },
+    prefill: {
+      name: data.name,
+      email: data.email,
+      contact: data.phone
+    },
     theme: { color: "#1e40af" }
   };
+
   const rzp = new Razorpay(options);
   rzp.open();
 }
 
 function showThankYou(data){
-  document.getElementById('enrollModal').style.display='none';
+  document.getElementById('enrollModal').style.display = 'none';
   document.getElementById('thankCourse').textContent = data.plan_name;
-  document.getElementById('thankYouModal').style.display='flex';
+  document.getElementById('thankYouModal').style.display = 'flex';
+}
+
+// Close modals when clicking outside
+window.onclick = function(e) {
+  const enrollModal = document.getElementById('enrollModal');
+  const thankModal = document.getElementById('thankYouModal');
+  if (e.target === enrollModal) enrollModal.style.display = 'none';
+  if (e.target === thankModal) thankModal.style.display = 'none';
 }
 </script>
 
