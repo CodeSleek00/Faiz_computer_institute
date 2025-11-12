@@ -163,7 +163,7 @@ function startPayment() {
   const data = Object.fromEntries(new FormData(form));
 
   let options = {
-    key: "rzp_live_pA6jgjncp78sq7",
+    key: "rzp_test_Rc7TynjHcNrEfB",
     amount: parseInt(data.price) * 100,
     currency: "INR",
     name: "Pyaara Store",
