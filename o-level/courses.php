@@ -23,10 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $password = $phone;
 
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
-        VALUES (?,?,?,?,?,?,?,'Paid',?)");
-    $stmt->bind_param("sssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $password);
-    
+    (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$payment_status = 'Paid';
+$stmt->bind_param("ssssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $payment_status, $password);
+
     if ($stmt->execute()) {
         echo "success";
     } else {
