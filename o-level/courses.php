@@ -1,10 +1,25 @@
 <?php
 require 'db_connect.php';
+session_start();
 
-// Fetch available courses
+// ✅ 1. Update payment after Razorpay success (AJAX)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
+    $pid = $_POST['payment_id'];
+    $eid = $_POST['enrollment_id'];
+
+    $stmt = $conn->prepare("UPDATE olevel_enrollments 
+        SET payment_id=?, payment_status='Paid' 
+        WHERE student_id=?");
+    $stmt->bind_param("ss", $pid, $eid);
+    $stmt->execute();
+    $stmt->close();
+    exit("success");
+}
+
+// ✅ 2. Fetch available courses
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 
-// Handle enrollment form
+// ✅ 3. Handle enrollment form submission (before payment)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
@@ -13,24 +28,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $course = trim($_POST['course_name']);
     $price = floatval($_POST['price']);
 
-    // Generate Enrollment ID (start from 1001)
+    // Generate Enrollment ID
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
     $row = $res->fetch_assoc();
     $next = ($row['last_id'] ?? 1000) + 1;
-    $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
+    $enrollment_id = "FAIZ-OLEVEL-" . $next;
 
-    // Use phone as password but store securely
-    $password_hash = password_hash($phone, PASSWORD_DEFAULT);
+    // Password = phone
+    $password = $phone;
 
-    // Insert into DB
+    // Insert new record (initially pending)
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, password) 
-        VALUES (?,?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssds", $enrollment_id, $name, $email, $phone, $address, $course, $price, $password_hash);
+        (student_id, name, email, phone, address, plan_name, amount, payment_status, password) 
+        VALUES (?,?,?,?,?,?,?,?,?)");
+    $status = 'Pending';
+    $stmt->bind_param("sssssssss", $enrollment_id, $name, $email, $phone, $address, $course, $price, $status, $password);
     $stmt->execute();
     $stmt->close();
 
-    // Trigger Razorpay popup
     echo "<script>
       const enrollmentData = {
         id: '". addslashes($enrollment_id) ."',
@@ -107,7 +122,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <input type="email" name="email" required>
       <label>Phone (This will be your password)</label>
       <input type="text" name="phone" required>
-      <div class="note">Note: Your phone number will be used as your initial password (stored securely).</div>
+      <div class="note">Note: Your phone number will be your initial password.</div>
       <label>Address</label>
       <textarea name="address" required></textarea>
       <button type="submit" name="enroll_submit" class="btn-primary" style="width:100%;">Proceed to Payment</button>
@@ -138,24 +153,29 @@ function openForm(course, price){
 }
 function closeForm(){document.getElementById('enrollModal').style.display='none';}
 
-// Razorpay popup trigger
+// ✅ After PHP inserts initial record, this triggers Razorpay
 if(typeof enrollmentData !== 'undefined'){
   startPayment(enrollmentData);
 }
 
 function startPayment(data){
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB", // Replace with your Razorpay key
+    key: "rzp_test_Rc7TynjHcNrEfB", // Your Razorpay Key
     amount: data.price * 100,
     currency: "INR",
     name: "Pyaara Store",
     description: data.course,
     handler: function (response){
-      fetch('', {
+      fetch(window.location.href, {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `update_payment=1&payment_id=${response.razorpay_payment_id}&enrollment_id=${encodeURIComponent(data.id)}`
-      }).then(()=> showThankYou(data));
+      })
+      .then(res => res.text())
+      .then(text => {
+        if(text.trim() === "success") showThankYou(data);
+        else alert("Payment update failed: " + text);
+      });
     },
     prefill: { name: data.name },
     theme: { color: "#1e40af" }
@@ -171,17 +191,5 @@ function showThankYou(data){
 }
 </script>
 
-<?php
-// Update payment after success
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
-    $pid = $_POST['payment_id'];
-    $eid = $_POST['enrollment_id'];
-    $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=?, payment_status='Success' WHERE student_id=?");
-    $stmt->bind_param("ss", $pid, $eid);
-    $stmt->execute();
-    $stmt->close();
-    exit;
-}
-?>
 </body>
 </html>
