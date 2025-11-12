@@ -1,6 +1,36 @@
 <?php
 require 'db_connect.php';
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
+
+// Handle form + payment in same file
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $course = $_POST['course_name'];
+    $price = $_POST['price'];
+
+    // Generate Enrollment ID
+    $res = $conn->query("SELECT id FROM olevel_enrollments ORDER BY id DESC LIMIT 1");
+    $next = ($res->num_rows > 0) ? ($res->fetch_assoc()['id'] + 1) : 1001;
+    $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
+
+    // Insert into database
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (enrollment_id, name, email, phone, address, course_name) VALUES (?,?,?,?,?,?)");
+    $stmt->bind_param("ssssss", $enrollment_id, $name, $email, $phone, $address, $course);
+    $stmt->execute();
+
+    // After saving data, show payment modal
+    echo "<script>
+      const enrollmentData = {
+        id: '$enrollment_id',
+        name: '$name',
+        course: '$course',
+        price: '$price'
+      };
+    </script>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,144 +40,139 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Premium Courses | Pyaara Store</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ---- (your full CSS remains same as before) ---- */
+body{font-family:'Poppins',sans-serif;margin:0;background:#f8f9fa;}
+header{background:#1e40af;color:#fff;text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;}
+h1{margin:0;font-size:1.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
+.card:hover{transform:translateY(-5px);}
+.card img{width:100%;height:160px;object-fit:cover}
+.card-body{padding:1rem;}
+.card-body h3{margin:0;font-size:1.1rem;}
+.price{font-weight:600;color:#1e40af;margin:.5rem 0;}
+button{cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weight:500;}
+.btn-primary{background:#1e40af;color:#fff;}
+.btn-outline{background:#fff;color:#1e40af;border:1px solid #1e40af;}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
+.modal-content{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
+input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
+.close{float:right;font-size:1.3rem;cursor:pointer;}
+footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
 </style>
 </head>
 <body>
 
-<header class="page-header">
-  <h1 class="page-title">Premium Learning Courses</h1>
-  <p class="page-subtitle">Expand your knowledge with our expertly crafted courses</p>
+<header>
+  <h1>Premium Learning Courses</h1>
+  <p>Expand your knowledge with our expertly crafted modules</p>
 </header>
 
-<main class="courses-container">
-  <div class="courses-grid">
-    <?php while($c = $courses->fetch_assoc()): ?>
-    <div class="course-card">
-      <div class="course-image-container">
-        <?php if($c['image']): ?>
-          <img src="<?= htmlspecialchars($c['image']) ?>" alt="<?= htmlspecialchars($c['name']) ?>" class="course-image">
-        <?php else: ?>
-          <img src="https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image" alt="Course Image" class="course-image">
-        <?php endif; ?>
-        <span class="course-type-badge"><?= htmlspecialchars($c['type']) ?></span>
-      </div>
-      <div class="course-content">
-        <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
-        <div class="course-meta">
-          <div class="course-videos">
-            <span>📹</span>
-            <span><?= htmlspecialchars($c['total_videos']) ?> Videos</span>
-          </div>
-        </div>
-        <div class="course-price">₹<?= htmlspecialchars($c['price']) ?></div>
-        <div class="course-actions">
-          <button class="btn btn-outline" onclick="showCourseDetails('<?= htmlspecialchars($c['name']) ?>', '<?= htmlspecialchars($c['description']) ?>', <?= $c['price'] ?>)">Details</button>
-          <button class="btn btn-primary" onclick="openEnrollmentForm('<?= htmlspecialchars($c['name']) ?>', <?= $c['price'] ?>)">Enroll</button>
-        </div>
-      </div>
+<div class="grid">
+<?php while($c = $courses->fetch_assoc()): ?>
+  <div class="card">
+    <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course">
+    <div class="card-body">
+      <h3><?= htmlspecialchars($c['name']) ?></h3>
+      <p style="color:#666;font-size:.9rem;"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
+      <div class="price">₹<?= htmlspecialchars($c['price']) ?></div>
+      <button class="btn-primary" onclick="openForm('<?= htmlspecialchars($c['name']) ?>', <?= $c['price'] ?>)">Enroll</button>
     </div>
-    <?php endwhile; ?>
   </div>
-</main>
-
-<!-- Course Details Modal (same as before) -->
-<div class="modal-overlay" id="courseDetailsModal"> ... </div>
+<?php endwhile; ?>
+</div>
 
 <!-- Enrollment Form Modal -->
-<div class="modal-overlay" id="enrollmentFormModal">
+<div class="modal" id="enrollModal">
   <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">Enroll in Course</h2>
-      <button class="close-btn" onclick="closeEnrollmentForm()">×</button>
-    </div>
-    <div class="modal-body">
-      <form id="enrollForm">
-        <input type="hidden" name="course_name" id="formCourseName">
-        <input type="hidden" name="price" id="formCoursePrice">
-        
-        <label>Full Name</label>
-        <input type="text" name="name" required style="width:100%;padding:8px;margin:5px 0;border:1px solid #ccc;border-radius:6px;">
-        
-        <label>Email</label>
-        <input type="email" name="email" required style="width:100%;padding:8px;margin:5px 0;border:1px solid #ccc;border-radius:6px;">
-        
-        <label>Phone</label>
-        <input type="text" name="phone" required style="width:100%;padding:8px;margin:5px 0;border:1px solid #ccc;border-radius:6px;">
-        
-        <label>Address</label>
-        <textarea name="address" required style="width:100%;padding:8px;margin:5px 0;border:1px solid #ccc;border-radius:6px;"></textarea>
-
-        <div class="modal-actions" style="margin-top:15px;">
-          <button type="button" class="btn btn-outline" onclick="closeEnrollmentForm()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Proceed to Payment</button>
-        </div>
-      </form>
-    </div>
+    <span class="close" onclick="closeForm()">&times;</span>
+    <h2 style="margin-top:0;">Enroll in <span id="courseTitle"></span></h2>
+    <form method="POST">
+      <input type="hidden" name="course_name" id="courseInput">
+      <input type="hidden" name="price" id="priceInput">
+      <label>Full Name</label>
+      <input type="text" name="name" required>
+      <label>Email</label>
+      <input type="email" name="email" required>
+      <label>Phone</label>
+      <input type="text" name="phone" required>
+      <label>Address</label>
+      <textarea name="address" required></textarea>
+      <button type="submit" name="enroll_submit" class="btn-primary" style="width:100%;">Proceed to Payment</button>
+    </form>
   </div>
 </div>
 
+<!-- Thank You Modal -->
+<div class="modal" id="thankYouModal">
+  <div class="modal-content" style="text-align:center;">
+    <h2>🎉 Payment Successful!</h2>
+    <p>Thank you for enrolling in <b id="thankCourse"></b>.</p>
+    <p>Your Enrollment ID:</p>
+    <div style="font-weight:700;color:#1e40af" id="thankEnrollID"></div>
+    <br>
+    <button class="btn-outline" onclick="location.reload()">Back to Courses</button>
+  </div>
+</div>
+
+<footer>© <?= date('Y') ?> Pyaara Store. All rights reserved.</footer>
+
 <script>
-function openEnrollmentForm(courseName, price) {
-  document.getElementById('formCourseName').value = courseName;
-  document.getElementById('formCoursePrice').value = price;
-  document.getElementById('enrollmentFormModal').style.display = 'flex';
+function openForm(course, price){
+  document.getElementById('courseTitle').textContent = course;
+  document.getElementById('courseInput').value = course;
+  document.getElementById('priceInput').value = price;
+  document.getElementById('enrollModal').style.display='flex';
+}
+function closeForm(){document.getElementById('enrollModal').style.display='none';}
+
+// Razorpay auto-open if PHP printed enrollmentData
+if(typeof enrollmentData !== 'undefined'){
+  startPayment(enrollmentData);
 }
 
-function closeEnrollmentForm() {
-  document.getElementById('enrollmentFormModal').style.display = 'none';
-}
-
-document.getElementById('enrollForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const formData = new FormData(this);
-  
-  fetch('save_enrollment.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === 'success') {
-      startPayment(data.enrollment_id, data.name, data.course_name, data.price);
-    } else {
-      alert('Error: ' + data.message);
-    }
-  })
-  .catch(err => alert('Failed to save enrollment.'));
-});
-
-function startPayment(enrollment_id, name, course, amount) {
-  closeEnrollmentForm();
-
-  var options = {
-    "key": "rzp_test_Rc7TynjHcNrEfB",
-    "amount": amount * 100,
-    "currency": "INR",
-    "name": "Pyaara Store",
-    "description": course,
-    "handler": function (response) {
-      fetch('update_payment.php', {
+function startPayment(data){
+  const options = {
+    key: "rzp_test_Rc7TynjHcNrEfB",
+    amount: data.price * 100,
+    currency: "INR",
+    name: "Pyaara Store",
+    description: data.course,
+    handler: function (response){
+      // Save payment ID via AJAX
+      fetch('', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `payment_id=${response.razorpay_payment_id}&enrollment_id=${enrollment_id}`
+        body: `update_payment=1&payment_id=${response.razorpay_payment_id}&enrollment_id=${data.id}`
       });
-      alert("Payment Successful! Enrollment ID: " + enrollment_id);
-      window.location.href = 'thank_you.php';
+      showThankYou(data);
     },
-    "prefill": {
-      "name": name
-    },
-    "theme": {"color": "#1e40af"}
+    prefill: { name: data.name },
+    theme: { color: "#1e40af" }
   };
-  
-  var rzp = new Razorpay(options);
+  const rzp = new Razorpay(options);
   rzp.open();
 }
+
+function showThankYou(data){
+  document.getElementById('thankCourse').textContent = data.course;
+  document.getElementById('thankEnrollID').textContent = data.id;
+  document.getElementById('thankYouModal').style.display='flex';
+}
 </script>
+
+<?php
+// handle payment update (same file)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
+    $pid = $_POST['payment_id'];
+    $eid = $_POST['enrollment_id'];
+    $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=? WHERE enrollment_id=?");
+    $stmt->bind_param("ss", $pid, $eid);
+    $stmt->execute();
+    exit;
+}
+?>
 
 </body>
 </html>
