@@ -141,7 +141,7 @@ ul {
     <div class="course-card">
       <h3><?= htmlspecialchars($row['name']) ?></h3>
       <p class="price">₹<?= number_format($row['price'], 2) ?></p>
-      <p class="duration"><?= htmlspecialchars($row['duration']) ?></p>
+     
       <button class="btn btn-outline" onclick='openModal(<?= json_encode($row) ?>)'>View Details</button>
       <button class="btn btn-primary" onclick="openEnrollForm('<?= $row['name'] ?>', '<?= $row['price'] ?>')">Enroll Now</button>
     </div>
