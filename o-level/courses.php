@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
     $row = $res->fetch_assoc();
     $next = ($row['last_id'] ?? 1000) + 1;
-    $student_id = "FAIZ-OLEVEL-" . $next;
+    $student_id = "FAIZ-OLEVELMOD-" . $next;
 
     // password same as phone (can hash later if needed)
     $password = $phone;
