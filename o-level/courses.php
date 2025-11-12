@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
 
     // Insert into database
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (enrollment_id, name, email, phone, address, course_name) VALUES (?,?,?,?,?,?)");
-    $stmt->bind_param("ssssss", $enrollment_id, $name, $email, $phone, $address, $course);
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, course_name) VALUES (?,?,?,?,?,?)");
+    $stmt->bind_param("ssssss", $student_id, $name, $email, $phone, $address, $course);
     $stmt->execute();
 
     // After saving data, show payment modal
@@ -166,8 +166,8 @@ function showThankYou(data){
 // handle payment update (same file)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
     $pid = $_POST['payment_id'];
-    $eid = $_POST['enrollment_id'];
-    $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=? WHERE enrollment_id=?");
+    $eid = $_POST['student_id'];
+    $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=? WHERE student_id=?");
     $stmt->bind_param("ss", $pid, $eid);
     $stmt->execute();
     exit;
