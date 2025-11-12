@@ -13,25 +13,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $course = trim($_POST['course_name']);
     $price = floatval($_POST['price']);
 
-    // Generate next Enrollment ID
+    // Generate next Enrollment ID (start from 1001)
     $res = $conn->query("SELECT id FROM olevel_enrollments ORDER BY id DESC LIMIT 1");
     $next = ($res && $res->num_rows > 0) ? ($res->fetch_assoc()['id'] + 1) : 1001;
     $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
 
-    // Save to database
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount) 
-        VALUES (?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssd", $enrollment_id, $name, $email, $phone, $address, $course, $price);
-    $stmt->execute();
+    // Use phone as password BUT hash it before storing
+    $password_hash = password_hash($phone, PASSWORD_DEFAULT);
 
-    // Pass data to JS
+    // Save to database (including password hash)
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
+        (student_id, name, email, phone, address, plan_name, amount, password) 
+        VALUES (?,?,?,?,?,?,?,?)");
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    // types: s s s s s s d s  => "ssssssds"
+    $stmt->bind_param("ssssssds", $enrollment_id, $name, $email, $phone, $address, $course, $price, $password_hash);
+    $stmt->execute();
+    $stmt->close();
+
+    // Pass data to JS to trigger Razorpay
     echo "<script>
       const enrollmentData = {
-        id: '$enrollment_id',
-        name: '$name',
-        course: '$course',
-        price: '$price'
+        id: '". addslashes($enrollment_id) ."',
+        name: '". addslashes($name) ."',
+        course: '". addslashes($course) ."',
+        price: ". json_encode($price) ."
       };
     </script>";
 }
@@ -64,6 +73,7 @@ button{cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weig
 input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
 .close{float:right;font-size:1.3rem;cursor:pointer;}
 footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
+.note{font-size:.85rem;color:#374151;margin-top:6px;}
 </style>
 </head>
 <body>
@@ -99,8 +109,9 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <input type="text" name="name" required>
       <label>Email</label>
       <input type="email" name="email" required>
-      <label>Phone</label>
+      <label>Phone (This will be your password)</label>
       <input type="text" name="phone" required>
+      <div class="note">Note: Your phone number will be used as your initial password (stored securely).</div>
       <label>Address</label>
       <textarea name="address" required></textarea>
       <button type="submit" name="enroll_submit" class="btn-primary" style="width:100%;">Proceed to Payment</button>
@@ -147,7 +158,7 @@ function startPayment(data){
       fetch('', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `update_payment=1&payment_id=${response.razorpay_payment_id}&enrollment_id=${data.id}`
+        body: `update_payment=1&payment_id=${response.razorpay_payment_id}&enrollment_id=${encodeURIComponent(data.id)}`
       });
       showThankYou(data);
     },
@@ -173,6 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
     $stmt = $conn->prepare("UPDATE olevel_enrollments SET payment_id=?, payment_status='Success' WHERE student_id=?");
     $stmt->bind_param("ss", $pid, $eid);
     $stmt->execute();
+    $stmt->close();
     exit;
 }
 ?>
