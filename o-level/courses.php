@@ -49,22 +49,36 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Poppins',sans-serif;margin:0;background:#f8f9fa;}
+*{font-family:'Poppins',sans-serif;margin:0;padding:0;box-sizing:border-box;}
+body{background:#f8f9fa;}
 header{background:#1e40af;color:#fff;text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
-.card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
-.card:hover{transform:translateY(-5px);}
-.card img{width:100%;height:160px;object-fit:cover}
-.card-body{padding:1rem;}
-.card-body h3{margin:0;font-size:1.1rem;}
-.price{font-weight:600;color:#1e40af;margin:.5rem 0;}
+.single{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
+.single{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
+.single:hover{transform:translateY(-5px);}
+.single img{width:100%;height:160px;object-fit:cover}
+.single{padding:1rem;}
+.single h3{margin:0;font-size:1.1rem;}
+.single{font-weight:600;color:#1e40af;margin:.5rem 0;}
 button{cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weight:500;}
-.btn-primary{background:#1e40af;color:#fff;}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
-.modal-content{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
-.close{float:right;font-size:1.3rem;cursor:pointer;}
+.single{background:#1e40af;color:#fff;}
+.single{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
+.single{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
+.single{float:right;font-size:1.3rem;cursor:pointer;}
 input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
 footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
+
+/* Additional styles for different elements */
+.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
+.course-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
+.course-card:hover{transform:translateY(-5px);}
+.course-image{width:100%;height:160px;object-fit:cover}
+.course-body{padding:1rem;}
+.course-title{margin:0;font-size:1.1rem;}
+.course-price{font-weight:600;color:#1e40af;margin:.5rem 0;}
+.enroll-btn{background:#1e40af;color:#fff;}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
+.modal-container{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
+.close-btn{float:right;font-size:1.3rem;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -74,17 +88,17 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
   <p>Enroll securely through Razorpay</p>
 </header>
 
-<div class="grid">
+<div class="course-grid">
 <?php while($c = $courses->fetch_assoc()): 
     $clean_price = (float)preg_replace('/[^0-9.]/', '', $c['price']); // सिर्फ़ नंबर
 ?>
-  <div class="card">
-    <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course">
-    <div class="card-body">
-      <h3><?= htmlspecialchars($c['name']) ?></h3>
+  <div class="course-card">
+    <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course" class="course-image">
+    <div class="course-body">
+      <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
       <p style="color:#666;font-size:.9rem;"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
-      <div class="price">₹<?= number_format($clean_price, 0) ?></div>
-      <button class="btn-primary" 
+      <div class="course-price">₹<?= number_format($clean_price, 0) ?></div>
+      <button class="enroll-btn" 
               onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>
         Enroll Now
       </button>
@@ -94,9 +108,9 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 </div>
 
 <!-- Enrollment Modal -->
-<div class="modal" id="enrollModal">
-  <div class="modal-content">
-    <span class="close" onclick="closeForm()">&times;</span>
+<div class="modal-overlay" id="enrollModal">
+  <div class="modal-container">
+    <span class="close-btn" onclick="closeForm()">&times;</span>
     <h2>Enroll in <span id="courseTitle"></span></h2>
     <form id="enrollForm" onsubmit="startPayment(event)">
       <input type="hidden" name="plan_name" id="planInput">
@@ -109,18 +123,18 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <input type="text" name="phone" required pattern="[0-9]{10}" title="10 digit mobile number">
       <label>Address</label>
       <textarea name="address" required></textarea>
-      <button type="submit" class="btn-primary" style="width:100%;">Proceed to Pay</button>
+      <button type="submit" class="enroll-btn" style="width:100%;">Proceed to Pay</button>
     </form>
   </div>
 </div>
 
 <!-- Thank You Modal -->
-<div class="modal" id="thankYouModal">
-  <div class="modal-content" style="text-align:center;">
+<div class="modal-overlay" id="thankYouModal">
+  <div class="modal-container" style="text-align:center;">
     <h2>Payment Successful!</h2>
     <p>Thank you for enrolling in <b id="thankCourse"></b>.</p>
     <p>Your enrollment is now confirmed</p>
-    <button onclick="location.reload()" class="btn-primary">Back to Courses</button>
+    <button onclick="location.reload()" class="enroll-btn">Back to Courses</button>
   </div>
 </div>
 
