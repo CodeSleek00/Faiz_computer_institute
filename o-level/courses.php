@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $email   = mysqli_real_escape_string($conn, $_POST['email']);
     $phone   = mysqli_real_escape_string($conn, $_POST['phone']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']); // ✅ correct field
+    $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']);
     $price   = mysqli_real_escape_string($conn, $_POST['price_val']);
 
     // Generate ID
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $next = ($row['last_id'] ?? 1000) + 1;
     $student_id = "FAIZ-OLEVEL-" . $next;
 
-    $password = $phone; // phone as password
+    $password = $phone;
 
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
         (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
@@ -74,7 +74,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
       <h3><?= htmlspecialchars($c['name']) ?></h3>
       <p style="color:#666;font-size:.9rem;"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
       <div class="price">₹<?= htmlspecialchars($c['price']) ?></div>
-      <button class="btn-primary" onclick="openForm('<?= htmlspecialchars($c['name']) ?>', <?= $c['price'] ?>)">Enroll Now</button>
+      <button class="btn-primary" onclick='openForm(<?= json_encode($c["name"]) ?>, <?= $c["price"] ?>)'>Enroll Now</button>
     </div>
   </div>
 <?php endwhile; ?>
@@ -86,8 +86,8 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
     <span class="close" onclick="closeForm()">&times;</span>
     <h2>Enroll in <span id="courseTitle"></span></h2>
     <form id="enrollForm" onsubmit="startPayment(event)">
-      <input type="hidden" name="plan_name" id="planInput">  <!-- ✅ renamed -->
-      <input type="hidden" name="price_val" id="priceInput"> <!-- ✅ renamed -->
+      <input type="hidden" name="plan_name" id="planInput">
+      <input type="hidden" name="price_val" id="priceInput">
       <label>Full Name</label>
       <input type="text" name="name" required>
       <label>Email</label>
@@ -116,7 +116,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 <script>
 function openForm(course, price){
   document.getElementById('courseTitle').textContent = course;
-  document.getElementById('planInput').value = course; // ✅ fixed
+  document.getElementById('planInput').value = course;
   document.getElementById('priceInput').value = price;
   document.getElementById('enrollModal').style.display='flex';
 }
@@ -128,13 +128,12 @@ function startPayment(e){
   const data = Object.fromEntries(new FormData(form).entries());
 
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB", // your key
-    amount: parseInt(data.price_val) * 100, // in paisa
+    key: "rzp_test_Rc7TynjHcNrEfB",
+    amount: parseInt(data.price_val) * 100,
     currency: "INR",
     name: "Pyaara Store",
-    description: data.plan_name, // ✅ fixed
+    description: data.plan_name,
     handler: function (){
-      // only after payment success → insert to DB
       fetch("", {
         method: "POST",
         headers: {"Content-Type":"application/x-www-form-urlencoded"},
