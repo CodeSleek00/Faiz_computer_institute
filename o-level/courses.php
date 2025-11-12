@@ -4,7 +4,7 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 
 // Student ID generator
 function generateStudentID($conn) {
-    $result = $conn->query("SELECT COUNT(*) as total FROM enrolled_students");
+    $result = $conn->query("SELECT COUNT(*) as total FROM olevel_enrollments");
     $count = $result->fetch_assoc()['total'] ?? 0;
     return "Faiz-OLEVELMOD-" . (1001 + $count);
 }
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $payment_status = "Paid";
 
-    $stmt = $conn->prepare("INSERT INTO enrolled_students (student_id, name, email, phone, address, plan_name, price, payment_status) VALUES (?,?,?,?,?,?,?,?)");
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, price, payment_status) VALUES (?,?,?,?,?,?,?,?)");
     $stmt->bind_param("ssssssss", $student_id, $name, $email, $phone, $address, $plan_name, $price, $payment_status);
     
     if ($stmt->execute()) {
