@@ -2,39 +2,31 @@
 require 'db_connect.php';
 session_start();
 
-// After Razorpay payment success → save enrollment
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_id'])) {
+// After successful Razorpay payment → insert data
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
     $name     = mysqli_real_escape_string($conn, $_POST['name']);
     $email    = mysqli_real_escape_string($conn, $_POST['email']);
     $phone    = mysqli_real_escape_string($conn, $_POST['phone']);
     $address  = mysqli_real_escape_string($conn, $_POST['address']);
     $course   = mysqli_real_escape_string($conn, $_POST['course']);
     $price    = mysqli_real_escape_string($conn, $_POST['price']);
-    $payment_id = mysqli_real_escape_string($conn, $_POST['payment_id']);
 
-    // Generate Enrollment ID
+    // Generate Enrollment ID (FAIZ-OLEVEL-XXXX)
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
     $row = $res->fetch_assoc();
     $next = ($row['last_id'] ?? 1000) + 1;
     $student_id = "FAIZ-OLEVEL-" . $next;
 
-    $password = $phone; // phone as password
+    // password same as phone (can hash later if needed)
+    $password = $phone;
 
-    // Insert after successful payment
+    // Insert into DB (only after successful payment)
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, payment_id, payment_status, password) 
-        VALUES (?,?,?,?,?,?,?,?,?,?)");
-    $status = 'Paid';
-    $stmt->bind_param("ssssssdsss", $student_id, $name, $email, $phone, $address, $course, $price, $payment_id, $status, $password);
+        (student_id, name, email, phone, address, plan_name, amount, payment_status, password) 
+        VALUES (?,?,?,?,?,?,?,'Paid',?)");
+    $stmt->bind_param("sssssdss", $student_id, $name, $email, $phone, $address, $course, $price, $password);
     $stmt->execute();
     $stmt->close();
-
-    $_SESSION['enroll_success'] = [
-        'student_id' => $student_id,
-        'name' => $name,
-        'course' => $course,
-        'price' => $price,
-    ];
 
     echo "success";
     exit;
@@ -49,7 +41,7 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Courses | Pyaara Store</title>
+<title>Enroll | Premium Courses</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -75,7 +67,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 
 <header>
   <h1>Premium Learning Courses</h1>
-  <p>Enroll after secure Razorpay payment</p>
+  <p>Enroll securely through Razorpay</p>
 </header>
 
 <div class="grid">
@@ -118,9 +110,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
   <div class="modal-content" style="text-align:center;">
     <h2>🎉 Payment Successful!</h2>
     <p>Thank you for enrolling in <b id="thankCourse"></b>.</p>
-    <p>Your Enrollment ID:</p>
-    <div style="font-weight:700;color:#1e40af" id="thankEnrollID"></div>
-    <br>
+    <p>Your enrollment is now confirmed ✅</p>
     <button onclick="location.reload()" class="btn-primary">Back to Courses</button>
   </div>
 </div>
@@ -142,22 +132,22 @@ function startPayment(e){
   const data = Object.fromEntries(new FormData(form).entries());
 
   const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB", // replace with live key later
+    key: "rzp_test_Rc7TynjHcNrEfB", // replace with your live key later
     amount: data.price * 100,
     currency: "INR",
     name: "Pyaara Store",
     description: data.course,
-    handler: function (response){
-      // Now payment successful → save to database
+    handler: function (){
+      // only after payment success → insert to DB
       fetch("", {
         method: "POST",
         headers: {"Content-Type":"application/x-www-form-urlencoded"},
-        body: new URLSearchParams({...data, payment_id: response.razorpay_payment_id})
+        body: new URLSearchParams({...data, payment_confirmed: 1})
       }).then(res => res.text()).then(res=>{
         if(res.trim()==="success"){
           showThankYou(data);
         } else {
-          alert("Database error: " + res);
+          alert("Database Error: " + res);
         }
       });
     },
@@ -170,9 +160,9 @@ function startPayment(e){
 function showThankYou(data){
   document.getElementById('enrollModal').style.display='none';
   document.getElementById('thankCourse').textContent = data.course;
-  document.getElementById('thankEnrollID').textContent = "Generated after payment ✅";
   document.getElementById('thankYouModal').style.display='flex';
 }
 </script>
+
 </body>
 </html>
