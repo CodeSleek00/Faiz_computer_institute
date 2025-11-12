@@ -2,29 +2,27 @@
 require 'db_connect.php';
 session_start();
 
-// After successful Razorpay payment → insert data
+// When payment successful, insert record
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
     $name     = mysqli_real_escape_string($conn, $_POST['name']);
     $email    = mysqli_real_escape_string($conn, $_POST['email']);
     $phone    = mysqli_real_escape_string($conn, $_POST['phone']);
     $address  = mysqli_real_escape_string($conn, $_POST['address']);
-    $course   = mysqli_real_escape_string($conn, $_POST['course']);
+    $plan     = mysqli_real_escape_string($conn, $_POST['plan']); // 👈 FIXED (was 'course' before)
     $price    = mysqli_real_escape_string($conn, $_POST['price']);
 
-    // Generate Enrollment ID (FAIZ-OLEVEL-XXXX)
+    // Generate Student ID
     $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
     $row = $res->fetch_assoc();
     $next = ($row['last_id'] ?? 1000) + 1;
     $student_id = "FAIZ-OLEVEL-" . $next;
-
-    // password same as phone (can hash later if needed)
     $password = $phone;
 
-    // Insert into DB (only after successful payment)
+    // Insert after payment success
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, payment_status, password) 
+        (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
         VALUES (?,?,?,?,?,?,?,'Paid',?)");
-    $stmt->bind_param("sssssdss", $student_id, $name, $email, $phone, $address, $course, $price, $password);
+    $stmt->bind_param("sssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $password);
     $stmt->execute();
     $stmt->close();
 
@@ -32,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
     exit;
 }
 
-// Fetch available courses
+// Fetch courses
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 ?>
 
@@ -90,7 +88,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
     <span class="close" onclick="closeForm()">&times;</span>
     <h2>Enroll in <span id="courseTitle"></span></h2>
     <form id="enrollForm" onsubmit="startPayment(event)">
-      <input type="hidden" name="course" id="courseInput">
+      <input type="hidden" name="plan" id="planInput"> <!-- 👈 FIXED -->
       <input type="hidden" name="price" id="priceInput">
       <label>Full Name</label>
       <input type="text" name="name" required>
@@ -120,7 +118,7 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
 <script>
 function openForm(course, price){
   document.getElementById('courseTitle').textContent = course;
-  document.getElementById('courseInput').value = course;
+  document.getElementById('planInput').value = course; // 👈 FIXED
   document.getElementById('priceInput').value = price;
   document.getElementById('enrollModal').style.display='flex';
 }
@@ -136,7 +134,7 @@ function startPayment(e){
     amount: data.price * 100,
     currency: "INR",
     name: "Pyaara Store",
-    description: data.course,
+    description: data.plan,
     handler: function (){
       // only after payment success → insert to DB
       fetch("", {
@@ -159,7 +157,7 @@ function startPayment(e){
 }
 function showThankYou(data){
   document.getElementById('enrollModal').style.display='none';
-  document.getElementById('thankCourse').textContent = data.course;
+  document.getElementById('thankCourse').textContent = data.plan;
   document.getElementById('thankYouModal').style.display='flex';
 }
 </script>
