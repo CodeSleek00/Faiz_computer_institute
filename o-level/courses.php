@@ -142,7 +142,7 @@ function showDetails(name, desc, price) {
   document.getElementById("modal-title").innerText = name + " - ₹" + price;
   document.getElementById("modal-desc").innerHTML = descList;
   document.getElementById("plan").value = name;
-  document.getElementById("price").value = price;
+  document.getElementById("amount").value = price;
   modal.style.display = "flex";
 }
 
@@ -150,7 +150,7 @@ function openForm(plan, price) {
   document.getElementById("modal-title").innerText = plan + " - ₹" + price;
   document.getElementById("modal-desc").innerHTML = "";
   document.getElementById("plan").value = plan;
-  document.getElementById("price").value = price;
+  document.getElementById("amount").value = price;
   modal.style.display = "flex";
 }
 
