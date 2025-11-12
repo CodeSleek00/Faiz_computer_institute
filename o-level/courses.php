@@ -1,10 +1,10 @@
 <?php
 require 'db_connect.php';
 
-// Fetch courses
+// Fetch available courses
 $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 
-// If enrollment form submitted
+// Handle enrollment form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
@@ -13,28 +13,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enroll_submit'])) {
     $course = trim($_POST['course_name']);
     $price = floatval($_POST['price']);
 
-    // Generate next Enrollment ID (start from 1001)
-    $res = $conn->query("SELECT id FROM olevel_enrollments ORDER BY id DESC LIMIT 1");
-    $next = ($res && $res->num_rows > 0) ? ($res->fetch_assoc()['id'] + 1) : 1001;
+    // Generate Enrollment ID (start from 1001)
+    $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
+    $row = $res->fetch_assoc();
+    $next = ($row['last_id'] ?? 1000) + 1;
     $enrollment_id = "FAIZ-OLEVELMOD-" . $next;
 
-    // Use phone as password BUT hash it before storing
+    // Use phone as password but store securely
     $password_hash = password_hash($phone, PASSWORD_DEFAULT);
 
-    // Save to database (including password hash)
+    // Insert into DB
     $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
         (student_id, name, email, phone, address, plan_name, amount, password) 
         VALUES (?,?,?,?,?,?,?,?)");
-    if (!$stmt) {
-        die("Prepare failed: " . $conn->error);
-    }
-
-    // types: s s s s s s d s  => "ssssssds"
     $stmt->bind_param("ssssssds", $enrollment_id, $name, $email, $phone, $address, $course, $price, $password_hash);
     $stmt->execute();
     $stmt->close();
 
-    // Pass data to JS to trigger Razorpay
+    // Trigger Razorpay popup
     echo "<script>
       const enrollmentData = {
         id: '". addslashes($enrollment_id) ."',
@@ -142,7 +138,7 @@ function openForm(course, price){
 }
 function closeForm(){document.getElementById('enrollModal').style.display='none';}
 
-// Razorpay auto popup if enrollmentData exists
+// Razorpay popup trigger
 if(typeof enrollmentData !== 'undefined'){
   startPayment(enrollmentData);
 }
@@ -159,8 +155,7 @@ function startPayment(data){
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `update_payment=1&payment_id=${response.razorpay_payment_id}&enrollment_id=${encodeURIComponent(data.id)}`
-      });
-      showThankYou(data);
+      }).then(()=> showThankYou(data));
     },
     prefill: { name: data.name },
     theme: { color: "#1e40af" }
@@ -174,25 +169,10 @@ function showThankYou(data){
   document.getElementById('thankEnrollID').textContent = data.id;
   document.getElementById('thankYouModal').style.display='flex';
 }
-handler: function (response) {
-    $.ajax({
-        url: 'verify_payment.php',
-        type: 'POST',
-        data: {
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_signature: response.razorpay_signature
-        },
-        success: function (res) {
-            window.location.href = "thank_you.php";
-        }
-    });
-}
-
 </script>
 
 <?php
-// Handle payment update
+// Update payment after success
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_payment'])) {
     $pid = $_POST['payment_id'];
     $eid = $_POST['enrollment_id'];
