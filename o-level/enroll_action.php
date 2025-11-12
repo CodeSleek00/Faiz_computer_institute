@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $last_id = 1000 + $row['id'];
     }
 
-    $student_id = "Faiz-Olevel-" . ($last_id + 1);
+    $student_id = "Faiz-OLEVEL-" . ($last_id + 1);
     $password = $phone; // password same as phone
 
     // Insert enrollment data (with EMI fields)
