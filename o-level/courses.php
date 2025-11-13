@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
   --primary: #007bff;
   --primary-dark: #0056b3;
   --primary-light: #e6f2ff;
-  --secondary: #0003b8ff;
+  --secondary: #0008ffff;
   --dark: #333;
   --light: #f8f9fa;
   --white: #ffffff;
