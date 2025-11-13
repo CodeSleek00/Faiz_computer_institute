@@ -1,37 +1,42 @@
 <?php
 require 'db_connect.php';
-$courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
+session_start();
 
-// ✅ Student ID generator
-function generateStudentID($conn) {
-    $result = $conn->query("SELECT COUNT(*) as total FROM olevel_enrollments");
-    $count = $result->fetch_assoc()['total'] ?? 0;
-    return "Faiz-OLEVELMOD-" . (1001 + $count);
-}
-
-// ✅ Handle form + payment confirmation
+// ✅ Insert data after payment success
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
-    $student_id = generateStudentID($conn);
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $name    = mysqli_real_escape_string($conn, $_POST['name']);
+    $email   = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone   = mysqli_real_escape_string($conn, $_POST['phone']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $plan_name = mysqli_real_escape_string($conn, $_POST['plan']);
-    $amount = mysqli_real_escape_string($conn, $_POST['amount']);
-    $payment_status = "Paid";
+    $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']);
+    $price   = (float)$_POST['price_val'];
 
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status) VALUES (?,?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssss", $student_id, $name, $email, $phone, $address, $plan_name, $amount, $payment_status);
-    
+    // Generate Student ID
+    $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
+    $row = $res->fetch_assoc();
+    $next = ($row['last_id'] ?? 1000) + 1;
+    $student_id = "FAIZ-OLEVELMOD-" . $next;
+
+    $password = $phone;
+    $payment_status = 'Paid';
+
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
+        (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $payment_status, $password);
+
     if ($stmt->execute()) {
-        echo "success|$student_id";
+        echo "success|$student_id"; // 👈 Return student ID for redirect
     } else {
-        echo "error|" . $conn->error;
+        echo "error|" . $stmt->error;
     }
+    $stmt->close();
     exit;
 }
-?>
 
+// ✅ Fetch courses
+$courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
