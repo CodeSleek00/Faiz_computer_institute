@@ -718,7 +718,7 @@ textarea.faiz-mod-form-control {
 </div>
 
 <footer class="faiz-mod-footer">
-  <p>&copy; <?= date('Y') ?> Pyaara Store. All rights reserved.</p>
+  <p>&copy; <?= date('Y') ?> Faiz Computer Institute. All rights reserved.</p>
 </footer>
 
 <!-- Modal -->
