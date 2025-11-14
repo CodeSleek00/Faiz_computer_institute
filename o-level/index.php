@@ -1,42 +1,37 @@
 <?php
 require 'db_connect.php';
-session_start();
+$courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
 
-// ✅ Insert data after payment success
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
-    $name    = mysqli_real_escape_string($conn, $_POST['name']);
-    $email   = mysqli_real_escape_string($conn, $_POST['email']);
-    $phone   = mysqli_real_escape_string($conn, $_POST['phone']);
-    $address = mysqli_real_escape_string($conn, $_POST['address']);
-    $plan    = mysqli_real_escape_string($conn, $_POST['plan_name']);
-    $price   = (float)$_POST['price_val'];
-
-    // Generate Student ID
-    $res = $conn->query("SELECT MAX(id) AS last_id FROM olevel_enrollments");
-    $row = $res->fetch_assoc();
-    $next = ($row['last_id'] ?? 1000) + 1;
-    $student_id = "FAIZ-OLEVELMOD-" . $next;
-
-    $password = $phone;
-    $payment_status = 'Paid';
-
-    $stmt = $conn->prepare("INSERT INTO olevel_enrollments 
-        (student_id, name, email, phone, address, plan_name, amount, payment_status, password)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssdss", $student_id, $name, $email, $phone, $address, $plan, $price, $payment_status, $password);
-
-    if ($stmt->execute()) {
-        echo "success|$student_id"; // 👈 Return student ID for redirect
-    } else {
-        echo "error|" . $stmt->error;
-    }
-    $stmt->close();
-    exit;
+// ✅ Student ID generator
+function generateStudentID($conn) {
+    $result = $conn->query("SELECT COUNT(*) as total FROM olevel_enrollments");
+    $count = $result->fetch_assoc()['total'] ?? 0;
+    return "Faiz-OLEVELMOD-" . (1001 + $count);
 }
 
-// ✅ Fetch courses
-$courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
+// ✅ Handle form + payment confirmation
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed'])) {
+    $student_id = generateStudentID($conn);
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $address = mysqli_real_escape_string($conn, $_POST['address']);
+    $plan_name = mysqli_real_escape_string($conn, $_POST['plan']);
+    $amount = mysqli_real_escape_string($conn, $_POST['amount']);
+    $payment_status = "Paid";
+
+    $stmt = $conn->prepare("INSERT INTO olevel_enrollments (student_id, name, email, phone, address, plan_name, amount, payment_status) VALUES (?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssssssss", $student_id, $name, $email, $phone, $address, $plan_name, $amount, $payment_status);
+    
+    if ($stmt->execute()) {
+        echo "success|$student_id";
+    } else {
+        echo "error|" . $conn->error;
+    }
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,20 +49,412 @@ $courses = $conn->query("SELECT * FROM single_courses ORDER BY id DESC");
    
     <title>Faiz Computer Institute</title>
    <style>
-    .single{background:#1e40af;color:#fff;text-align:center;padding:2rem 1rem;margin-bottom:1.5rem;}
-   .course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;padding:1rem;max-width:1100px;margin:auto;}
-.course-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;transition:.3s}
-.course-card:hover{transform:translateY(-5px);}
-.course-image{width:100%;height:160px;object-fit:cover}
-.course-body{padding:1rem;}
-.course-title{margin:0;font-size:1.1rem;}
-.course-price{font-weight:600;color:#1e40af;margin:.5rem 0;}
-.enroll-btn{background:#1e40af;color:#fff;cursor:pointer;padding:.6rem 1rem;border:none;border-radius:6px;font-weight:500;}
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:999;}
-.modal-container{background:#fff;border-radius:10px;max-width:400px;width:90%;padding:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.2);}
-.close-btn{float:right;font-size:1.3rem;cursor:pointer;}
-input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ccc;border-radius:5px;}
-footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2rem;}
+    .:root {
+  --faiz-mod-primary: #007bff;
+  --faiz-mod-primary-dark: #0056b3;
+  --faiz-mod-primary-light: #e6f2ff;
+  --faiz-mod-secondary: #00b894;
+  --faiz-mod-dark: #333;
+  --faiz-mod-light: #f8f9fa;
+  --faiz-mod-white: #ffffff;
+  --faiz-mod-gray: #6c757d;
+  --faiz-mod-border-radius: 12px;
+  --faiz-mod-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --faiz-mod-transition: all 0.3s ease;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--faiz-mod-light);
+  color: var(--faiz-mod-dark);
+  line-height: 1.6;
+}
+
+/* Header Styles */
+.faiz-mod-header {
+  background: linear-gradient(135deg, var(--faiz-mod-primary), var(--faiz-mod-primary-dark));
+  color: var(--faiz-mod-white);
+  padding: 2rem 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.faiz-mod-header h1 {
+  font-weight: 600;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.faiz-mod-header p {
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Container and Grid */
+.faiz-mod-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.faiz-mod-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Card Styles */
+.faiz-mod-card {
+  background: var(--faiz-mod-white);
+  border-radius: var(--faiz-mod-border-radius);
+  box-shadow: var(--faiz-mod-box-shadow);
+  overflow: hidden;
+  transition: var(--faiz-mod-transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.faiz-mod-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.faiz-mod-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.faiz-mod-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.faiz-mod-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--faiz-mod-dark);
+}
+
+.faiz-mod-card-description {
+  color: var(--faiz-mod-gray);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.faiz-mod-card-price {
+  color: var(--faiz-mod-secondary);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.faiz-mod-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+/* Button Styles */
+.faiz-mod-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--faiz-mod-transition);
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.faiz-mod-btn-primary {
+  background: var(--faiz-mod-primary);
+  color: var(--faiz-mod-white);
+}
+
+.faiz-mod-btn-primary:hover {
+  background: var(--faiz-mod-primary-dark);
+}
+
+.faiz-mod-btn-outline {
+  background: transparent;
+  color: var(--faiz-mod-primary);
+  border: 1px solid var(--faiz-mod-primary);
+}
+
+.faiz-mod-btn-outline:hover {
+  background: var(--faiz-mod-primary-light);
+}
+
+/* Modal Styles */
+.faiz-mod-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.faiz-mod-modal-content {
+  background: var(--faiz-mod-white);
+  border-radius: var(--faiz-mod-border-radius);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: faiz-mod-modalFadeIn 0.3s ease;
+}
+
+@keyframes faiz-mod-modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faiz-mod-modal-header {
+  padding: 1.5rem 1.5rem 0;
+  border-bottom: none;
+}
+
+.faiz-mod-modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--faiz-mod-dark);
+  margin-bottom: 0.5rem;
+}
+
+.faiz-mod-modal-price {
+  color: var(--faiz-mod-secondary);
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.faiz-mod-modal-body {
+  padding: 1rem 1.5rem;
+}
+
+.faiz-mod-modal-features {
+  margin-bottom: 1.5rem;
+}
+
+.faiz-mod-modal-features ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.faiz-mod-modal-features li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.faiz-mod-modal-features li:before {
+  content: "✓";
+  color: var(--faiz-mod-secondary);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.faiz-mod-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--faiz-mod-gray);
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--faiz-mod-transition);
+}
+
+.faiz-mod-close:hover {
+  background: var(--faiz-mod-light);
+  color: var(--faiz-mod-dark);
+}
+
+/* Form Styles */
+.faiz-mod-form-group {
+  margin-bottom: 1rem;
+}
+
+.faiz-mod-form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--faiz-mod-dark);
+}
+
+.faiz-mod-form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  transition: var(--faiz-mod-transition);
+}
+
+.faiz-mod-form-control:focus {
+  outline: none;
+  border-color: var(--faiz-mod-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+textarea.faiz-mod-form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.faiz-mod-modal-footer {
+  padding: 0 1.5rem 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.faiz-mod-btn-pay {
+  background: var(--faiz-mod-secondary);
+  color: var(--faiz-mod-white);
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+}
+
+.faiz-mod-btn-pay:hover {
+  background: #00a382;
+}
+
+/* Footer */
+.faiz-mod-footer {
+  background: var(--faiz-mod-dark);
+  color: var(--faiz-mod-white);
+  padding: 2rem 1rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.faiz-mod-footer p {
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .faiz-mod-header h1 {
+    font-size: 2rem;
+  }
+  
+  .faiz-mod-courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .faiz-mod-card-actions {
+    flex-direction: column;
+  }
+  
+  .faiz-mod-modal-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .faiz-mod-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .faiz-mod-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .faiz-mod-courses-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .faiz-mod-card-content {
+    padding: 1.25rem;
+  }
+  
+  .faiz-mod-modal-body, .faiz-mod-modal-header, .faiz-mod-modal-footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Loading State */
+.faiz-mod-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: faiz-mod-spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes faiz-mod-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success/Error Messages */
+.faiz-mod-message {
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.faiz-mod-message-success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.faiz-mod-message-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
 </style>
  
 </head>
@@ -306,96 +693,137 @@ footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem;margin-top:2
     </div>
   </div>
 
-<header class="single">
-  <h1>Premium Learning Courses</h1>
-  <p>Enroll securely through Razorpay</p>
+<header class="faiz-mod-header">
+  <h1>Premium Courses</h1>
+  <p>Enhance your skills with our expertly crafted courses designed for success</p>
 </header>
 
-<div class="course-grid">
-<?php while($c = $courses->fetch_assoc()): 
-    $clean_price = (float)preg_replace('/[^0-9.]/', '', $c['price']);
-?>
-  <div class="course-card">
-    <img src="<?= htmlspecialchars($c['image'] ?: 'https://via.placeholder.com/400x200/1e40af/ffffff?text=Course+Image') ?>" alt="Course" class="course-image">
-    <div class="course-body">
-      <h3 class="course-title"><?= htmlspecialchars($c['name']) ?></h3>
-      <p class="course-description"><?= htmlspecialchars(substr($c['description'],0,60)) ?>...</p>
-      <div class="course-price">₹<?= number_format($clean_price, 0) ?></div>
-      <button class="enroll-btn" onclick='openForm(<?= json_encode($c["name"]) ?>, <?= json_encode($clean_price) ?>)'>Enroll Now</button>
+<div class="faiz-mod-container">
+  <div class="faiz-mod-courses-grid">
+    <?php while($row = $courses->fetch_assoc()): ?>
+      <div class="faiz-mod-card">
+        <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>" class="faiz-mod-card-img">
+        <div class="faiz-mod-card-content">
+          <h3 class="faiz-mod-card-title"><?= htmlspecialchars($row['name']) ?></h3>
+          <p class="faiz-mod-card-description"><?= htmlspecialchars(substr($row['description'], 0, 100)) ?>...</p>
+          <p class="faiz-mod-card-price">₹<?= htmlspecialchars($row['price']) ?></p>
+          <div class="faiz-mod-card-actions">
+            <button class="faiz-mod-btn faiz-mod-btn-outline" onclick="showDetails('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars(addslashes($row['description'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">View Details</button>
+            <button class="faiz-mod-btn faiz-mod-btn-primary" onclick="openForm('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">Enroll Now</button>
+          </div>
+        </div>
+      </div>
+    <?php endwhile; ?>
+  </div>
+</div>
+
+<footer class="faiz-mod-footer">
+  <p>&copy; <?= date('Y') ?> Pyaara Store. All rights reserved.</p>
+</footer>
+
+<!-- Modal -->
+<div class="faiz-mod-modal" id="popup">
+  <div class="faiz-mod-modal-content">
+    <button class="faiz-mod-close" onclick="closePopup()">&times;</button>
+    <div class="faiz-mod-modal-header">
+      <h2 class="faiz-mod-modal-title" id="modal-title"></h2>
+      <p class="faiz-mod-modal-price" id="modal-price"></p>
+    </div>
+    <div class="faiz-mod-modal-body">
+      <div class="faiz-mod-modal-features" id="modal-desc"></div>
+      <form id="enrollForm">
+        <input type="hidden" name="plan" id="plan">
+        <input type="hidden" name="amount" id="amount">
+        
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="name">Full Name</label>
+          <input type="text" class="faiz-mod-form-control" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="email">Email Address</label>
+          <input type="email" class="faiz-mod-form-control" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="phone">Phone Number</label>
+          <input type="text" class="faiz-mod-form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+        </div>
+        
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="address">Full Address</label>
+          <textarea class="faiz-mod-form-control" id="address" name="address" placeholder="Enter your complete address" required></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="faiz-mod-modal-footer">
+      <button type="button" class="faiz-mod-btn faiz-mod-btn-pay" onclick="startPayment()">
+        <span class="faiz-mod-loading" id="loading-icon" style="display: none;"></span>
+        <span id="pay-text">Proceed to Pay</span>
+      </button>
     </div>
   </div>
-<?php endwhile; ?>
 </div>
 
-<!-- Enrollment Modal -->
-<div class="modal-overlay" id="enrollModal">
-  <div class="modal-container">
-    <span class="close-btn" onclick="closeForm()">&times;</span>
-    <h2>Enroll in <span id="courseTitle"></span></h2>
-    <form id="enrollForm" onsubmit="startPayment(event)">
-      <input type="hidden" name="plan_name" id="planInput">
-      <input type="hidden" name="price_val" id="priceInput">
-      <label>Full Name</label>
-      <input type="text" name="name" required>
-      <label>Email</label>
-      <input type="email" name="email" required>
-      <label>Phone (This will be your password)</label>
-      <input type="text" name="phone" required pattern="[0-9]{10}" title="10 digit mobile number">
-      <label>Address</label>
-      <textarea name="address" required></textarea>
-      <button type="submit" class="enroll-btn" style="width:100%;">Proceed to Pay</button>
-    </form>
-  </div>
-</div>
-
-<!-- Loader -->
-<div class="modal-overlay" id="loadingModal">
-  <div class="modal-container" style="text-align:center;">
-    <div class="loader" id="loaderText">Processing your enrollment...</div>
-  </div>
-</div>
 
 <script>
-function openForm(course, price){
-  const numPrice = parseFloat(price);
-  if (isNaN(numPrice) || numPrice <= 0) {
-    alert("Invalid course price!");
-    return;
-  }
-  document.getElementById('courseTitle').textContent = course;
-  document.getElementById('planInput').value = course;
-  document.getElementById('priceInput').value = numPrice;
-  document.getElementById('enrollModal').style.display = 'flex';
+let modal = document.getElementById("popup");
+let isProcessing = false;
+
+function showDetails(name, desc, amount) {
+  let descList = desc.split(',').map(d => `<li>${d.trim()}</li>`).join('');
+  document.getElementById("modal-title").innerText = name;
+  document.getElementById("modal-price").innerText = "₹" + amount;
+  document.getElementById("modal-desc").innerHTML = `<h3>Course Features:</h3><ul>${descList}</ul>`;
+  document.getElementById("plan").value = name;
+  document.getElementById("amount").value = amount;
+  modal.style.display = "flex";
 }
 
-function closeForm(){
-  document.getElementById('enrollModal').style.display = 'none';
+function openForm(plan, amount) {
+  document.getElementById("modal-title").innerText = plan;
+  document.getElementById("modal-price").innerText = "₹" + amount;
+  document.getElementById("modal-desc").innerHTML = "";
+  document.getElementById("plan").value = plan;
+  document.getElementById("amount").value = amount;
+  modal.style.display = "flex";
 }
 
-function startPayment(e){
-  e.preventDefault();
-  const form = e.target;
-  const data = Object.fromEntries(new FormData(form).entries());
+function closePopup() {
+  modal.style.display = "none";
+  isProcessing = false;
+  document.getElementById("loading-icon").style.display = "none";
+  document.getElementById("pay-text").innerText = "Proceed to Pay";
+}
+
+function startPayment() {
+  if (isProcessing) return;
   
-  const price = parseFloat(data.price_val);
-  if (isNaN(price) || price <= 0) {
-    alert("Invalid price amount!");
+  const form = document.getElementById("enrollForm");
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  
+  // Basic form validation
+  if (!data.name || !data.email || !data.phone || !data.address) {
+    alert("Please fill in all required fields");
     return;
   }
+  
+  isProcessing = true;
+  document.getElementById("loading-icon").style.display = "inline-block";
+  document.getElementById("pay-text").innerText = "Processing...";
+  
+  let price = parseInt(data.amount.replace(/[^\d]/g, "")); // remove any ₹ sign
 
-  const options = {
-    key: "rzp_test_Rc7TynjHcNrEfB", // 🔑 Replace with your live Razorpay key
-    amount: Math.round(price * 100),
+  let options = {
+    key: "rzp_test_Rc7TynjHcNrEfB",
+    amount: price * 100, // Razorpay expects amount in paise
     currency: "INR",
     name: "Pyaara Store",
-    description: data.plan_name,
-    handler: function (){
-      // Show loading
-      document.getElementById('enrollModal').style.display = 'none';
-      document.getElementById('loadingModal').style.display = 'flex';
-      document.getElementById('loaderText').style.display = 'block';
-
-      fetch("", {
+    description: data.plan,
+    handler: function (response) {
+      // Payment successful, now submit enrollment
+      fetch(window.location.href, {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: new URLSearchParams({...data, payment_confirmed: 1})
@@ -404,17 +832,20 @@ function startPayment(e){
       .then(res => {
         const parts = res.trim().split("|");
         if (parts[0] === "success" && parts[1]) {
-          const cid = parts[1];
-          window.location.href = "thankyou.php?cid=" + encodeURIComponent(cid);
+          window.location.href = "thankyou.php?cid=" + encodeURIComponent(parts[1]);
         } else {
-          alert("Enrollment failed. Please contact support.\nResponse: " + res);
-          document.getElementById('loadingModal').style.display = 'none';
+          alert("Enrollment failed. " + res);
+          isProcessing = false;
+          document.getElementById("loading-icon").style.display = "none";
+          document.getElementById("pay-text").innerText = "Proceed to Pay";
         }
       })
-      .catch(err => {
-        console.error(err);
-        alert("Network error. Try again.");
-        document.getElementById('loadingModal').style.display = 'none';
+      .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred during enrollment. Please try again.");
+        isProcessing = false;
+        document.getElementById("loading-icon").style.display = "none";
+        document.getElementById("pay-text").innerText = "Proceed to Pay";
       });
     },
     prefill: {
@@ -422,16 +853,27 @@ function startPayment(e){
       email: data.email,
       contact: data.phone
     },
-    theme: { color: "#1e40af" }
+    theme: {
+      color: "#007bff"
+    }
   };
 
-  const rzp = new Razorpay(options);
+  let rzp = new Razorpay(options);
   rzp.open();
+  
+  rzp.on('payment.failed', function (response) {
+    alert("Payment failed. Please try again.");
+    isProcessing = false;
+    document.getElementById("loading-icon").style.display = "none";
+    document.getElementById("pay-text").innerText = "Proceed to Pay";
+  });
 }
 
-window.onclick = function(e) {
-  const enrollModal = document.getElementById('enrollModal');
-  if (e.target === enrollModal) enrollModal.style.display = 'none';
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    closePopup();
+  }
 }
 </script>
 
