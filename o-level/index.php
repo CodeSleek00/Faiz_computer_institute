@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
    
     <title>Faiz Computer Institute</title>
    <style>
-    .:root {
+    :root {
   --faiz-mod-primary: #007bff;
   --faiz-mod-primary-dark: #0056b3;
   --faiz-mod-primary-light: #e6f2ff;
