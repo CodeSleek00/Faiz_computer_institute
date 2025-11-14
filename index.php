@@ -34,7 +34,7 @@
                 <a href="university/university.php"><li>For University Courses</li></a>
                 <a href="schooling/school.html"><li>For High School & Intermediate Courses</li></a>
                 <a href="free/free.html"><li>For Free Courses</li></a>
-                <a href="o-level/index.php">O Level</a>
+                <a href="o-level/index.php">O Level/CCC</a>
             </ul>
         </div>
     </header>
@@ -85,7 +85,7 @@
             <div class="auth-buttons">
                 <button class="login-btn">Login</button>
               <a href="free/free.html" style="text-decoration: none;">  <button class="signup-btn">Free Courses</button></a>
-              <a href="o-level/index.php" style="text-decoration: none;">  <button class="signup-btn">O Level</button></a>
+              <a href="o-level/index.php" style="text-decoration: none;">  <button class="signup-btn">O Level/CCC</button></a>
             </div>
             
         </div>
