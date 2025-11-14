@@ -717,10 +717,6 @@ textarea.faiz-mod-form-control {
   </div>
 </div>
 
-<footer class="faiz-mod-footer">
-  <p>&copy; <?= date('Y') ?> Faiz Computer Institute. All rights reserved.</p>
-</footer>
-
 <!-- Modal -->
 <div class="faiz-mod-modal" id="popup">
   <div class="faiz-mod-modal-content">
