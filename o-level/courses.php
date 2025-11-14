@@ -43,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
 <style>
 /* CSS Variables for consistent theming */
 :root {
-  --primary: #007bff;
-  --primary-dark: #0056b3;
-  --primary-light: #e6f2ff;
-  --secondary: #00b894;
-  --dark: #333;
-  --light: #f8f9fa;
-  --white: #ffffff;
-  --gray: #6c757d;
-  --border-radius: 12px;
-  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  --transition: all 0.3s ease;
+  --faiz-mod-primary: #007bff;
+  --faiz-mod-primary-dark: #0056b3;
+  --faiz-mod-primary-light: #e6f2ff;
+  --faiz-mod-secondary: #00b894;
+  --faiz-mod-dark: #333;
+  --faiz-mod-light: #f8f9fa;
+  --faiz-mod-white: #ffffff;
+  --faiz-mod-gray: #6c757d;
+  --faiz-mod-border-radius: 12px;
+  --faiz-mod-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --faiz-mod-transition: all 0.3s ease;
 }
 
 /* Base Styles */
@@ -65,27 +65,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['payment_confirmed']))
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: var(--light);
-  color: var(--dark);
+  background: var(--faiz-mod-light);
+  color: var(--faiz-mod-dark);
   line-height: 1.6;
 }
 
 /* Header Styles */
-.header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: var(--white);
+.faiz-mod-header {
+  background: linear-gradient(135deg, var(--faiz-mod-primary), var(--faiz-mod-primary-dark));
+  color: var(--faiz-mod-white);
   padding: 2rem 1rem;
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.header h1 {
+.faiz-mod-header h1 {
   font-weight: 600;
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
-.header p {
+.faiz-mod-header p {
   font-weight: 300;
   max-width: 600px;
   margin: 0 auto;
@@ -93,13 +93,13 @@ body {
 }
 
 /* Container and Grid */
-.container {
+.faiz-mod-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-.courses-grid {
+.faiz-mod-courses-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
@@ -107,99 +107,99 @@ body {
 }
 
 /* Card Styles */
-.card {
-  background: var(--white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
+.faiz-mod-card {
+  background: var(--faiz-mod-white);
+  border-radius: var(--faiz-mod-border-radius);
+  box-shadow: var(--faiz-mod-box-shadow);
   overflow: hidden;
-  transition: var(--transition);
+  transition: var(--faiz-mod-transition);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.card:hover {
+.faiz-mod-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
 
-.card-img {
+.faiz-mod-card-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   display: block;
 }
 
-.card-content {
+.faiz-mod-card-content {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
-.card-title {
+.faiz-mod-card-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--dark);
+  color: var(--faiz-mod-dark);
 }
 
-.card-description {
-  color: var(--gray);
+.faiz-mod-card-description {
+  color: var(--faiz-mod-gray);
   font-size: 0.9rem;
   margin-bottom: 1rem;
   flex-grow: 1;
 }
 
-.card-price {
-  color: var(--secondary);
+.faiz-mod-card-price {
+  color: var(--faiz-mod-secondary);
   font-weight: 600;
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-.card-actions {
+.faiz-mod-card-actions {
   display: flex;
   gap: 0.75rem;
   margin-top: auto;
 }
 
 /* Button Styles */
-.btn {
+.faiz-mod-btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-weight: 500;
   text-align: center;
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--faiz-mod-transition);
   border: none;
   font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   flex: 1;
 }
 
-.btn-primary {
-  background: var(--primary);
-  color: var(--white);
+.faiz-mod-btn-primary {
+  background: var(--faiz-mod-primary);
+  color: var(--faiz-mod-white);
 }
 
-.btn-primary:hover {
-  background: var(--primary-dark);
+.faiz-mod-btn-primary:hover {
+  background: var(--faiz-mod-primary-dark);
 }
 
-.btn-outline {
+.faiz-mod-btn-outline {
   background: transparent;
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  color: var(--faiz-mod-primary);
+  border: 1px solid var(--faiz-mod-primary);
 }
 
-.btn-outline:hover {
-  background: var(--primary-light);
+.faiz-mod-btn-outline:hover {
+  background: var(--faiz-mod-primary-light);
 }
 
 /* Modal Styles */
-.modal {
+.faiz-mod-modal {
   display: none;
   position: fixed;
   top: 0;
@@ -213,19 +213,19 @@ body {
   padding: 1rem;
 }
 
-.modal-content {
-  background: var(--white);
-  border-radius: var(--border-radius);
+.faiz-mod-modal-content {
+  background: var(--faiz-mod-white);
+  border-radius: var(--faiz-mod-border-radius);
   width: 100%;
   max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   position: relative;
-  animation: modalFadeIn 0.3s ease;
+  animation: faiz-mod-modalFadeIn 0.3s ease;
 }
 
-@keyframes modalFadeIn {
+@keyframes faiz-mod-modalFadeIn {
   from {
     opacity: 0;
     transform: translateY(-20px);
@@ -236,59 +236,59 @@ body {
   }
 }
 
-.modal-header {
+.faiz-mod-modal-header {
   padding: 1.5rem 1.5rem 0;
   border-bottom: none;
 }
 
-.modal-title {
+.faiz-mod-modal-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--faiz-mod-dark);
   margin-bottom: 0.5rem;
 }
 
-.modal-price {
-  color: var(--secondary);
+.faiz-mod-modal-price {
+  color: var(--faiz-mod-secondary);
   font-weight: 600;
   font-size: 1.25rem;
   margin-bottom: 1rem;
 }
 
-.modal-body {
+.faiz-mod-modal-body {
   padding: 1rem 1.5rem;
 }
 
-.modal-features {
+.faiz-mod-modal-features {
   margin-bottom: 1.5rem;
 }
 
-.modal-features ul {
+.faiz-mod-modal-features ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-.modal-features li {
+.faiz-mod-modal-features li {
   padding: 0.5rem 0;
   position: relative;
   padding-left: 1.5rem;
 }
 
-.modal-features li:before {
+.faiz-mod-modal-features li:before {
   content: "✓";
-  color: var(--secondary);
+  color: var(--faiz-mod-secondary);
   position: absolute;
   left: 0;
   font-weight: bold;
 }
 
-.close {
+.faiz-mod-close {
   position: absolute;
   top: 1rem;
   right: 1.5rem;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--gray);
+  color: var(--faiz-mod-gray);
   background: none;
   border: none;
   width: 30px;
@@ -297,153 +297,153 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: var(--transition);
+  transition: var(--faiz-mod-transition);
 }
 
-.close:hover {
-  background: var(--light);
-  color: var(--dark);
+.faiz-mod-close:hover {
+  background: var(--faiz-mod-light);
+  color: var(--faiz-mod-dark);
 }
 
 /* Form Styles */
-.form-group {
+.faiz-mod-form-group {
   margin-bottom: 1rem;
 }
 
-.form-label {
+.faiz-mod-form-label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: var(--dark);
+  color: var(--faiz-mod-dark);
 }
 
-.form-control {
+.faiz-mod-form-control {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid #ddd;
   border-radius: 6px;
   font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
-  transition: var(--transition);
+  transition: var(--faiz-mod-transition);
 }
 
-.form-control:focus {
+.faiz-mod-form-control:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: var(--faiz-mod-primary);
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
-textarea.form-control {
+textarea.faiz-mod-form-control {
   min-height: 100px;
   resize: vertical;
 }
 
-.modal-footer {
+.faiz-mod-modal-footer {
   padding: 0 1.5rem 1.5rem;
   display: flex;
   justify-content: flex-end;
 }
 
-.btn-pay {
-  background: var(--secondary);
-  color: var(--white);
+.faiz-mod-btn-pay {
+  background: var(--faiz-mod-secondary);
+  color: var(--faiz-mod-white);
   width: 100%;
   padding: 0.9rem;
   font-size: 1rem;
 }
 
-.btn-pay:hover {
+.faiz-mod-btn-pay:hover {
   background: #00a382;
 }
 
 /* Footer */
-.footer {
-  background: var(--dark);
-  color: var(--white);
+.faiz-mod-footer {
+  background: var(--faiz-mod-dark);
+  color: var(--faiz-mod-white);
   padding: 2rem 1rem;
   text-align: center;
   margin-top: 3rem;
 }
 
-.footer p {
+.faiz-mod-footer p {
   opacity: 0.8;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .header h1 {
+  .faiz-mod-header h1 {
     font-size: 2rem;
   }
   
-  .courses-grid {
+  .faiz-mod-courses-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
   }
   
-  .card-actions {
+  .faiz-mod-card-actions {
     flex-direction: column;
   }
   
-  .modal-content {
+  .faiz-mod-modal-content {
     max-width: 100%;
   }
 }
 
 @media (max-width: 576px) {
-  .header {
+  .faiz-mod-header {
     padding: 1.5rem 1rem;
   }
   
-  .header h1 {
+  .faiz-mod-header h1 {
     font-size: 1.75rem;
   }
   
-  .courses-grid {
+  .faiz-mod-courses-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
   
-  .card-content {
+  .faiz-mod-card-content {
     padding: 1.25rem;
   }
   
-  .modal-body, .modal-header, .modal-footer {
+  .faiz-mod-modal-body, .faiz-mod-modal-header, .faiz-mod-modal-footer {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }
 }
 
 /* Loading State */
-.loading {
+.faiz-mod-loading {
   display: inline-block;
   width: 20px;
   height: 20px;
   border: 3px solid rgba(255,255,255,.3);
   border-radius: 50%;
   border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
+  animation: faiz-mod-spin 1s ease-in-out infinite;
   margin-right: 8px;
 }
 
-@keyframes spin {
+@keyframes faiz-mod-spin {
   to { transform: rotate(360deg); }
 }
 
 /* Success/Error Messages */
-.message {
+.faiz-mod-message {
   padding: 1rem;
   border-radius: 6px;
   margin-bottom: 1rem;
   text-align: center;
 }
 
-.message-success {
+.faiz-mod-message-success {
   background: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
 }
 
-.message-error {
+.faiz-mod-message-error {
   background: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
@@ -452,23 +452,23 @@ textarea.form-control {
 </head>
 <body>
 
-<header class="header">
+<header class="faiz-mod-header">
   <h1>Premium Courses</h1>
   <p>Enhance your skills with our expertly crafted courses designed for success</p>
 </header>
 
-<div class="container">
-  <div class="courses-grid">
+<div class="faiz-mod-container">
+  <div class="faiz-mod-courses-grid">
     <?php while($row = $courses->fetch_assoc()): ?>
-      <div class="card">
-        <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>" class="card-img">
-        <div class="card-content">
-          <h3 class="card-title"><?= htmlspecialchars($row['name']) ?></h3>
-          <p class="card-description"><?= htmlspecialchars(substr($row['description'], 0, 100)) ?>...</p>
-          <p class="card-price">₹<?= htmlspecialchars($row['price']) ?></p>
-          <div class="card-actions">
-            <button class="btn btn-outline" onclick="showDetails('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars(addslashes($row['description'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">View Details</button>
-            <button class="btn btn-primary" onclick="openForm('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">Enroll Now</button>
+      <div class="faiz-mod-card">
+        <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>" class="faiz-mod-card-img">
+        <div class="faiz-mod-card-content">
+          <h3 class="faiz-mod-card-title"><?= htmlspecialchars($row['name']) ?></h3>
+          <p class="faiz-mod-card-description"><?= htmlspecialchars(substr($row['description'], 0, 100)) ?>...</p>
+          <p class="faiz-mod-card-price">₹<?= htmlspecialchars($row['price']) ?></p>
+          <div class="faiz-mod-card-actions">
+            <button class="faiz-mod-btn faiz-mod-btn-outline" onclick="showDetails('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars(addslashes($row['description'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">View Details</button>
+            <button class="faiz-mod-btn faiz-mod-btn-primary" onclick="openForm('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">Enroll Now</button>
           </div>
         </div>
       </div>
@@ -476,48 +476,48 @@ textarea.form-control {
   </div>
 </div>
 
-<footer class="footer">
+<footer class="faiz-mod-footer">
   <p>&copy; <?= date('Y') ?> Pyaara Store. All rights reserved.</p>
 </footer>
 
 <!-- Modal -->
-<div class="modal" id="popup">
-  <div class="modal-content">
-    <button class="close" onclick="closePopup()">&times;</button>
-    <div class="modal-header">
-      <h2 class="modal-title" id="modal-title"></h2>
-      <p class="modal-price" id="modal-price"></p>
+<div class="faiz-mod-modal" id="popup">
+  <div class="faiz-mod-modal-content">
+    <button class="faiz-mod-close" onclick="closePopup()">&times;</button>
+    <div class="faiz-mod-modal-header">
+      <h2 class="faiz-mod-modal-title" id="modal-title"></h2>
+      <p class="faiz-mod-modal-price" id="modal-price"></p>
     </div>
-    <div class="modal-body">
-      <div class="modal-features" id="modal-desc"></div>
+    <div class="faiz-mod-modal-body">
+      <div class="faiz-mod-modal-features" id="modal-desc"></div>
       <form id="enrollForm">
         <input type="hidden" name="plan" id="plan">
         <input type="hidden" name="amount" id="amount">
         
-        <div class="form-group">
-          <label class="form-label" for="name">Full Name</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="name">Full Name</label>
+          <input type="text" class="faiz-mod-form-control" id="name" name="name" placeholder="Enter your full name" required>
         </div>
         
-        <div class="form-group">
-          <label class="form-label" for="email">Email Address</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="email">Email Address</label>
+          <input type="email" class="faiz-mod-form-control" id="email" name="email" placeholder="Enter your email" required>
         </div>
         
-        <div class="form-group">
-          <label class="form-label" for="phone">Phone Number</label>
-          <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="phone">Phone Number</label>
+          <input type="text" class="faiz-mod-form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
         </div>
         
-        <div class="form-group">
-          <label class="form-label" for="address">Full Address</label>
-          <textarea class="form-control" id="address" name="address" placeholder="Enter your complete address" required></textarea>
+        <div class="faiz-mod-form-group">
+          <label class="faiz-mod-form-label" for="address">Full Address</label>
+          <textarea class="faiz-mod-form-control" id="address" name="address" placeholder="Enter your complete address" required></textarea>
         </div>
       </form>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-pay" onclick="startPayment()">
-        <span class="loading" id="loading-icon" style="display: none;"></span>
+    <div class="faiz-mod-modal-footer">
+      <button type="button" class="faiz-mod-btn faiz-mod-btn-pay" onclick="startPayment()">
+        <span class="faiz-mod-loading" id="loading-icon" style="display: none;"></span>
         <span id="pay-text">Proceed to Pay</span>
       </button>
     </div>
