@@ -9,9 +9,14 @@ require '../db/db_connect.php';
 
 $student_id = $_SESSION['student_id'];
 
-// ✔ Secure Prepared Statement
-$stmt = $conn->prepare("SELECT * FROM videos_assignment WHERE student_id = ?");
-$stmt->bind_param("s", $student_id);
+// ✔ Correct table name + proper JOIN
+$stmt = $conn->prepare("
+    SELECT v.title, v.video_file 
+    FROM videos v
+    INNER JOIN video_assignments a ON a.video_id = v.id
+    WHERE a.assigned_to = ?
+");
+$stmt->bind_param("i", $student_id);
 $stmt->execute();
 $videos = $stmt->get_result();
 ?>
