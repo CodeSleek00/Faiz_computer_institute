@@ -2,6 +2,7 @@
 session_start();
 require '../db_connect.php';
 
+// Only allow logged-in students
 if (!isset($_SESSION['student_id'])) {
     echo "Unauthorized Access";
     exit();
@@ -9,6 +10,7 @@ if (!isset($_SESSION['student_id'])) {
 
 $student_id = $_SESSION['student_id'];
 
+// Fetch assigned videos for this student
 $sql = "
 SELECT videos.title, videos.video_file
 FROM video_assign
@@ -25,12 +27,25 @@ $result = $stmt->get_result();
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Videos</title>
-<style>
-body { font-family: Arial; padding:20px; }
-.video-box { margin-bottom:20px; padding:15px; border:1px solid #ddd; }
-video { width:100%; max-width:500px; border-radius:10px; }
-</style>
+    <meta charset="UTF-8">
+    <title>My Videos</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f9f9f9; }
+        h2 { color: #333; }
+        .video-box { 
+            margin-bottom: 20px; 
+            padding: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #fff;
+        }
+        video { 
+            width: 100%; 
+            max-width: 500px; 
+            border-radius: 8px; 
+            outline: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -41,9 +56,10 @@ video { width:100%; max-width:500px; border-radius:10px; }
 <?php else: ?>
     <?php while($row = $result->fetch_assoc()): ?>
         <div class="video-box">
-            <h3><?= $row['title'] ?></h3>
+            <h3><?= htmlspecialchars($row['title']) ?></h3>
             <video controls>
-                <source src="../<?= $row['video_file'] ?>" type="video/mp4">
+                <source src="../<?= htmlspecialchars($row['video_file']) ?>" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
         </div>
     <?php endwhile; ?>
