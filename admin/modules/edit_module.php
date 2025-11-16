@@ -7,9 +7,9 @@ $module = $conn->query("SELECT * FROM modules WHERE module_name = '$id'")->fetch
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['module_name'];
-    $desc = $_POST['module_description'];
+    $desc = $_POST['description'];
 
-    $conn->query("UPDATE modules SET module_name='$name', module_description='$desc' WHERE module_id='$id'");
+    $conn->query("UPDATE modules SET module_name='$name', description='$desc' WHERE module_id='$id'");
 
     header("Location: manage_modules.php");
     exit;
