@@ -83,7 +83,7 @@
 
         <div class="nav-right">
             <div class="auth-buttons">
-                <button class="login-btn">Login</button>
+                <a href="login/login.php"><button class="login-btn">Login</button></a>
               <a href="free/free.html" style="text-decoration: none;">  <button class="signup-btn">Free Courses</button></a>
               <a href="o-level/index.php" style="text-decoration: none;">  <button class="signup-btn">O Level/CCC</button></a>
             </div>
