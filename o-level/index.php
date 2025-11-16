@@ -893,7 +893,7 @@ function startPayment() {
 
   let options = {
     key: "rzp_test_Rc7TynjHcNrEfB",
-    amount: price * 100, // Razorpay expects amount in paise
+    amount: price, // Razorpay expects amount in paise
     currency: "INR",
     name: "Pyaara Store",
     description: data.plan,
