@@ -3,7 +3,7 @@ require '../../db_connect.php';
 session_start();
 
 // Fetch all modules
-$modules = $conn->query("SELECT * FROM modules ORDER BY module_name DESC");
+$modules = $conn->query("SELECT * FROM module_sections ORDER BY module_id DESC");
 ?>
 
 <!DOCTYPE html>
