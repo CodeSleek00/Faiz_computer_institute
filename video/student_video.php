@@ -1,86 +1,60 @@
 <?php
 session_start();
+include '../db_connect.php';
+
+// Check Login
 if (!isset($_SESSION['student_id'])) {
-    header("Location: ../login/login.php");
+    echo "Unauthorized Access!";
     exit();
 }
 
-require '../db/db_connect.php';
-
 $student_id = $_SESSION['student_id'];
 
-// ✔ Correct table name + proper JOIN
-$stmt = $conn->prepare("
-    SELECT v.title, v.video_file 
-    FROM videos v
-    INNER JOIN video_assignments a ON a.video_id = v.id
-    WHERE a.assigned_to = ?
-");
-$stmt->bind_param("i", $student_id);
-$stmt->execute();
-$videos = $stmt->get_result();
+// Fetch videos where student_id exists in assigned_students
+$sql = "SELECT * FROM videos 
+        WHERE FIND_IN_SET('$student_id', assigned_students) > 0";
+
+$result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Videos</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>My Videos</title>
 <style>
-body{
-    font-family: 'Poppins', sans-serif;
-    background:#f4f6ff;
-    margin:0;
-    padding:0;
-}
-.header{
-    background:#007bff;
-    color:#fff;
-    padding:18px;
-    font-size:22px;
-    font-weight:600;
-}
-.container{
-    padding:20px;
-}
-.card{
-    background:#fff;
-    padding:20px;
-    margin-bottom:20px;
-    border-radius:10px;
-    box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-.video-box{
-    margin-bottom:20px;
-}
-video{
-    width:100%;
-    border-radius:10px;
-}
+    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+    .video-card {
+        background: white; padding: 15px; margin-bottom: 15px;
+        border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    video {
+        width: 100%; max-height: 350px; border-radius: 8px;
+    }
 </style>
 </head>
 <body>
 
-<div class="header">Welcome, <?= $_SESSION['student_name'] ?></div>
+<h2>📚 My Assigned Videos</h2>
 
-<div class="container">
+<?php if ($result->num_rows > 0): ?>
 
-<h2>Your Videos</h2>
+    <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="video-card">
+            <h3><?php echo $row['title']; ?></h3>
 
-<?php if ($videos->num_rows > 0): ?>
-    <?php while ($row = $videos->fetch_assoc()): ?>
-        <div class="card video-box">
-            <h3><?= $row['title'] ?></h3>
             <video controls>
-                <source src="../uploads/videos/<?= $row['video_file'] ?>" type="video/mp4">
+                <source src="<?php echo $row['video_path']; ?>" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
+
+            <p><?php echo $row['description']; ?></p>
         </div>
     <?php endwhile; ?>
+
 <?php else: ?>
     <p>No videos assigned yet.</p>
 <?php endif; ?>
-
-</div>
 
 </body>
 </html>
