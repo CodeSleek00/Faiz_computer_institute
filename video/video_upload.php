@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // video upload
     $file = time() . "_" . $_FILES['video']['name'];
-    $path = "uploads/videos/" . $file;
+    $path = "../uploads/videos/" . $file;
     move_uploaded_file($_FILES['video']['tmp_name'], $path);
 
     $stmt = $conn->prepare("INSERT INTO videos (title, description, video_file) VALUES (?,?,?)");

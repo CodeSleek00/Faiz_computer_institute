@@ -10,7 +10,7 @@ require '../db/db_connect.php';
 $student_id = $_SESSION['student_id'];
 
 // ✔ Secure Prepared Statement
-$stmt = $conn->prepare("SELECT * FROM videos WHERE student_id = ?");
+$stmt = $conn->prepare("SELECT * FROM videos_assignment WHERE student_id = ?");
 $stmt->bind_param("s", $student_id);
 $stmt->execute();
 $videos = $stmt->get_result();
