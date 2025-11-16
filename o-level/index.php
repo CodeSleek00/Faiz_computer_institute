@@ -895,7 +895,7 @@ function startPayment() {
     key: "rzp_test_Rc7TynjHcNrEfB",
     amount: price, // Razorpay expects amount in paise
     currency: "INR",
-    name: "Pyaara Store",
+    name: "FAIZ COMPUTER INSTITUTE",
     description: data.plan,
     handler: function (response) {
       // Payment successful, now submit enrollment
