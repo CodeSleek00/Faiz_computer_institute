@@ -1,8 +1,7 @@
 <?php
 require 'session_check.php';
 require '../db_connect.php';
-
-$student_id = $_SESSION['student_id'];
+$student_id = $_SESSION['student_id']; // FAIZ-Olevelmod-1001
 
 $exams = $conn->query("
     SELECT e.*
@@ -11,6 +10,7 @@ $exams = $conn->query("
     WHERE ea.student_id = '$student_id'
 ");
 ?>
+
 
 <h2>Assigned Exams</h2>
 <ul>
