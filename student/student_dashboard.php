@@ -15,7 +15,7 @@ $feeData = ($fee->num_rows > 0) ? $fee->fetch_assoc() : null;
 
 // Fee calculations
 $paid_fee   = $feeData['amount'] ?? 0;
-$remaining  = 0; // Paid = full amount, so remaining = 0
+$remaining  = $feeData['emi_remaining'] ?? 0;// Paid = full amount, so remaining = 0
 $months     = $feeData['emi_months'] ?? 0;
 
 // Fetch Assigned Modules
