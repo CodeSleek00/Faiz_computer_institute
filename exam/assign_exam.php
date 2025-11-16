@@ -2,8 +2,8 @@
 require '../db_connect.php';
 $exam_id = intval($_GET['exam_id']);
 
-// Fetch students
-$students = $conn->query("SELECT id,name FROM olevel_enrollments");
+// Fetch students from olevel_enrollments
+$students = $conn->query("SELECT id, name FROM olevel_enrollments");
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $selected = $_POST['students'] ?? [];

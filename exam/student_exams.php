@@ -1,8 +1,9 @@
 <?php
 session_start();
 require '../db_connect.php';
-$student_id = $_SESSION['student_id'];
+$student_id = $_SESSION['student_id']; // session me store hone wala id
 
+// Fetch only exams assigned to this student
 $exams = $conn->query("
     SELECT e.*
     FROM exams e
