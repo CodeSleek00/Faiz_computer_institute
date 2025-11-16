@@ -3,7 +3,7 @@ require '../../db_connect.php';
 session_start();
 
 $id = $_GET['id'];
-$module = $conn->query("SELECT * FROM modules_section WHERE module_id = '$id'")->fetch_assoc();
+$module = $conn->query("SELECT * FROM modules WHERE module_name = '$id'")->fetch_assoc();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['module_name'];
