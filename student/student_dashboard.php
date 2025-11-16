@@ -80,7 +80,7 @@ body{
     <!-- Profile -->
     <div class="card">
         <h3>Profile</h3>
-        <p><b>Student ID:</b> <?= $_SESSION['enrollment'] ?></p>
+        <p><b>Student ID:</b> <?= $_SESSION['student_id'] ?></p>
         <p><b>Course:</b> <?= $_SESSION['course'] ?></p>
     </div>
 
