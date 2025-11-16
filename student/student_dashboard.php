@@ -14,9 +14,8 @@ $fee = $conn->query("SELECT * FROM olevel_enrollments WHERE student_id='$student
 $feeData = ($fee->num_rows > 0) ? $fee->fetch_assoc() : null;
 
 // Fee calculations
-$total_fee  = $feeData['total_fee'] ?? 0;
-$paid_fee   = $feeData['amount_paid'] ?? 0;
-$remaining  = $total_fee - $paid_fee;
+$paid_fee   = $feeData['amount'] ?? 0;
+$remaining  = 0; // Paid = full amount, so remaining = 0
 $months     = $feeData['emi_months'] ?? 0;
 
 // Fetch Assigned Modules
@@ -81,13 +80,12 @@ body{
     <div class="card">
         <h3>Profile</h3>
         <p><b>Student ID:</b> <?= $_SESSION['student_id'] ?></p>
-        <p><b>Course: O Level</b> <?= $_SESSION['plan_name'] ?></p>
+        <p><b>Course:</b> <?= $_SESSION['plan_name'] ?></p>
     </div>
 
     <!-- Fees -->
     <div class="card">
         <h3>Fee Status</h3>
-        <p><b>Total Fee:</b> ₹<?= $total_fee ?></p>
         <p><b>Paid:</b> ₹<?= $paid_fee ?></p>
         <p><b>Remaining:</b> ₹<?= $remaining ?></p>
         <p><b>EMI Months:</b> <?= $months ?> Months</p>
