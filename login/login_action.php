@@ -10,7 +10,9 @@ if (empty($student_id) || empty($password)) {
   exit();
 }
 
-$stmt = $conn->prepare("SELECT id, student_id, name, password, is_locked, plan_name FROM olevel_enrollments WHERE student_id = ?");
+$stmt = $conn->prepare("SELECT id, student_id, name, password, is_locked, plan_name 
+                        FROM olevel_enrollments 
+                        WHERE student_id = ?");
 $stmt->bind_param("s", $student_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -23,14 +25,12 @@ if ($result->num_rows === 1) {
     $_SESSION['student_name'] = $row['name'];
     header("Location: locked_portal.php");
     exit();
-}
+  }
 
-
-  // If you are storing plain text passwords (not recommended)
   if ($password === $row['password']) {
     $_SESSION['student_id'] = $row['student_id'];
     $_SESSION['student_name'] = $row['name'];
-    $_SESSION['plan_name'] = $row['plan_name'];
+    $_SESSION['plan_name'] = $row['plan_name'];   // ✅ FIXED
 
     header("Location: ../student/student_dashboard.php");
     exit();
@@ -43,3 +43,4 @@ if ($result->num_rows === 1) {
   header("Location: login.php?error=Student+ID+not+found");
   exit();
 }
+?>
