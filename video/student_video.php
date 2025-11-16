@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db_connect.php';
+include 'db_connect.php';
 
 // Check Login
 if (!isset($_SESSION['student_id'])) {
