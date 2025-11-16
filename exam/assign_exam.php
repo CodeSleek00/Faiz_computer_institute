@@ -4,7 +4,7 @@ require '../db_connect.php';
 $exam_id = $_GET['exam_id'];
 
 // Fetch all students
-$students = $conn->query("SELECT id, name FROM students"); // your student table
+$students = $conn->query("SELECT id, name FROM olevel_enrollments"); // your student table
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selected_students = $_POST['students']; // array of student_ids
