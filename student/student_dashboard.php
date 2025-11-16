@@ -80,7 +80,8 @@ body{
     <div class="card">
         <h3>Profile</h3>
         <p><b>Student ID:</b> <?= $_SESSION['student_id'] ?></p>
-        <p><b>Course:</b> <?= $_SESSION['plan_name'] ?></p>
+        <?= isset($_SESSION['plan_name']) ? $_SESSION['plan_name'] : 'No Plan Found' ?>
+
     </div>
 
     <!-- Fees -->
