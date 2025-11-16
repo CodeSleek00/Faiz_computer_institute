@@ -135,9 +135,7 @@ $result = $stmt->get_result();
     <div class="container">
         <h2>📚 Your Assigned Videos</h2>
         
-        <div class="security-notice">
-            <strong>Security Notice:</strong> Downloading and screen recording of these videos is restricted. Your user ID is watermarked on all videos.
-        </div>
+       
 
         <?php if ($result->num_rows === 0): ?>
             <div class="no-videos">
