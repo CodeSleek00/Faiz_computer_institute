@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // assigned_by = 0 (admin without login)
     $stmt = $conn->prepare("
-        INSERT INTO video_assignments (video_id, assigned_to, assigned_by, role) 
+        INSERT INTO video_assignments (video_id, assigned_to, assigned_by, assigned_role) 
         VALUES (?, ?, 0, 'admin')
     ");
 
