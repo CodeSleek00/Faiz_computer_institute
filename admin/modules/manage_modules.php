@@ -32,7 +32,7 @@ $modules = $conn->query("SELECT * FROM modules ORDER BY module_name DESC");
         <tr>
             <td><?= $row['id'] ?></td>
             <td><?= $row['module_name'] ?></td>
-            <td><?= $row['module_description'] ?></td>
+            <td><?= $row['description'] ?></td>
 
             <td>
                 <a href="edit_module.php?id=<?= $row['module_id'] ?>" class="btn small">Edit</a>
