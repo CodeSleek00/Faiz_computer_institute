@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../db_connect.php';
+require 'db_connect.php';
 
 if (!isset($_SESSION['student_id'])) {
     echo "Unauthorized Access";
