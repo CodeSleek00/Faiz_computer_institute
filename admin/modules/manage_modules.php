@@ -3,7 +3,7 @@ require '../../db_connect.php';
 session_start();
 
 // Fetch all modules
-$modules = $conn->query("SELECT * FROM modules ORDER BY module_id DESC");
+$modules = $conn->query("SELECT * FROM modules ORDER BY module_name DESC");
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ $modules = $conn->query("SELECT * FROM modules ORDER BY module_id DESC");
 
         <?php while ($row = $modules->fetch_assoc()) { ?>
         <tr>
-            <td><?= $row['module_id'] ?></td>
+            <td><?= $row['id'] ?></td>
             <td><?= $row['module_name'] ?></td>
             <td><?= $row['module_description'] ?></td>
 
