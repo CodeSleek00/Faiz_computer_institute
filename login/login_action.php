@@ -30,7 +30,7 @@ if ($result->num_rows === 1) {
   if ($password === $row['password']) {
     $_SESSION['student_id'] = $row['student_id'];
     $_SESSION['student_name'] = $row['name'];
-    header("Location: dashboard.php");
+    header("Location: ../student/student_dashboard.php");
     exit();
   } else {
     header("Location: login.php?error=Incorrect+Password");
