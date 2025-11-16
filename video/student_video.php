@@ -153,7 +153,7 @@ $result = $stmt->get_result();
                             Your browser does not support the video tag.
                         </video>
                         <div class="controls-overlay">
-                            <div class="user-id">User: <?= htmlspecialchars($student_id) ?></div>
+                            <div class="user-id">FAIZ COMPUTER INSTITUTE</div>
                             <div class="watermark"><?= date('Y-m-d H:i:s') ?></div>
                         </div>
                     </div>
