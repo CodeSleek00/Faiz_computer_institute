@@ -186,7 +186,7 @@
             <p>Boost your career with our Signature Course — where learning meets success.
                 Upgrade your skills, elevate your opportunities.</p>
           </div>
-          <a href="allcourse.php"><button>Explore programs →</button></a>
+        <button>  <a href="allcourse.php">Explore programs →</button></a>
         </div>
         <div class="card-image">
           <img src="images/2.png" alt="AI Learning">
@@ -200,7 +200,7 @@
             <h2 style="color: white;">Enroll in Top University Programs – Integral, Parul & Mangalayatan</h2>
             <p style="color: white;">Choose from top-rated degree courses like BA, MA, BBA, MBA, BCA, and MCA. </p>
           </div>
-          <a href="university/uuniversity.php"><button>Try University Program →</button></a>
+          <a href="university/university.php"><button>Try University Program →</button></a>
         </div>
         <div class="card-image">
           <img src="images/1.png" alt="Business Growth">
