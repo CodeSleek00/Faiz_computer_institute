@@ -186,7 +186,7 @@
             <p>Boost your career with our Signature Course — where learning meets success.
                 Upgrade your skills, elevate your opportunities.</p>
           </div>
-        <button>  <a href="allcourse.php">Explore programs →</button></a>
+        <button>  <a href="all_course.php">Explore programs →</button></a>
         </div>
         <div class="card-image">
           <img src="images/2.png" alt="AI Learning">
