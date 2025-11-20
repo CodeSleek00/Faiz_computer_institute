@@ -78,7 +78,7 @@ $courses = $conn->query("SELECT * FROM courses ORDER BY id DESC");
         <div class="company">Company: <b><?php echo $row['company']; ?></b></div>
 
         <!-- View Details Button -->
-        <a href="course_details.php?id=<?php echo $row['id']; ?>" class="btn">
+        <a href="course_detail.php?id=<?php echo $row['id']; ?>" class="btn">
             View Details
         </a>
     </div>
