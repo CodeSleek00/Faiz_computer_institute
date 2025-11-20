@@ -76,13 +76,6 @@ ul li::before {
     <?php while($d = $docs->fetch_assoc()) echo "<li>".$d['document_name']."</li>"; ?>
     </ul>
 
-    <h3>Reviews</h3>
-    <?php 
-    if($reviews->num_rows == 0) echo "<p>No reviews yet.</p>";
-    while($r = $reviews->fetch_assoc()) {
-        echo "<div class='review-box'><b>".$r['reviewer_name']."</b> ⭐".$r['rating']."<br>".$r['review_text']."</div>";
-    }
-    ?>
 
     <br>
     <button class="enroll-btn">Enroll Now</button>
