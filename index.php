@@ -186,7 +186,7 @@
             <p>Boost your career with our Signature Course — where learning meets success.
                 Upgrade your skills, elevate your opportunities.</p>
           </div>
-          <button>Explore programs →</button>
+          <a href="allcourse.php"><button>Explore programs →</button></a>
         </div>
         <div class="card-image">
           <img src="images/2.png" alt="AI Learning">
@@ -200,7 +200,7 @@
             <h2 style="color: white;">Enroll in Top University Programs – Integral, Parul & Mangalayatan</h2>
             <p style="color: white;">Choose from top-rated degree courses like BA, MA, BBA, MBA, BCA, and MCA. </p>
           </div>
-          <button>Try University Program →</button>
+          <a href="university/uuniversity.php"><button>Try University Program →</button></a>
         </div>
         <div class="card-image">
           <img src="images/1.png" alt="Business Growth">
@@ -214,7 +214,7 @@
             <h2>10th & 12th Education Made Easy – BOSSE & NIOS Boards.</h2>
             <p>Study at your own pace and earn a valid 10th or 12th certificate with BOSSE and NIOS, India's most trusted open schooling boards.</p>
           </div>
-          <button>Start Learning →</button>
+          <a href="schooling/school.html"><button>Start Learning →</button></a>
         </div>
         <div class="card-image">
           <img src="images/3.png" alt="Upskilling">
@@ -228,7 +228,7 @@
             <h2 style="color:white">Free Career-Building Courses Powered by EduBridge India</h2>
             <p style="color: whitesmoke;">Take the first step toward your dream career with EduBridge India's free learning programs.</p>
           </div>
-          <button style="background-color: white;color:black;">View Courses →</button>
+         <a href="free/free.html"> <button style="background-color: white;color:black;">View Courses →</button></a>
         </div>
         <div class="card-image">
           <img src="images/4.png" alt="Data Science">
