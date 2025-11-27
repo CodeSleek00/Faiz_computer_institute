@@ -454,7 +454,7 @@ showSection2("Free Courses","free",$conn);
 <div class="testimonial-container" id="scrollArea">
     <div class="testimonial-card">
         <div class="profile">
-            <img src="https://i.pravatar.cc/100?img=1" alt="Sarah">
+           
             <h3>Harshit Sharma</h3>
         </div>
         <p class="testimonial-text">
@@ -464,7 +464,7 @@ showSection2("Free Courses","free",$conn);
 
     <div class="testimonial-card">
         <div class="profile">
-            <img src="https://i.pravatar.cc/100?img=2" alt="Noeris">
+           
             <h3>Sumit Singh</h3>
         </div>
         <p class="testimonial-text">
@@ -474,7 +474,7 @@ showSection2("Free Courses","free",$conn);
 
     <div class="testimonial-card">
         <div class="profile">
-            <img src="https://i.pravatar.cc/100?img=3" alt="Abdullahi">
+           
             <h3>Ranjana Singh</h3>
         </div>
         <p class="testimonial-text">
