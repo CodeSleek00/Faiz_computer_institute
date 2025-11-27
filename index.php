@@ -53,7 +53,7 @@
                     <h4>Explore </h4>
                     <a href="index.php"><i class="fa fa-user" aria-hidden="true"></i> Individual </a>
                    <a href="university/university.php"><i class="fa fa-university" aria-hidden="true"></i>University</a>
-                    <a href="schooling/school.html"><i class="fa-solid fa-school"></i>Schooling</a>
+                    <a href="schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
                     <a href="free/free.html"><i class="fa-thin fa-money-check"></i>  Free</a>
                     <a href="">Login<i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
