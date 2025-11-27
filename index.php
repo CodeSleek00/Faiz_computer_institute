@@ -253,34 +253,34 @@
 
   <div class="logo-strip-container">
     <div class="logo-strip" id="logoStrip">
-      <a href="https://example.com/rgcsm" class="logo-box" target="_blank">
+      <a href="https://rgcsm.org/" class="logo-box" target="_blank">
         <img src="images/rgcsm.png" alt="RGCSM">
         <span>RGCSM</span>
       </a>
-      <a href="https://example.com/bosse" class="logo-box" target="_blank">
+      <a href="https://www.bosse.ac.in/" class="logo-box" target="_blank">
         <img src="images/bosse.png" alt="BOSSE">
         <span>BOSSE</span>
       </a>
-      <a href="https://paruluniversity.ac.in/" class="logo-box" target="_blank">
+      <a href="https://paruluniversity.ac.in//" class="logo-box" target="_blank">
         <img src="images/parul.jpg" alt="Parul University">
         <span>Parul University</span>
       </a>
-      <a href="https://example.com/integral" class="logo-box" target="_blank">
+      <a href="https://www.iul.ac.in/" class="logo-box" target="_blank">
         <img src="images/integral.avif" alt="Integral">
        
       </a>
-      <a href="https://example.com/manglayatan" class="logo-box" target="_blank">
+      <a href="https://www.mangalayatan.in/" class="logo-box" target="_blank">
         <img src="images/manglayatan.jpg" alt="Manglayatan University">
         <span>Manglayatan University</span>
       </a>
-      <a href="https://example.com/edubridge" class="logo-box" target="_blank">
+      <a href="https://www.edubridgeindia.com/" class="logo-box" target="_blank">
         <img src="images/edubrige.avif" alt="EduBridge">
        
       </a>
-      <a href="https://example.com/codesleek" class="logo-box" target="_blank">
+    
         <img src="images/Codesleekstudios.png" alt="Code Sleek Studios">
         <span>Code Sleek Studios</span>
-      </a>
+     
      
     </div>
     
