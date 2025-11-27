@@ -72,11 +72,11 @@
                     <a href="#"><i class="fas fa-bullhorn"></i> Digital Marketing</a>
                 </div>
                 <div class="dropdown-column">
-                    <h4>Professional Courses</h4>
-                    <a href="#"><i class="fas fa-layer-group"></i> Full Stack Development</a>
-                    <a href="#"><i class="fas fa-table"></i> Advanced Excel</a>
-                    <a href="#"><i class="fas fa-network-wired"></i> Networking</a>
-                    <a href="#"><i class="fas fa-user-secret"></i> Ethical Hacking</a>
+                    <h4>Aboout Us</h4>
+                    <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
+                <a href="#"><i class="fas fa-table"></i> Gallery</a>
+                <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
+                <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
                 </div>
             </div>
         </div>
@@ -152,20 +152,21 @@
         
         <div class="mobile-menu-item">
             <div class="mobile-menu-header-item" data-target="mobileProfessional">
-                <span>Professional Courses</span>
+                <span>About US</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileProfessional">
-                <a href="#"><i class="fas fa-layer-group"></i> Full Stack Development</a>
-                <a href="#"><i class="fas fa-table"></i> Advanced Excel</a>
-                <a href="#"><i class="fas fa-network-wired"></i> Networking</a>
-                <a href="#"><i class="fas fa-user-secret"></i> Ethical Hacking</a>
+                <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
+                <a href="#"><i class="fas fa-table"></i> Gallery</a>
+                <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
+                <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
+
             </div>
         </div>
         
         <div class="mobile-auth">
             <button class="mobile-login">Login</button>
-            <button class="mobile-signup">Sign Up</button>
+           
         </div>
         
         <div class="mobile-free">
