@@ -341,7 +341,7 @@ function showSection($title, $section, $conn) {
             <div class="o-level-online-card-text">
                 <h2>Start your O-Level preparation online today. </h2>
                 <p>Join our comprehensive online O-Level preparation program designed to help you in your exams.</p>
-               <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
+               <a href="o-level/index.php"><button class="o-level-online-explore">Explore More</button></a>
             </div>
             <div class="o-level-online-card-image" style="background-image: url('images/Online\ acces.png');"></div>
         </div>
@@ -350,7 +350,7 @@ function showSection($title, $section, $conn) {
             <div class="o-level-online-card-text">
                 <h2>Start your CCC preparation online Today.</h2>
                   <p>Join our comprehensive online CCC preparation program designed to help you in your exams.</p>
-                <a href="www,google.con"><button class="o-level-online-explore">Explore More</button></a>
+                <a href="o-level/index.php"><button class="o-level-online-explore">Explore More</button></a>
             </div>
             <div class="o-level-online-card-image" style="background-image: url('images/O\ level.png');"></div>
         </div>
@@ -364,19 +364,19 @@ function showSection($title, $section, $conn) {
     <div class="career-options">
       <button class="option">
         <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-lafs/64/external-grow-distance-education-outline-part-4-outline-lafs.png" alt="external-grow-distance-education-outline-part-4-outline-lafs"/></span>
-        <a href="" style="text-decoration: none;color:black;"><span>Grow your skills</span></a>
+        <a href="allcourse.php" style="text-decoration: none;color:black;"><span>Grow your skills</span></a>
       </button>
       <button class="option">
         <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ink/48/learning.png" alt="learning"/></span>
-        <a href="" style="text-decoration: none;color:black;"><span>Learn something new</span></a>
+        <a href="allcourse.php" style="text-decoration: none;color:black;"><span>Learn something new</span></a>
       </button>
       <button class="option">
         <span class="icon"><img width="30" height="30" src="https://img.icons8.com/external-outline-geotatah/64/external-development-just-in-time-outline-geotatah.png" alt="external-development-just-in-time-outline-geotatah"/></span>
-        <a href="" style="text-decoration: none;color:black;"><span>Improve your knowledge</span></a>
+        <a href="allcourse.php" style="text-decoration: none;color:black;"><span>Improve your knowledge</span></a>
       </button>
       <button class="option">
         <span class="icon"><img width="30" height="30" src="https://img.icons8.com/ios/50/hard-to-find.png" alt="hard-to-find"/></span>
-        <a href="ggfg.html" style="text-decoration: none;color:black;"><span>Explore Our Courses</span></a>
+        <a href="allcourse.php" style="text-decoration: none;color:black;"><span>Explore Our Courses</span></a>
       </button>
     </div>
   </div>
@@ -444,7 +444,7 @@ showSection2("Free Courses","free",$conn);
         </div>
 
         <div class="university-text">
-          <h2 style="text-align:center;">Join colleges and universities that choose <span class="highlight">Faiz Computer Institute for Campus</span></h2></a>
+          <h2 style="text-align:center;">Join colleges and universities that choose <span class="highlight"><a href="university/university.php"></a>Faiz Computer Institute for Campus</span></h2></a>
         </div>
     </div>
 </div>
@@ -455,27 +455,27 @@ showSection2("Free Courses","free",$conn);
     <div class="testimonial-card">
         <div class="profile">
             <img src="https://i.pravatar.cc/100?img=1" alt="Sarah">
-            <h3>Sarah W.</h3>
+            <h3>Harshit Sharma</h3>
         </div>
         <p class="testimonial-text">
-            "Coursera's reputation for high-quality content, paired with its flexible structure, made it possible for me to dive into data analytics while managing family, health, and everyday life."
+            "Faiz Computer Institute's reputation for high-quality content, paired with its flexible structure, made it possible for me to dive into data analytics while managing family, health, and everyday life."
         </p>
     </div>
 
     <div class="testimonial-card">
         <div class="profile">
             <img src="https://i.pravatar.cc/100?img=2" alt="Noeris">
-            <h3>Noeris B.</h3>
+            <h3>Sumit Singh</h3>
         </div>
         <p class="testimonial-text">
-            "Coursera rebuilt my confidence and showed me I could dream bigger. It wasn't just about gaining knowledge—it was about believing in my potential again."
+            "Faiz Computer Institute rebuilt my confidence and showed me I could dream bigger. It wasn't just about gaining knowledge—it was about believing in my potential again."
         </p>
     </div>
 
     <div class="testimonial-card">
         <div class="profile">
             <img src="https://i.pravatar.cc/100?img=3" alt="Abdullahi">
-            <h3>Abdullahi M.</h3>
+            <h3>Ranjana Singh</h3>
         </div>
         <p class="testimonial-text">
             "I now feel more prepared to take on leadership roles and have already started mentoring some of my colleagues."
@@ -485,10 +485,10 @@ showSection2("Free Courses","free",$conn);
     <div class="testimonial-card">
         <div class="profile">
             <img src="https://i.pravatar.cc/100?img=4" alt="Anas">
-            <h3>Anas A.</h3>
+            <h3> Prerna Kumari</h3>
         </div>
         <p class="testimonial-text">
-            "Learning with Coursera has expanded my professional expertise by giving me access to cutting-edge research, practical tools, and global perspectives."
+            "Learning with Faiz Computer Institute has expanded my professional expertise by giving me access to cutting-edge research, practical tools, and global perspectives."
         </p>
     </div>
 </div>
