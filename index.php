@@ -277,11 +277,11 @@
         <img src="images/edubrige.avif" alt="EduBridge">
        
       </a>
-    
+     <a href="" class="logo-box" target="_blank">
         <img src="images/Codesleekstudios.png" alt="Code Sleek Studios">
         <span>Code Sleek Studios</span>
      
-     
+     </a>
     </div>
     
     <button class="nav-btn prev" id="prevBtn">
