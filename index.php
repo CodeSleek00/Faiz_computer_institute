@@ -484,7 +484,7 @@ showSection2("Free Courses","free",$conn);
 
     <div class="testimonial-card">
         <div class="profile">
-            <img src="https://i.pravatar.cc/100?img=4" alt="Anas">
+           
             <h3> Prerna Kumari</h3>
         </div>
         <p class="testimonial-text">
