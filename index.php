@@ -300,7 +300,7 @@
 <?php
 function showSection($title, $section, $conn) {
     echo "<div class='courses-section-item'>
-            <a href='a.html' style='text-decoration:none;'> <div class='courses-section-header'>{$title} <span>→</span></div></a>
+            <a href='all_course.php' style='text-decoration:none;'> <div class='courses-section-header'>{$title} <span>→</span></div></a>
             <div class='courses-section-container'>";
     
     $courses = $conn->query("SELECT * FROM courses WHERE home_section='$section' ORDER BY id DESC LIMIT 4");
@@ -390,7 +390,7 @@ function showSection($title, $section, $conn) {
 <?php
 function showSection2($title, $section, $conn) {
     echo "<div class='course-2-section'>
-             <a href='a.html' style='text-decoration:none;'> <div class='course-2-header'>{$title} <span>→</span></div></a>
+             <a href='all_course.php' style='text-decoration:none;'> <div class='course-2-header'>{$title} <span>→</span></div></a>
             <div class='course-2-courses-container'>";
     $courses = $conn->query("SELECT * FROM courses WHERE home_section2='$section' ORDER BY id DESC LIMIT 4");
     if($courses->num_rows == 0){
