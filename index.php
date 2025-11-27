@@ -52,10 +52,10 @@
                 <div class="dropdown-column">
                     <h4>Explore </h4>
                     <a href="index.php"><i class="fa fa-user" aria-hidden="true"></i> Individual </a>
-                   <a href="university/university.php"><i class="fa fa-university" aria-hidden="true"></i>University</a>
+                   <a href="university/university.php"><i class="fa fa-university" aria-hidden="true"></i> University</a>
                     <a href="schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
-                    <a href="free/free.html"><i class="fa-solid fa-wallet"></i>  Free</a>
-                    <a href="">Login<i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="free/free.html"><i class="fa-solid fa-wallet"></i> Free</a>
+                    <a href="">Login <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Online Degree</h4>
@@ -63,7 +63,7 @@
                     <a href="university/view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
                     <a href="university/view.php?id=19"><i class="fas fa-book"></i> BBA</a>
                     <a href="university/view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
-                    <a href="university/university.php">More<i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Trending Courses</h4>
@@ -71,7 +71,7 @@
                     <a href="course_detail.php?id=7"><i class="fas fa-palette"></i> O Level</a>
                     <a href="course_detail.php?id=3"><i class="fas fa-calculator"></i> Tally</a>
                     <a href="course_detail.php?id=9"><i class="fas fa-bullhorn"></i> Advance Excel</a>
-                    <a href="all_course.php">More Courses<i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Aboout Us</h4>
@@ -79,7 +79,7 @@
                 <a href="#"><i class="fas fa-table"></i> Gallery</a>
                 <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
                 <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
-                <a href="university/university.php">More<i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
             </div>
         </div>
