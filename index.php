@@ -86,7 +86,7 @@
 
         <div class="nav-right">
             <div class="auth-buttons">
-                <a href="login/login.php"><button class="login-btn">Login</button></a>
+                <a href="https://faizcomputerinstitute.in/login-system/login.php"><button class="login-btn">Login</button></a>
               <a href="free/free.html" style="text-decoration: none;">  <button class="signup-btn">Free Courses</button></a>
               <a href="o-level/index.php" style="text-decoration: none;">  <button class="signup-btn">O Level/CCC</button></a>
             </div>
@@ -157,7 +157,7 @@
         
         <div class="mobile-menu-item">
             <div class="mobile-menu-header-item" data-target="mobileProfessional">
-                <span>About US</span>
+                <span>About Us</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileProfessional">
@@ -170,7 +170,7 @@
         </div>
         
         <div class="mobile-auth">
-            <button class="mobile-login">Login</button>
+            <button class="mobile-login"><a href="https://faizcomputerinstitute.in/login-system/login.php">Login</a></button>
            
         </div>
         
