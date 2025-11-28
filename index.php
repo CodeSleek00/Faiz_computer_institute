@@ -147,10 +147,11 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileTrending">
-                <a href="#"><i class="fab fa-python"></i> Python Programming</a>
-                <a href="#"><i class="fas fa-palette"></i> Graphic Design</a>
-                <a href="#"><i class="fas fa-calculator"></i> Tally Prime</a>
-                <a href="#"><i class="fas fa-bullhorn"></i> Digital Marketing</a>
+                <a href="course_detail.php?id=1"><i class="fab fa-python"></i> DOAP</a>
+                    <a href="course_detail.php?id=7"><i class="fas fa-palette"></i> O Level</a>
+                    <a href="course_detail.php?id=3"><i class="fas fa-calculator"></i> Tally</a>
+                    <a href="course_detail.php?id=9"><i class="fas fa-bullhorn"></i> Advance Excel</a>
+                    <a href="all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
             </div>
         </div>
         
@@ -164,7 +165,7 @@
                 <a href="#"><i class="fas fa-table"></i> Gallery</a>
                 <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
                 <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
-
+                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
             </div>
         </div>
         
