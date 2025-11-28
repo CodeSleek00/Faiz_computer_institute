@@ -74,7 +74,7 @@
                     <a href="all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
                 <div class="dropdown-column">
-                    <h4>Aboout Us</h4>
+                    <h4>About Us</h4>
                     <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
                 <a href="#"><i class="fas fa-table"></i> Gallery</a>
                 <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
@@ -119,10 +119,11 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileRoles">
-                 <a href="index.php"><i class="fa-thin fa-circle-user"></i> Individual </a>
-                   <a href="university/university.php"><i class="fa-thin fa-building-columns"></i>University</a>
-                    <a href="schooling/school.html"><i class="fa-thin fa-school"></i> Schooling</a>
-                    <a href="free/free.html"><i class="fa-thin fa-money-check"></i>  Free</a>
+                <a href="index.php"><i class="fa fa-user" aria-hidden="true"></i> Individual </a>
+                   <a href="university/university.php"><i class="fa fa-university" aria-hidden="true"></i> University</a>
+                    <a href="schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
+                    <a href="free/free.html"><i class="fa-solid fa-wallet"></i> Free</a>
+                    
             </div>
         </div>
         
