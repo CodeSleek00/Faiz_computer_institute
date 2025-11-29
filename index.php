@@ -178,6 +178,11 @@
             <i class="fas fa-gift"></i>
            <a href="free/free.html"> <span>Free Courses</span></a>
         </div>
+         <div class="mobile-free">
+            <i class="fas fa-graduation-cap"></i>
+            <a href="o-level/index.php">
+            <span>O Level/CCC</span>
+        </div></a>
     </div>
 
   <div class="carousel-wrapper">
