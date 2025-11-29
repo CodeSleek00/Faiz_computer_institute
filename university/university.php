@@ -203,8 +203,14 @@ function showCourseSection($conn, $category, $limit = 4) {
         
         <div class="mobile-free">
             <i class="fas fa-gift"></i>
+            <a href="../free/free.html">
             <span>Free Courses</span>
-        </div>
+        </div></a>
+         <div class="mobile-free">
+            <i class="fas fa-graduation-cap"></i>
+            <a href="o-level/index.php">
+            <span>O Level/CCC</span>
+        </div></a>
     </div>
 
   <!-- 🔹 Main Section -->
