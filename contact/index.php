@@ -2,26 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contact Us</title>
+    <title>Contact Us - Faiz Computer Institute</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="../images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     
     <style>
         :root {
@@ -258,7 +250,7 @@
             color: var(--text-dark);
         }
         
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 16px 18px;
             border: 1px solid var(--medium-gray);
@@ -269,7 +261,7 @@
             background-color: #fafbfc;
         }
         
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--light-blue);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -335,81 +327,19 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
         }
         
-       
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            header {
-                padding: 80px 0 50px;
-            }
-            
-            header h1 {
-                font-size: 2.4rem;
-            }
-            
-            .main-content {
-                flex-direction: column;
-                margin-top: -60px;
-            }
-            
-            .contact-info, .contact-form {
-                padding: 30px;
-            }
-            
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-           
-            
-            .map-title {
-                font-size: 1.8rem;
-            }
+        /* Navigation Styles */
+        nav {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
-        @media (max-width: 480px) {
-            header {
-                padding: 60px 0 40px;
-            }
-            
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            header p {
-                font-size: 1rem;
-            }
-            
-            .contact-info, .contact-form {
-                padding: 25px;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-            
-            .info-icon {
-                width: 45px;
-                height: 45px;
-            }
-            .contact-form {
-                margin-top: 0px;
-            }
-        }
-
-
-       nav {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 5%;
-    position: sticky;  /* ✅ Make it sticky */
-    top: 0;            /* ✅ Stick to the top */
-    z-index: 1000;     /* ✅ Ensure it stays above all content */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
 
         .nav-left {
             font-size: 22px;
@@ -754,20 +684,34 @@
             display: block;
         }
 
-        /* ---- Responsive ---- */
-        @media (max-width: 1024px) {
-            nav {
-                padding: 12px 3%;
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 80px 0 50px;
             }
             
-            .dropdown {
-                width: 95vw;
-                gap: 20px;
-                padding: 20px;
+            header h1 {
+                font-size: 2.4rem;
             }
-        }
-
-        @media (max-width: 768px) {
+            
+            .main-content {
+                flex-direction: column;
+                margin-top: -60px;
+            }
+            
+            .contact-info, .contact-form {
+                padding: 30px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+           
+            .map-title {
+                font-size: 1.8rem;
+            }
+            
             .mobile-toggle {
                 display: block;
             }
@@ -776,8 +720,36 @@
                 display: none;
             }
         }
-
+        
         @media (max-width: 480px) {
+            header {
+                padding: 60px 0 40px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .contact-info, .contact-form {
+                padding: 25px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .info-icon {
+                width: 45px;
+                height: 45px;
+            }
+            .contact-form {
+                margin-top: 0px;
+            }
+            
             .dropdown {
                 grid-template-columns: 1fr;
             }
@@ -789,14 +761,13 @@
     </style>
 </head>
 <body>
-   
-    
-     <nav>
+    <!-- Navigation -->
+    <nav>
         <div class="nav-left">
-           
-           <a href="../index.php" style="text-decoration: none;"> Faiz Computer Institute</a>
+            <a href="../index.php" style="text-decoration: none;"> Faiz Computer Institute</a>
         </div>
- <div class="nav-center">
+        
+        <div class="nav-center">
             <button id="exploreBtn">
                 Explore <i class="fas fa-chevron-down"></i>
             </button>
@@ -807,7 +778,7 @@
                    <a href="university.php"><i class="fa fa-university" aria-hidden="true"></i> University</a>
                     <a href="../schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
                     <a href="../free/free.html"><i class="fa-solid fa-wallet"></i> Free</a>
-                    <a href="">Login <i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="https://faizcomputerinstitute.in/login-system/login.php">Login <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Online Degree</h4>
@@ -815,7 +786,7 @@
                     <a href="view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
                     <a href="view.php?id=19"><i class="fas fa-book"></i> BBA</a>
                     <a href="view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
-                    <a href="university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="university.php">More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Trending Courses</h4>
@@ -823,7 +794,7 @@
                     <a href="../course_detail.php?id=7"><i class="fas fa-palette"></i> O Level</a>
                     <a href="../course_detail.php?id=3"><i class="fas fa-calculator"></i> Tally</a>
                     <a href="../course_detail.php?id=9"><i class="fas fa-bullhorn"></i> Advance Excel</a>
-                    <a href="../all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="../all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>About Us</h4>
@@ -831,7 +802,7 @@
                 <a href="#"><i class="fas fa-table"></i> Gallery</a>
                 <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
                 <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
-                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -842,7 +813,6 @@
               <a href="free/free.html" style="text-decoration: none;">  <button class="signup-btn">Free Courses</button></a>
               <a href="o-level/index.php" style="text-decoration: none;">  <button class="signup-btn">O Level/CCC</button></a>
             </div>
-            
         </div>
 
         <!-- Mobile Toggle Button -->
@@ -850,7 +820,6 @@
             <i class="fas fa-bars"></i>
         </button>
     </nav>
-
 
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
@@ -904,7 +873,7 @@
                     <a href="../course_detail.php?id=7"><i class="fas fa-palette"></i> O Level</a>
                     <a href="../course_detail.php?id=3"><i class="fas fa-calculator"></i> Tally</a>
                     <a href="../course_detail.php?id=9"><i class="fas fa-bullhorn"></i> Advance Excel</a>
-                    <a href="../all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="../all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
         
@@ -918,32 +887,36 @@
                 <a href="#"><i class="fas fa-table"></i> Gallery</a>
                 <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
                 <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
-                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
         
         <div class="mobile-auth">
-            <button class="mobile-login">Login</button>
-           
+            <a href="https://faizcomputerinstitute.in/login-system/login.php" style="text-decoration: none;">
+                <button class="mobile-login">Login</button>
+            </a>
         </div>
         
         <div class="mobile-free">
             <i class="fas fa-gift"></i>
-            <a href="../free/free.html">
-            <span>Free Courses</span>
-        </div></a>
-         <div class="mobile-free">
+            <a href="../free/free.html" style="text-decoration: none;">
+                <span>Free Courses</span>
+            </a>
+        </div>
+        
+        <div class="mobile-free">
             <i class="fas fa-graduation-cap"></i>
-            <a href="../o-level/index.php">
-            <span>O Level/CCC</span>
-        </div></a>
+            <a href="../o-level/index.php" style="text-decoration: none;">
+                <span>O Level/CCC</span>
+            </a>
+        </div>
     </div>
 
     <!-- Header -->
     <header>
         <div class="container">
             <h1>Get In Touch With Us</h1>
-            <p>We're here to help and answer any questions you might have. <br></p>
+            <p>We're here to help and answer any questions you might have. <br>We look forward to hearing from you!</p>
         </div>
     </header>
     
@@ -961,7 +934,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Our Location</h3>
-                        <p>Lucknow, Uttar Pradesh – India</p>
+                        <p>Charan Plaza, Infront Of Masjid, Telibagh, Lucknow, Uttar Pradesh – India</p>
                     </div>
                 </div>
                 
@@ -971,7 +944,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Email Address</h3>
-                        <p>support@yourdomain.com</p>
+                        <p>Faizcomputerinstitutes@gmail.com</p>
                     </div>
                 </div>
                 
@@ -981,7 +954,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Phone Number</h3>
-                        <p>+91 9876543210</p>
+                        <p>+91 9721896891, +91 7007862136</p>
                     </div>
                 </div>
                 
@@ -1034,7 +1007,18 @@
                         </div>
                     </div>
                     
-                   
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select name="subject" id="subject" required>
+                            <option value="" disabled selected>Select a subject</option>
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Course Information">Course Information</option>
+                            <option value="Admission Process">Admission Process</option>
+                            <option value="Fee Structure">Fee Structure</option>
+                            <option value="Technical Support">Technical Support</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label for="message">Your Message</label>
@@ -1061,85 +1045,129 @@
         </div>
     </div>
     
-     <footer class="bg-gray-50 text-gray-600">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-      <div class="space-y-4">
-        <a href="#" class="text-blue-700 font-extrabold text-2xl select-none hover:text-blue-800 transition block">Faiz Computer Institute.</a>
-        <p class="text-xs text-gray-500">Empowering careers through immersive education since 2002.</p>
-        
-        <div class="flex items-center space-x-4 pt-2">
-          <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-blue-600 transition">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" aria-label="Twitter" class="text-gray-500 hover:text-blue-400 transition">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-pink-600 transition">
-            <i class="fab fa-instagram"></i>
-          </a>
-          
+    <!-- Footer -->
+    <footer class="bg-gray-50 text-gray-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+            <div class="space-y-4">
+                <a href="#" class="text-blue-700 font-extrabold text-2xl select-none hover:text-blue-800 transition block">Faiz Computer Institute.</a>
+                <p class="text-xs text-gray-500">Empowering careers through immersive education since 2002.</p>
+                
+                <div class="flex items-center space-x-4 pt-2">
+                    <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-blue-600 transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter" class="text-gray-500 hover:text-blue-400 transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-pink-600 transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h5 class="font-semibold text-gray-800 text-sm mb-4">Company</h5>
+                <ul class="space-y-2 text-xs">
+                    <li><a class="hover:text-blue-600 transition" href="#">About Us</a></li>
+                    <li><a class="hover:text-blue-600 transition" href="#">Blog</a></li>
+                    <li><a class="hover:text-blue-600 transition" href="#">Affiliates</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h5 class="font-semibold text-gray-800 text-sm mb-4">Resources</h5>
+                <ul class="space-y-2 text-xs">
+                    <li><a class="hover:text-blue-600 transition" href="#">Help Center</a></li>
+                    <li><a class="hover:text-blue-600 transition" href="#">Scholarships</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h5 class="font-semibold text-gray-800 text-sm mb-4">Support</h5>
+                <ul class="space-y-2 text-xs">
+                    <li><a class="hover:text-blue-600 transition" href="#">Contact Us</a></li>
+                    <li><a class="hover:text-blue-600 transition" href="#">FAQ</a></li>
+                    <li><a class="hover:text-blue-600 transition" href="#">Privacy Policy</a></li>
+                    <li><a class="hover:text-blue-600 transition" href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h5 class="font-semibold text-gray-800 text-sm mb-4">Contact</h5>
+                <ul class="space-y-3 text-xs">
+                    <li class="flex items-start">
+                        <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3"></i>
+                        <span>Charan Plaza, Infront Of Masjid, Telibagh, Lucknow</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-phone-alt text-blue-600 mr-3"></i>
+                        <div>
+                            <a class="hover:text-blue-600 transition block" href="tel:+919721896891">+91 9721896891</a>
+                            <a class="hover:text-blue-600 transition block" href="tel:+917007862136">+91 7007862136</a>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-envelope text-blue-600 mr-3"></i>
+                        <a class="hover:text-blue-600 transition" href="mailto:Faizcomputerinstitutes@gmail.com">Faizcomputerinstitutes@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Company</h5>
-        <ul class="space-y-2 text-xs">
-          <li><a class="hover:text-blue-600 transition" href="#">About Us</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Blog</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Affiliates</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Resources</h5>
-        <ul class="space-y-2 text-xs">
-          <li><a class="hover:text-blue-600 transition" href="#">Help Center</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Scholarships</a></li>
-          
-        </ul>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Support</h5>
-        <ul class="space-y-2 text-xs">
-          <li><a class="hover:text-blue-600 transition" href="#">Contact Us</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">FAQ</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Privacy Policy</a></li>
-          <li><a class="hover:text-blue-600 transition" href="#">Terms of Service</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h5 class="font-semibold text-gray-800 text-sm mb-4">Contact</h5>
-        <ul class="space-y-3 text-xs">
-          <li class="flex items-start">
-            <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3"></i>
-            <span>Charan Plaza, Infront Of Masjid, Telibagh, Lucknow</span>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-phone-alt text-blue-600 mr-3"></i>
-            <a class="hover:text-blue-600 transition" href="tel:+919721896891">+91 9721896891</a>
-            <a class="hover:text-blue-600 transition" href="tel:+917007862136">+91 7007862136</a>
-          </li>
-          <li class="flex items-center">
-            <i class="fas fa-envelope text-blue-600 mr-3"></i>
-            <a class="hover:text-blue-600 transition" href="mailto:hello@upskill.com">Faizcomputerinstitutes@gmail.com</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-      <div class="mb-3 md:mb-0">
-        &copy; 2025 Faiz Computer Institute. All rights reserved.
-      </div>
-      <div class="flex space-x-4">
-        <a href="#" class="hover:text-blue-600 transition">Privacy Policy</a>
-        <a href="#" class="hover:text-blue-600 transition">Terms of Service</a>
         
-      </div>
-    </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+            <div class="mb-3 md:mb-0">
+                &copy; 2025 Faiz Computer Institute. All rights reserved.
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-blue-600 transition">Privacy Policy</a>
+                <a href="#" class="hover:text-blue-600 transition">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const mobileClose = document.getElementById('mobileClose');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('overlay');
+            
+            // Toggle mobile menu
+            mobileToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                overlay.classList.add('active');
+            });
+            
+            // Close mobile menu
+            mobileClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            // Close mobile menu when clicking overlay
+            overlay.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            // Mobile dropdown functionality
+            const mobileMenuHeaders = document.querySelectorAll('.mobile-menu-header-item');
+            mobileMenuHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetDropdown = document.getElementById(targetId);
+                    
+                    // Toggle active class on header
+                    this.classList.toggle('active');
+                    
+                    // Toggle active class on dropdown
+                    targetDropdown.classList.toggle('active');
+                });
+            });
+        });
+
+        // Form submission function
         function submitForm() {
             const form = document.getElementById('contactForm');
             const response = document.getElementById('response');
@@ -1167,7 +1195,7 @@
                 form.reset();
             })
             .catch(err => {
-                response.innerHTML = "Something went wrong!";
+                response.innerHTML = "Something went wrong! Please try again later.";
                 response.style.color = "#e53e3e";
                 response.style.backgroundColor = "rgba(229, 62, 62, 0.1)";
             });
