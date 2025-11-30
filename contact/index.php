@@ -23,6 +23,8 @@
             --medium-gray: #e2e8f0;
             --dark-gray: #64748b;
             --text-dark: #1e293b;
+            --success-color: #059669;
+            --error-color: #e53e3e;
         }
         
         * {
@@ -53,10 +55,11 @@
         header {
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
             color: var(--white);
-            padding: 80px 0 40px;
+            padding: 100px 0 60px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
         
         header::before {
@@ -72,14 +75,14 @@
         }
         
         header h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 15px;
             position: relative;
             z-index: 1;
         }
         
         header p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             max-width: 600px;
             margin: 0 auto;
             position: relative;
@@ -92,7 +95,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 40px;
-            margin: -60px auto 60px;
+            margin: -80px auto 60px;
             position: relative;
             z-index: 2;
         }
@@ -101,18 +104,42 @@
             flex: 1;
             min-width: 300px;
             background: var(--white);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
         }
         
         .contact-form {
             flex: 1.5;
             min-width: 300px;
             background: var(--white);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #fbbf24 100%);
         }
         
         .section-title {
@@ -120,7 +147,7 @@
             margin-bottom: 25px;
             color: var(--primary-blue);
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
         
         .section-title::after {
@@ -129,7 +156,7 @@
             bottom: 0;
             left: 0;
             width: 50px;
-            height: 3px;
+            height: 4px;
             background-color: var(--accent-color);
             border-radius: 3px;
         }
@@ -139,23 +166,29 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateX(5px);
         }
         
         .info-icon {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(30, 64, 175, 0.1);
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 15px;
             flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.2);
         }
         
         .info-icon i {
-            color: var(--primary-blue);
-            font-size: 1.2rem;
+            color: var(--white);
+            font-size: 1.3rem;
         }
         
         .info-text h3 {
@@ -174,27 +207,27 @@
         }
         
         .social-link {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(30, 64, 175, 0.1);
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-blue);
+            color: var(--white);
             text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.2);
         }
         
         .social-link:hover {
-            background-color: var(--primary-blue);
-            color: var(--white);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(30, 64, 175, 0.3);
         }
         
         /* Contact Form */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .form-row {
@@ -215,31 +248,33 @@
         
         input, textarea {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px 18px;
             border: 1px solid var(--medium-gray);
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background-color: #fafbfc;
         }
         
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--light-blue);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background-color: var(--white);
         }
         
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 140px;
         }
         
         .submit-btn {
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
             color: var(--white);
             border: none;
-            border-radius: 8px;
-            padding: 16px 30px;
+            border-radius: 10px;
+            padding: 18px 30px;
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             font-weight: 600;
@@ -249,11 +284,12 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.3);
         }
         
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.4);
         }
         
         .submit-btn i {
@@ -264,31 +300,36 @@
             margin-top: 15px;
             text-align: center;
             font-weight: 500;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
         
         /* Map Section */
         .map-section {
-            margin: 60px auto;
+            margin: 80px auto;
         }
         
         .map-title {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: var(--primary-blue);
+            font-size: 2.2rem;
         }
         
         .map-container {
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
         }
         
         /* Footer */
         footer {
-            background-color: var(--primary-blue);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
             color: var(--white);
-            padding: 40px 0;
+            padding: 50px 0 30px;
             text-align: center;
+            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
         }
         
         .footer-content {
@@ -301,7 +342,7 @@
         
         .footer-logo {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
         }
         
@@ -314,6 +355,7 @@
             color: var(--white);
             text-decoration: none;
             transition: opacity 0.3s ease;
+            font-weight: 500;
         }
         
         .footer-links a:hover {
@@ -321,20 +363,24 @@
         }
         
         .copyright {
-            margin-top: 20px;
+            margin-top: 30px;
             opacity: 0.8;
             font-size: 0.9rem;
         }
         
         /* Responsive Styles */
         @media (max-width: 768px) {
+            header {
+                padding: 80px 0 50px;
+            }
+            
             header h1 {
-                font-size: 2.2rem;
+                font-size: 2.4rem;
             }
             
             .main-content {
                 flex-direction: column;
-                margin-top: -40px;
+                margin-top: -60px;
             }
             
             .contact-info, .contact-form {
@@ -350,15 +396,23 @@
                 flex-direction: column;
                 text-align: center;
             }
+            
+            .map-title {
+                font-size: 1.8rem;
+            }
         }
         
         @media (max-width: 480px) {
             header {
-                padding: 60px 0 30px;
+                padding: 60px 0 40px;
             }
             
             header h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
             }
             
             .contact-info, .contact-form {
@@ -368,6 +422,11 @@
             .section-title {
                 font-size: 1.5rem;
             }
+            
+            .info-icon {
+                width: 45px;
+                height: 45px;
+            }
         }
     </style>
 </head>
@@ -376,7 +435,7 @@
     <header>
         <div class="container">
             <h1>Get In Touch With Us</h1>
-            <p>We're here to help and answer any questions you might have. </p>
+            <p>We're here to help and answer any questions you might have. We look forward to hearing from you!</p>
         </div>
     </header>
     
@@ -446,39 +505,43 @@
             </div>
             
             <!-- Contact Form -->
-         <form id="contactForm">
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" name="name" id="name" placeholder="Enter your full name" required>
-        </div>
-       
-    </div>
-
-    <div class="form-row">
-        <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" name="contact" id="phone" placeholder="Enter your phone number" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" name="email" id="email" placeholder="Enter your email address" required>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="message">Your Message</label>
-        <textarea name="message" id="message" placeholder="Enter your message here..." required></textarea>
-    </div>
-
-    <button type="button" class="submit-btn" onclick="submitForm()">
-        Send Message <i class="fas fa-paper-plane"></i>
-    </button>
-
-    <p id="response"></p>
-</form>
-
+            <div class="contact-form">
+                <h2 class="section-title">Send Us a Message</h2>
+                <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+                
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" name="name" id="name" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" name="contact" id="phone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" name="email" id="email" placeholder="Enter your email address" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" name="subject" id="subject" placeholder="Enter message subject" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea name="message" id="message" placeholder="Enter your message here..." required></textarea>
+                    </div>
+                    
+                    <button type="button" class="submit-btn" onclick="submitForm()">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                    
+                    <p id="response"></p>
+                </form>
             </div>
         </div>
     </div>
@@ -493,40 +556,57 @@
         </div>
     </div>
     
-   
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">YourBrand</div>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Services</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 YourBrand. All rights reserved.
+            </div>
+        </div>
+    </footer>
     
     <script>
-      
-function submitForm() {
-    const form = document.getElementById('contactForm');
-    const response = document.getElementById('response');
+        function submitForm() {
+            const form = document.getElementById('contactForm');
+            const response = document.getElementById('response');
 
-    // Form validation
-    if (!form.name.value || !form.contact.value || !form.email.value || !form.subject.value || !form.message.value) {
-        response.innerHTML = "Please fill all required fields.";
-        response.style.color = "#e53e3e";
-        return;
-    }
+            // Form validation
+            if (!form.name.value || !form.contact.value || !form.email.value || !form.subject.value || !form.message.value) {
+                response.innerHTML = "Please fill all required fields.";
+                response.style.color = "#e53e3e";
+                response.style.backgroundColor = "rgba(229, 62, 62, 0.1)";
+                return;
+            }
 
-    // Send form data
-    let fd = new FormData(form);
+            // Send form data
+            let fd = new FormData(form);
 
-    fetch("save_contact.php", {
-        method: "POST",
-        body: fd
-    })
-    .then(res => res.text())
-    .then(data => {
-        response.innerHTML = data;
-        response.style.color = "#059669";  // success color
-        form.reset();
-    })
-    .catch(err => {
-        response.innerHTML = "Something went wrong!";
-        response.style.color = "#e53e3e";
-    });
-}
-</script>
-
+            fetch("save_contact.php", {
+                method: "POST",
+                body: fd
+            })
+            .then(res => res.text())
+            .then(data => {
+                response.innerHTML = data;
+                response.style.color = "#059669";
+                response.style.backgroundColor = "rgba(5, 150, 105, 0.1)";
+                form.reset();
+            })
+            .catch(err => {
+                response.innerHTML = "Something went wrong!";
+                response.style.color = "#e53e3e";
+                response.style.backgroundColor = "rgba(229, 62, 62, 0.1)";
+            });
+        }
+    </script>
 </body>
 </html>
