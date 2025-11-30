@@ -433,9 +433,558 @@
                 margin-top: 0px;
             }
         }
+
+
+       nav {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 5%;
+    position: sticky;  /* ✅ Make it sticky */
+    top: 0;            /* ✅ Stick to the top */
+    z-index: 1000;     /* ✅ Ensure it stays above all content */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+        .nav-left {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0406ae;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-left i {
+            color: #0c0058;
+        }
+
+        .nav-center {
+            position: relative;
+        }
+
+        .nav-center button {
+            background: none;
+            border: none;
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-center button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            color: #000;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            padding: 25px;
+            border-radius: 12px;
+            width: 90vw;
+            max-width: 1000px;
+            z-index: 100;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            border-top: 4px solid #0033ff;
+        }
+
+        .dropdown-column h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #1a1a2e;
+            border-bottom: 2px solid #c9d0ff;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .dropdown-column a {
+            display: block;
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            margin: 8px 0;
+            transition: 0.2s;
+            padding: 4px 0;
+        }
+
+        .dropdown-column a:hover {
+            color: #2563eb;
+            transform: translateX(5px);
+        }
+
+        .nav-center:hover .dropdown {
+            display: grid;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-btn, .signup-btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1px solid white;
+            color: #0026ff;
+            font-weight: normal;
+        }
+
+        .login-btn:hover {
+            background-color:rgb(0, 0, 148);
+            color: white;
+            transition: 0.3s ease-in-out;
+        }
+
+        .signup-btn {
+            background-color: white;
+            border: 1px solid #0004ff;
+            color: #1a1a2e;
+            font-weight: normal;
+        }
+
+        .signup-btn:hover {
+            background-color: #000d84;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+        }
+
+        .free-courses:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Mobile Toggle Button */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: rgb(0, 0, 0);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Left Side Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -70%;
+            width: 70%;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+            z-index: 1000;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 10px;
+        }
+
+        .mobile-menu-header .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-menu-header .logo i {
+            color: #2563eb;
+        }
+
+        .mobile-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .mobile-close:hover {
+            color: #2563eb;
+        }
+
+        .mobile-menu-item {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .mobile-menu-header-item {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+            color: #1a1a2e;
+            transition: background-color 0.2s;
+        }
+
+        .mobile-menu-header-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .mobile-menu-header-item i {
+            transition: transform 0.3s;
+            color: #64748b;
+        }
+
+        .mobile-menu-header-item.active i {
+            transform: rotate(180deg);
+            color: #2563eb;
+        }
+
+        .mobile-dropdown {
+            background-color: #f8fafc;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-dropdown.active {
+            max-height: 500px;
+        }
+
+        .mobile-dropdown a {
+            display: block;
+            padding: 12px 35px;
+            color: #475569;
+            text-decoration: none;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .mobile-dropdown a:hover {
+            background-color: #e0f2fe;
+            color: #2563eb;
+            padding-left: 40px;
+        }
+
+        .mobile-dropdown a i {
+            margin-right: 10px;
+            width: 18px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .mobile-auth {
+            display: flex;
+            padding: 20px;
+            gap: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .mobile-auth button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            border: none;
+        }
+
+        .mobile-login {
+            background: transparent;
+            border: 1px solid #2563eb !important;
+            color: #2563eb;
+        }
+
+        .mobile-login:hover {
+            background-color: #dbeafe;
+        }
+
+        .mobile-signup {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .mobile-signup:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .mobile-free {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #2563eb;
+            font-weight: 600;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .mobile-free:hover {
+            background-color: #f1f5f9;
+        }
+
+        .mobile-free i {
+            font-size: 18px;
+        }
+
+        /* Overlay when mobile menu is open */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 12px 3%;
+            }
+            
+            .dropdown {
+                width: 95vw;
+                gap: 20px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .nav-center, .nav-right {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dropdown {
+                grid-template-columns: 1fr;
+            }
+           
+            .mobile-auth {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
+     <header>
+        <div class="head">
+            <ul class="head1">
+                <a href="../index.php"><li>For Individual</li></a>
+                <a href="#"><li>For University Courses</li></a>
+                <a href="../schooling/school.html"><li>For High School & Intermediate Courses</li></a>
+                <a href="../free/free.html"><li>For Free Courses</li></a>
+            </ul>
+        </div>
+    </header>
+     <nav>
+        <div class="nav-left">
+           
+           <a href="../index.php" style="text-decoration: none;"> Faiz Computer Institute</a>
+        </div>
+ <div class="nav-center">
+            <button id="exploreBtn">
+                Explore <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="dropdown" id="dropdownMenu">
+                <div class="dropdown-column">
+                    <h4>Explore </h4>
+                    <a href="../index.php"><i class="fa fa-user" aria-hidden="true"></i> Individual </a>
+                   <a href="university.php"><i class="fa fa-university" aria-hidden="true"></i> University</a>
+                    <a href="../schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
+                    <a href="../free/free.html"><i class="fa-solid fa-wallet"></i> Free</a>
+                    <a href="">Login <i class="fa-solid fa-arrow-right"></i></i></a>
+                </div>
+                <div class="dropdown-column">
+                    <h4>Online Degree</h4>
+                    <a href="view.php?id=18"><i class="fas fa-graduation-cap"></i> BCA</a>
+                    <a href="view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
+                    <a href="view.php?id=19"><i class="fas fa-book"></i> BBA</a>
+                    <a href="view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
+                    <a href="university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                </div>
+                <div class="dropdown-column">
+                    <h4>Trending Courses</h4>
+                    <a href="../course_detail.php?id=1"><i class="fab fa-python"></i> DOAP</a>
+                    <a href="../course_detail.php?id=7"><i class="fas fa-palette"></i> O Level</a>
+                    <a href="../course_detail.php?id=3"><i class="fas fa-calculator"></i> Tally</a>
+                    <a href="../course_detail.php?id=9"><i class="fas fa-bullhorn"></i> Advance Excel</a>
+                    <a href="../all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
+                </div>
+                <div class="dropdown-column">
+                    <h4>About Us</h4>
+                    <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
+                <a href="#"><i class="fas fa-table"></i> Gallery</a>
+                <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
+                <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
+                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="auth-buttons">
+                <a href="https://faizcomputerinstitute.in/login-system/login.php"><button class="login-btn">Login</button></a>
+              <a href="free/free.html" style="text-decoration: none;">  <button class="signup-btn">Free Courses</button></a>
+              <a href="o-level/index.php" style="text-decoration: none;">  <button class="signup-btn">O Level/CCC</button></a>
+            </div>
+            
+        </div>
+
+        <!-- Mobile Toggle Button -->
+        <button class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Left Side Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                Faiz Computer Institute
+            </div>
+            <button class="mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+      <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileRoles">
+                <span>Explore</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileRoles">
+                <a href="../index.php"><i class="fa fa-user" aria-hidden="true"></i> Individual </a>
+                   <a href="university.php"><i class="fa fa-university" aria-hidden="true"></i> University</a>
+                    <a href="../schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
+                    <a href="../free/free.html"><i class="fa-solid fa-wallet"></i> Free</a>
+                    
+            </div>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileDegree">
+                <span>Online Degree</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileDegree">
+               <a href="university/view.php?id=18"><i class="fas fa-graduation-cap"></i> BCA</a>
+                    <a href="view.php?id=25"><i class="fas fa-user-graduate"></i> MCA</a>
+                    <a href="view.php?id=19"><i class="fas fa-book"></i> BBA</a>
+                    <a href="view.php?id=21"><i class="fas fa-briefcase"></i> MBA</a>
+                    <a href="university.php">More<i class="fa-solid fa-arrow-right"> </i></a>
+            </div>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileTrending">
+                <span>Trending Courses</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileTrending">
+                <a href="course_detail.php?id=1"><i class="fab fa-python"></i> DOAP</a>
+                    <a href="../course_detail.php?id=7"><i class="fas fa-palette"></i> O Level</a>
+                    <a href="../course_detail.php?id=3"><i class="fas fa-calculator"></i> Tally</a>
+                    <a href="../course_detail.php?id=9"><i class="fas fa-bullhorn"></i> Advance Excel</a>
+                    <a href="../all_course.php">More Courses <i class="fa-solid fa-arrow-right"></i></i></a>
+            </div>
+        </div>
+        
+        <div class="mobile-menu-item">
+            <div class="mobile-menu-header-item" data-target="mobileProfessional">
+                <span>About Us</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="mobile-dropdown" id="mobileProfessional">
+                <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
+                <a href="#"><i class="fas fa-table"></i> Gallery</a>
+                <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
+                <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
+                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+            </div>
+        </div>
+        
+        <div class="mobile-auth">
+            <button class="mobile-login">Login</button>
+           
+        </div>
+        
+        <div class="mobile-free">
+            <i class="fas fa-gift"></i>
+            <a href="../free/free.html">
+            <span>Free Courses</span>
+        </div></a>
+         <div class="mobile-free">
+            <i class="fas fa-graduation-cap"></i>
+            <a href="../o-level/index.php">
+            <span>O Level/CCC</span>
+        </div></a>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
