@@ -376,7 +376,7 @@
     <header>
         <div class="container">
             <h1>Get In Touch With Us</h1>
-            <p>We're here to help and answer any questions you might have. We look forward to hearing from you.</p>
+            <p>We're here to help and answer any questions you might have. </p>
         </div>
     </header>
     
