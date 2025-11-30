@@ -10,5 +10,13 @@ if ($conn->connect_error) {
     die("Database Connection Failed: " . $conn->connect_error);
 }
 
+// Set character encoding
 $conn->set_charset("utf8mb4");
+
+// Set PHP timezone
+date_default_timezone_set("Asia/Kolkata");
+
+// Set MySQL timezone
+$conn->query("SET time_zone = '+05:30'");
+
 ?>
