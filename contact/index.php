@@ -970,7 +970,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Working Hours</h3>
-                        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        <p>Monday - Saturday: 9:00 AM - 7:00 PM</p>
                     </div>
                 </div>
                 
