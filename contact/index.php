@@ -1013,18 +1013,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <select name="subject" id="subject" required>
-                            <option value="" disabled selected>Select a subject</option>
-                            <option value="General Inquiry">General Inquiry</option>
-                            <option value="Course Information">Course Information</option>
-                            <option value="Admission Process">Admission Process</option>
-                            <option value="Fee Structure">Fee Structure</option>
-                            <option value="Technical Support">Technical Support</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
+                   
                     
                     <div class="form-group">
                         <label for="message">Your Message</label>
