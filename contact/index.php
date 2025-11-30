@@ -376,7 +376,7 @@
     <header>
         <div class="container">
             <h1>Get In Touch With Us</h1>
-            <p>We're here to help and answer any questions you might have. We look forward to hearing from you.</p>
+            <p>We're here to help and answer any questions you might have. We look forward to hearing from you.</p><br><br>
         </div>
     </header>
     
@@ -503,23 +503,7 @@
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">YourBrand</div>
-                <div class="footer-links">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Services</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2023 YourBrand. All rights reserved.
-            </div>
-        </div>
-    </footer>
+   
     
     <script>
         function submitForm() {
