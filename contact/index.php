@@ -827,16 +827,8 @@
     </style>
 </head>
 <body>
-     <header>
-        <div class="head">
-            <ul class="head1">
-                <a href="../index.php"><li>For Individual</li></a>
-                <a href="#"><li>For University Courses</li></a>
-                <a href="../schooling/school.html"><li>For High School & Intermediate Courses</li></a>
-                <a href="../free/free.html"><li>For Free Courses</li></a>
-            </ul>
-        </div>
-    </header>
+   
+    
      <nav>
         <div class="nav-left">
            
