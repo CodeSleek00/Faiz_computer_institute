@@ -446,49 +446,47 @@
             </div>
             
             <!-- Contact Form -->
-            <div class="contact-form">
-                <h2 class="section-title">Send Us a Message</h2>
-                <p>Fill out the form below and we'll get back to you as soon as possible.</p>
-                
-                <form id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company</label>
-                            <input type="text" id="company" placeholder="Enter your company name">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" placeholder="Enter your phone number" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" placeholder="Enter your email address" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" placeholder="Enter the subject of your message" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" placeholder="Enter your message here..." required></textarea>
-                    </div>
-                    
-                    <button type="button" class="submit-btn" onclick="submitForm()">
-                        Send Message <i class="fas fa-paper-plane"></i>
-                    </button>
-                    
-                    <p id="response"></p>
-                </form>
+         <form id="contactForm">
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" name="company" id="company" placeholder="Enter your company name">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" name="contact" id="phone" placeholder="Enter your phone number" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email address" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="subject">Subject</label>
+        <input type="text" name="subject" id="subject" placeholder="Enter the subject" required>
+    </div>
+
+    <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea name="message" id="message" placeholder="Enter your message here..." required></textarea>
+    </div>
+
+    <button type="button" class="submit-btn" onclick="submitForm()">
+        Send Message <i class="fas fa-paper-plane"></i>
+    </button>
+
+    <p id="response"></p>
+</form>
+
             </div>
         </div>
     </div>
@@ -506,51 +504,37 @@
    
     
     <script>
-        function submitForm() {
-            // Get form values
-            const name = document.getElementById('name').value;
-            const company = document.getElementById('company').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            // Simple validation
-            if (!name || !phone || !email || !subject || !message) {
-                document.getElementById('response').innerHTML = 'Please fill in all required fields.';
-                document.getElementById('response').style.color = '#e53e3e';
-                return;
-            }
-            
-            // Create FormData object
-            let fd = new FormData();
-            fd.append("name", name);
-            fd.append("company", company);
-            fd.append("contact", phone);
-            fd.append("email", email);
-            fd.append("subject", subject);
-            fd.append("message", message);
-            
-            // Simulate form submission (replace with actual fetch request)
-            document.getElementById('response').innerHTML = 'Thank you! Your message has been sent successfully.';
-            document.getElementById('response').style.color = '#059669';
-            
-            // Clear form
-            document.getElementById('contactForm').reset();
-            
-            // In a real implementation, you would use:
-            /*
-            fetch("save_contact.php", {
-                method: "POST",
-                body: fd
-            })
-            .then(r => r.text())
-            .then(data => {
-                document.getElementById("response").innerHTML = data;
-                document.getElementById("contactForm").reset();
-            });
-            */
-        }
-    </script>
+      
+function submitForm() {
+    const form = document.getElementById('contactForm');
+    const response = document.getElementById('response');
+
+    // Form validation
+    if (!form.name.value || !form.contact.value || !form.email.value || !form.subject.value || !form.message.value) {
+        response.innerHTML = "Please fill all required fields.";
+        response.style.color = "#e53e3e";
+        return;
+    }
+
+    // Send form data
+    let fd = new FormData(form);
+
+    fetch("save_contact.php", {
+        method: "POST",
+        body: fd
+    })
+    .then(res => res.text())
+    .then(data => {
+        response.innerHTML = data;
+        response.style.color = "#059669";  // success color
+        form.reset();
+    })
+    .catch(err => {
+        response.innerHTML = "Something went wrong!";
+        response.style.color = "#e53e3e";
+    });
+}
+</script>
+
 </body>
 </html>
