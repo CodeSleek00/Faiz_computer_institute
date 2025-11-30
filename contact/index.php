@@ -309,7 +309,7 @@
         
         /* Map Section */
         .map-section {
-            margin: 80px auto;
+            margin: 30px auto;
         }
         
         .map-title {
@@ -428,6 +428,9 @@
             .info-icon {
                 width: 45px;
                 height: 45px;
+            }
+            .contact-form {
+                margin-top: 0px;
             }
         }
     </style>
