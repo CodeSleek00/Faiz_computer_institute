@@ -109,6 +109,7 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
             position: relative;
             overflow: hidden;
+            margin-top: 30px;
         }
         
         .contact-info::before {
@@ -130,6 +131,7 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
             position: relative;
             overflow: hidden;
+            margin-top: 30px;
         }
         
         .contact-form::before {
