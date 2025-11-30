@@ -1034,9 +1034,8 @@
     <div class="container map-section">
         <h2 class="map-title">Find Us Here</h2>
         <div class="map-container">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28470.858110412!2d80.94151576644922!3d26.846528200000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd991f32b16b%3A0x93ccba8909978be7!2sLucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000"
-                width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3872.490939772156!2d80.9390709756559!3d26.783787865618848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfb81bfb02ea7%3A0x3d7024a0e0e2b6ff!2sFaiz%20Computer%20Institute!5e1!3m2!1sen!2sin!4v1764498380487!5m2!1sen!2sin"   width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+               
         </div>
     </div>
     
