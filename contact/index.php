@@ -261,7 +261,7 @@
             background-color: #fafbfc;
         }
         input {
-            padding: auto;
+            padding: 20px;
         }
         
         input:focus, textarea:focus, select:focus {
