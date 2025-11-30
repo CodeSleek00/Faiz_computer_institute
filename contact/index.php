@@ -325,51 +325,7 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
         }
         
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
-            color: var(--white);
-            padding: 50px 0 30px;
-            text-align: center;
-            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
-        }
-        
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .footer-logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .footer-links a {
-            color: var(--white);
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .footer-links a:hover {
-            opacity: 0.8;
-        }
-        
-        .copyright {
-            margin-top: 30px;
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
-        
+       
         /* Responsive Styles */
         @media (max-width: 768px) {
             header {
@@ -393,11 +349,7 @@
                 flex-direction: column;
                 gap: 0;
             }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
+           
             
             .map-title {
                 font-size: 1.8rem;
@@ -1099,24 +1051,84 @@
         </div>
     </div>
     
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">YourBrand</div>
-                <div class="footer-links">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Services</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-            <div class="copyright">
-                &copy; 2023 YourBrand. All rights reserved.
-            </div>
+     <footer class="bg-gray-50 text-gray-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div class="space-y-4">
+        <a href="#" class="text-blue-700 font-extrabold text-2xl select-none hover:text-blue-800 transition block">Faiz Computer Institute.</a>
+        <p class="text-xs text-gray-500">Empowering careers through immersive education since 2002.</p>
+        
+        <div class="flex items-center space-x-4 pt-2">
+          <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-blue-600 transition">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" aria-label="Twitter" class="text-gray-500 hover:text-blue-400 transition">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-pink-600 transition">
+            <i class="fab fa-instagram"></i>
+          </a>
+          
         </div>
-    </footer>
+      </div>
+      
+      <div>
+        <h5 class="font-semibold text-gray-800 text-sm mb-4">Company</h5>
+        <ul class="space-y-2 text-xs">
+          <li><a class="hover:text-blue-600 transition" href="#">About Us</a></li>
+          <li><a class="hover:text-blue-600 transition" href="#">Blog</a></li>
+          <li><a class="hover:text-blue-600 transition" href="#">Affiliates</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h5 class="font-semibold text-gray-800 text-sm mb-4">Resources</h5>
+        <ul class="space-y-2 text-xs">
+          <li><a class="hover:text-blue-600 transition" href="#">Help Center</a></li>
+          <li><a class="hover:text-blue-600 transition" href="#">Scholarships</a></li>
+          
+        </ul>
+      </div>
+      
+      <div>
+        <h5 class="font-semibold text-gray-800 text-sm mb-4">Support</h5>
+        <ul class="space-y-2 text-xs">
+          <li><a class="hover:text-blue-600 transition" href="#">Contact Us</a></li>
+          <li><a class="hover:text-blue-600 transition" href="#">FAQ</a></li>
+          <li><a class="hover:text-blue-600 transition" href="#">Privacy Policy</a></li>
+          <li><a class="hover:text-blue-600 transition" href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h5 class="font-semibold text-gray-800 text-sm mb-4">Contact</h5>
+        <ul class="space-y-3 text-xs">
+          <li class="flex items-start">
+            <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3"></i>
+            <span>Charan Plaza, Infront Of Masjid, Telibagh, Lucknow</span>
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-phone-alt text-blue-600 mr-3"></i>
+            <a class="hover:text-blue-600 transition" href="tel:+919721896891">+91 9721896891</a>
+            <a class="hover:text-blue-600 transition" href="tel:+917007862136">+91 7007862136</a>
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-envelope text-blue-600 mr-3"></i>
+            <a class="hover:text-blue-600 transition" href="mailto:hello@upskill.com">Faizcomputerinstitutes@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+      <div class="mb-3 md:mb-0">
+        &copy; 2025 Faiz Computer Institute. All rights reserved.
+      </div>
+      <div class="flex space-x-4">
+        <a href="#" class="hover:text-blue-600 transition">Privacy Policy</a>
+        <a href="#" class="hover:text-blue-600 transition">Terms of Service</a>
+        
+      </div>
+    </div>
     <script>
         function submitForm() {
             const form = document.getElementById('contactForm');
