@@ -453,10 +453,7 @@
             <label for="name">Full Name</label>
             <input type="text" name="name" id="name" placeholder="Enter your full name" required>
         </div>
-        <div class="form-group">
-            <label for="company">Company</label>
-            <input type="text" name="company" id="company" placeholder="Enter your company name">
-        </div>
+       
     </div>
 
     <div class="form-row">
@@ -468,11 +465,6 @@
             <label for="email">Email Address</label>
             <input type="email" name="email" id="email" placeholder="Enter your email address" required>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" name="subject" id="subject" placeholder="Enter the subject" required>
     </div>
 
     <div class="form-group">
