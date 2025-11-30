@@ -229,7 +229,7 @@
             box-shadow: 0 10px 20px rgba(30, 64, 175, 0.3);
         }
         
-        /* Contact Form */
+        /* Contact Form - FIXED PADDING */
         .form-group {
             margin-bottom: 25px;
         }
@@ -250,28 +250,31 @@
             color: var(--text-dark);
         }
         
-        input, textarea, select {
+        /* FIXED: Input padding issue */
+        .contact-form input, 
+        .contact-form textarea, 
+        .contact-form select {
             width: 100%;
-            padding: 16px 18px;
+            padding: 16px 18px !important; /* Added !important to ensure padding is applied */
             border: 1px solid var(--medium-gray);
             border-radius: 10px;
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
             transition: all 0.3s ease;
             background-color: #fafbfc;
-        }
-        input {
-            padding: 20px;
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
         
-        input:focus, textarea:focus, select:focus {
+        .contact-form input:focus, 
+        .contact-form textarea:focus, 
+        .contact-form select:focus {
             outline: none;
             border-color: var(--light-blue);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
             background-color: var(--white);
         }
         
-        textarea {
+        .contact-form textarea {
             resize: vertical;
             min-height: 140px;
         }
