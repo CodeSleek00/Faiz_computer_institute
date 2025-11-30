@@ -260,6 +260,9 @@
             transition: all 0.3s ease;
             background-color: #fafbfc;
         }
+        input {
+            padding: auto;
+        }
         
         input:focus, textarea:focus, select:focus {
             outline: none;
