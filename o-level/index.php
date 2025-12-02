@@ -615,7 +615,7 @@ textarea.faiz-mod-form-control {
             <h2>Join O-Level (Online/Offline)</h2>
             <p>Join our O Level Course (Online or Offline) and get live sessions, video lectures, mock tests & full exam support — all at a minimal cost.</p>
           </div>
-          <button> Enroll Now →</button>
+         
         </div>
         <div class="card-image">
           <img src="../images/2.png" alt="AI Learning">
@@ -629,7 +629,7 @@ textarea.faiz-mod-form-control {
             <h2 style="color: white;">Join CCC (Online/Offline)</h2>
             <p style="color: white;">Join our CCC Course (Online or Offline) and get live sessions, video lectures, mock tests & full exam support — all at a minimal cost.</p>
           </div>
-          <button>Enroll Now →</button>
+         
         </div>
         <div class="card-image">
           <img src="../images/1.png" alt="Business Growth">
