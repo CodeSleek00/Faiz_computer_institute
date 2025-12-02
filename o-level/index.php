@@ -724,7 +724,11 @@ textarea.faiz-mod-form-control {
       <h2 class="faiz-mod-modal-title" id="modal-title"></h2>
       <p class="faiz-mod-modal-price" id="modal-price"></p>
     </div>
-   
+    <div class="faiz-mod-modal-body">
+      <div class="faiz-mod-modal-features" id="modal-desc"></div>
+     
+    </div>
+  </div>
 </div>
 
 
