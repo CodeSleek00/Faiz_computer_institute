@@ -79,7 +79,7 @@
                 <a href="gallery.php"><i class="fas fa-table"></i> Gallery</a>
                 <a href="feedback/reviews.php"><i class="fas fa-network-wired"></i> Reviews</a>
                 <a href=""><i class="fas fa-user-secret"></i>  About Us</a>
-                <a href="all_courses.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="all_course.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@
                 <a href="gallery.php"><i class="fas fa-table"></i> Gallery</a>
                 <a href="feedback/reviews.php"><i class="fas fa-network-wired"></i> Reviews</a>
                 <a href=""><i class="fas fa-user-secret"></i>  About Us</a>
-                <a href="all_courses.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="all_course.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
             </div>
         </div>
         
