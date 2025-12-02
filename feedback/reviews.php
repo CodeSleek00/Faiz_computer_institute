@@ -623,105 +623,30 @@ mysqli_data_seek($reviews, 0);
     </div>
 
     <script>
-        // Star Rating System
-        const stars = document.querySelectorAll('.rating-star');
-        const ratingValue = document.getElementById('ratingValue');
-        const ratingText = document.getElementById('ratingText');
-        
-        const descriptions = {
-            1: 'Poor - Needs significant improvement',
-            2: 'Fair - Has room for improvement', 
-            3: 'Good - Met expectations',
-            4: 'Very Good - Exceeded expectations',
-            5: 'Excellent - Outstanding experience'
-        };
-        
-        stars.forEach(star => {
-            star.addEventListener('click', () => {
-                const value = star.getAttribute('data-value');
-                ratingValue.value = value;
-                
-                // Update stars
-                stars.forEach(s => {
-                    const starValue = s.getAttribute('data-value');
-                    s.textContent = starValue <= value ? '★' : '☆';
-                    s.classList.toggle('active', starValue <= value);
-                });
-                
-                // Update text
-                ratingText.textContent = descriptions[value];
-                ratingText.style.color = '#495057';
-                ratingText.style.fontWeight = '600';
-            });
-            
-            // Hover effect
-            star.addEventListener('mouseenter', () => {
-                const hoverValue = star.getAttribute('data-value');
-                stars.forEach(s => {
-                    const starValue = s.getAttribute('data-value');
-                    s.style.color = starValue <= hoverValue ? '#ffd43b' : '#e9ecef';
-                });
-            });
-            
-            star.addEventListener('mouseleave', () => {
-                const selectedValue = ratingValue.value;
-                stars.forEach(s => {
-                    const starValue = s.getAttribute('data-value');
-                    if (selectedValue) {
-                        s.style.color = starValue <= selectedValue ? '#ffc107' : '#e9ecef';
-                    } else {
-                        s.style.color = '#e9ecef';
-                    }
-                });
-            });
-        });
-        
-        // Form submission
-        const form = document.getElementById('reviewForm');
-        const successMessage = document.getElementById('successMessage');
-        
-        form.addEventListener('submit', function(e) {
-            // In real implementation, remove e.preventDefault() and let form submit
-            e.preventDefault();
-            
-            // Show success message
-            successMessage.style.display = 'flex';
-            successMessage.style.animation = 'fadeIn 0.5s';
-            
-            // Reset form
-            setTimeout(() => {
-                form.reset();
-                stars.forEach(s => {
-                    s.textContent = '☆';
-                    s.classList.remove('active');
-                    s.style.color = '#e9ecef';
-                });
-                ratingText.textContent = 'Click stars to rate your experience';
-                ratingText.style.color = '#6c757d';
-                ratingText.style.fontWeight = '500';
-                ratingValue.value = '';
-                
-                // Hide message after 5 seconds
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 5000);
-            }, 1000);
-            
-            // In real implementation: Remove the e.preventDefault() above
-            // form.submit(); // Uncomment this for actual submission
-        });
-        
-        // Card hover effect enhancement
-        const reviewCards = document.querySelectorAll('.review-card');
-        reviewCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.zIndex = '10';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.zIndex = '1';
-            });
-        });
+        // ------ STAR RATING SCRIPT ------
+const stars = document.querySelectorAll(".rating-star");
+const ratingValue = document.getElementById("ratingValue");
+const ratingText = document.getElementById("ratingText");
+
+stars.forEach(star => {
+    star.addEventListener("click", () => {
+        let value = star.getAttribute("data-value");
+        ratingValue.value = value;
+
+        // Active stars fill
+        stars.forEach(s => s.classList.remove("active"));
+        for (let i = 0; i < value; i++) {
+            stars[i].classList.add("active");
+        }
+
+        ratingText.textContent = `You selected ${value} star${value > 1 ? "s" : ""}`;
+    });
+});
+
+// ------ SUCCESS MESSAGE -------
+document.getElementById("reviewForm").addEventListener("submit", function () {
+    document.getElementById("successMessage").style.display = "block";
+});
     </script>
 </body>
 </html>
