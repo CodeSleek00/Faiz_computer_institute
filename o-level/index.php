@@ -693,43 +693,6 @@ textarea.faiz-mod-form-control {
     </div>
   </div>
 
-<header class="faiz-mod-header">
-  <h1>Premium Courses</h1>
-  <p>Enhance your skills with our expertly crafted courses designed for success</p>
-</header>
-
-<div class="faiz-mod-container">
-  <div class="faiz-mod-courses-grid">
-    <?php while($row = $courses->fetch_assoc()): ?>
-      <div class="faiz-mod-card">
-        <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['name']) ?>" class="faiz-mod-card-img">
-        <div class="faiz-mod-card-content">
-          <h3 class="faiz-mod-card-title"><?= htmlspecialchars($row['name']) ?></h3>
-          <p class="faiz-mod-card-description"><?= htmlspecialchars(substr($row['description'], 0, 100)) ?>...</p>
-          <p class="faiz-mod-card-price">₹<?= htmlspecialchars($row['price']) ?></p>
-          <div class="faiz-mod-card-actions">
-            <button class="faiz-mod-btn faiz-mod-btn-outline" onclick="showDetails('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars(addslashes($row['description'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">View Details</button>
-          </div>
-        </div>
-      </div>
-    <?php endwhile; ?>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="faiz-mod-modal" id="popup">
-  <div class="faiz-mod-modal-content">
-    <button class="faiz-mod-close" onclick="closePopup()">&times;</button>
-    <div class="faiz-mod-modal-header">
-      <h2 class="faiz-mod-modal-title" id="modal-title"></h2>
-      <p class="faiz-mod-modal-price" id="modal-price"></p>
-    </div>
-    <div class="faiz-mod-modal-body">
-      <div class="faiz-mod-modal-features" id="modal-desc"></div>
-     
-    </div>
-  </div>
-</div>
 
 
   <!-- Footer -->
