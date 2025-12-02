@@ -645,7 +645,7 @@ textarea.faiz-mod-form-control {
     <div class="o-level-card">
       <div class="o-level-plan-title">Basic Access</div>
       <div class="o-level-plan-subtitle">O Level</div>
-      <button class="o-level-btn" onclick="window.location.href='enroll.php?plan=Basic Access&price=6000'">Enroll Now</button>
+
       <div class="o-level-price">₹6,000</div>
       <ul class="o-level-features">
         <li>Access to all Subject Video Lectures</li>
@@ -661,7 +661,7 @@ textarea.faiz-mod-form-control {
     <div class="o-level-card o-level-best">
       <div class="o-level-plan-title">Advanced Access</div>
       <div class="o-level-plan-subtitle">O Level</div>
-      <button class="o-level-btn" onclick="window.location.href='enroll.php?plan=Advanced Access&price=17000'">Enroll Now</button>
+     
       <div class="o-level-price">₹17,000</div>
       <ul class="o-level-features">
         <li>Access to all Subject Video Lectures</li>
@@ -681,7 +681,7 @@ textarea.faiz-mod-form-control {
     <div class="o-level-card">
       <div class="o-level-plan-title">Customizable Access</div>
       <div class="o-level-plan-subtitle">Price Varies According to Your Customisation</div>
-      <button class="o-level-btn" onclick="location.href='custom_enroll.php'">Enroll Now</button>
+     
       <div class="o-level-price">₹1500-₹17,000</div>
       <ul class="o-level-features">
         <li>Custom course</li>
@@ -709,7 +709,6 @@ textarea.faiz-mod-form-control {
           <p class="faiz-mod-card-price">₹<?= htmlspecialchars($row['price']) ?></p>
           <div class="faiz-mod-card-actions">
             <button class="faiz-mod-btn faiz-mod-btn-outline" onclick="showDetails('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars(addslashes($row['description'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">View Details</button>
-            <button class="faiz-mod-btn faiz-mod-btn-primary" onclick="openForm('<?= htmlspecialchars(addslashes($row['name'])) ?>', '<?= htmlspecialchars($row['price']) ?>')">Enroll Now</button>
           </div>
         </div>
       </div>

@@ -55,7 +55,7 @@
                    <a href="university/university.php"><i class="fa fa-university" aria-hidden="true"></i> University</a>
                     <a href="schooling/school.html"><i class="fa-solid fa-school"></i> Schooling</a>
                     <a href="free/free.html"><i class="fa-solid fa-wallet"></i> Free</a>
-                    <a href="">Login <i class="fa-solid fa-arrow-right"></i></i></a>
+                    <a href="https://faizcomputerinstitute.in/login-system/login.php">Login <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
                 <div class="dropdown-column">
                     <h4>Online Degree</h4>
