@@ -724,40 +724,7 @@ textarea.faiz-mod-form-control {
       <h2 class="faiz-mod-modal-title" id="modal-title"></h2>
       <p class="faiz-mod-modal-price" id="modal-price"></p>
     </div>
-    <div class="faiz-mod-modal-body">
-      <div class="faiz-mod-modal-features" id="modal-desc"></div>
-      <form id="enrollForm">
-        <input type="hidden" name="plan" id="plan">
-        <input type="hidden" name="amount" id="amount">
-        
-        <div class="faiz-mod-form-group">
-          <label class="faiz-mod-form-label" for="name">Full Name</label>
-          <input type="text" class="faiz-mod-form-control" id="name" name="name" placeholder="Enter your full name" required>
-        </div>
-        
-        <div class="faiz-mod-form-group">
-          <label class="faiz-mod-form-label" for="email">Email Address</label>
-          <input type="email" class="faiz-mod-form-control" id="email" name="email" placeholder="Enter your email" required>
-        </div>
-        
-        <div class="faiz-mod-form-group">
-          <label class="faiz-mod-form-label" for="phone">Phone Number</label>
-          <input type="text" class="faiz-mod-form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
-        </div>
-        
-        <div class="faiz-mod-form-group">
-          <label class="faiz-mod-form-label" for="address">Full Address</label>
-          <textarea class="faiz-mod-form-control" id="address" name="address" placeholder="Enter your complete address" required></textarea>
-        </div>
-      </form>
-    </div>
-    <div class="faiz-mod-modal-footer">
-      <button type="button" class="faiz-mod-btn faiz-mod-btn-pay" onclick="startPayment()">
-        <span class="faiz-mod-loading" id="loading-icon" style="display: none;"></span>
-        <span id="pay-text">Proceed to Pay</span>
-      </button>
-    </div>
-  </div>
+   
 </div>
 
 
