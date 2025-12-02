@@ -514,7 +514,7 @@ body {
                 
                 <!-- Action Section -->
                 <div class="action-section">
-                    <div class="price">Free</div>
+                    <div class="price"></div>
                     <button class="enroll-btn">
                         <i class="fas fa-rocket"></i> Enroll Now
                     </button>
