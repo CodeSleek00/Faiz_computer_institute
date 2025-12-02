@@ -521,47 +521,55 @@ mysqli_data_seek($reviews, 0);
         </div>
 
         <!-- Review Form -->
-        <div class="form-section">
-            <h2 class="form-title">Share Your Experience</h2>
-            
-            <form action="submit_review.php" method="POST" id="reviewForm">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Your Name</label>
-                        <input type="text" name="name" class="form-input" placeholder="Enter your full name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Email (Optional)</label>
-                        <input type="email" name="email" class="form-input" placeholder="email@example.com">
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label class="form-label">Your Rating</label>
-                        <div class="stars-container" id="starSelect">
-                            <span class="rating-star" data-value="1">☆</span>
-                            <span class="rating-star" data-value="2">☆</span>
-                            <span class="rating-star" data-value="3">☆</span>
-                            <span class="rating-star" data-value="4">☆</span>
-                            <span class="rating-star" data-value="5">☆</span>
-                        </div>
-                        <div class="rating-text" id="ratingText">Click stars to rate your experience</div>
-                        <input type="hidden" name="rating" id="ratingValue" required>
-                    </div>
-                    
-                    <div class="form-group full-width">
-                        <label class="form-label">Your Review</label>
-                        <textarea name="review" class="form-input" placeholder="Tell us about your experience. What did you like? What could be improved?" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Submit Your Review</button>
-                    
-                    <div id="successMessage" class="success-message">
-                        Thank you for your review! Your feedback helps other students.
-                    </div>
+       
+<div class="form-section">
+    <h2 class="form-title">Share Your Experience</h2>
+    
+    <form action="submit_review.php" method="POST" id="reviewForm">
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" name="name" class="form-input" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email (Optional)</label>
+                <input type="email" name="email" class="form-input" placeholder="email@example.com">
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label">Your Rating</label>
+
+                <div class="stars-container" id="starSelect">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
                 </div>
-            </form>
+
+                <div class="rating-text" id="ratingText">
+                    Click stars to rate your experience
+                </div>
+
+                <input type="hidden" name="rating" id="ratingValue" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label">Your Review</label>
+                <textarea name="review" class="form-input" placeholder="Tell us about your experience..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Your Review</button>
+
+            <div id="successMessage" class="success-message">
+                Thank you for your review! Your feedback helps others.
+            </div>
         </div>
+    </form>
+</div>
+
 
         <!-- Reviews Grid -->
         <div class="reviews-section">
