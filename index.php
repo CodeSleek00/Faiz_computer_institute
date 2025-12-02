@@ -75,11 +75,11 @@
                 </div>
                 <div class="dropdown-column">
                     <h4>About Us</h4>
-                    <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
-                <a href="#"><i class="fas fa-table"></i> Gallery</a>
-                <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
-                <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
-                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="contact/index.php"><i class="fas fa-layer-group"></i>Contact Us</a>
+                <a href="gallery.php"><i class="fas fa-table"></i> Gallery</a>
+                <a href="feedback/reviews.php"><i class="fas fa-network-wired"></i> Reviews</a>
+                <a href=""><i class="fas fa-user-secret"></i>  About Us</a>
+                <a href="all_courses.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
                 </div>
             </div>
         </div>
@@ -161,11 +161,11 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="mobile-dropdown" id="mobileProfessional">
-                <a href="#"><i class="fas fa-layer-group"></i>Contact Us</a>
-                <a href="#"><i class="fas fa-table"></i> Gallery</a>
-                <a href="#"><i class="fas fa-network-wired"></i> Brochure</a>
-                <a href="#"><i class="fas fa-user-secret"></i>  Enquiry</a>
-                <a href="university/university.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
+                <a href="contact/index.php"><i class="fas fa-layer-group"></i>Contact Us</a>
+                <a href="gallery.php"><i class="fas fa-table"></i> Gallery</a>
+                <a href="feedback/reviews.php"><i class="fas fa-network-wired"></i> Reviews</a>
+                <a href=""><i class="fas fa-user-secret"></i>  About Us</a>
+                <a href="all_courses.php">More <i class="fa-solid fa-arrow-right"></i></i></a>
             </div>
         </div>
         
