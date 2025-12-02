@@ -23,7 +23,7 @@ $data = mysqli_query($conn, "SELECT * FROM photos WHERE category='$cat' ORDER BY
 
 <div class="menu">
     <a href="?cat=Classroom">Classroom</a>
-    <a href="?cat=Office">Office</a>
+    
     <a href="?cat=Events">Events</a>
 </div>
 
