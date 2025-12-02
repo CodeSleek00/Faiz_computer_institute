@@ -466,12 +466,7 @@ $total_photos = mysqli_num_rows($data);
                     <a href="?cat=Events" class="category-btn <?php echo $cat == 'Events' ? 'active' : ''; ?>">
                         <i class="fas fa-calendar-alt"></i> Events
                     </a>
-                    <a href="?cat=Sports" class="category-btn <?php echo $cat == 'Sports' ? 'active' : ''; ?>">
-                        <i class="fas fa-running"></i> Sports
-                    </a>
-                    <a href="?cat=Cultural" class="category-btn <?php echo $cat == 'Cultural' ? 'active' : ''; ?>">
-                        <i class="fas fa-theater-masks"></i> Cultural
-                    </a>
+                  
                 </nav>
             </div>
         </div>
