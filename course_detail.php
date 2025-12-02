@@ -396,12 +396,8 @@ body {
         <div class="nav-container">
             <div class="logo-container">
                 <!-- Logo SVG in blue/white theme -->
-                <svg class="logo" viewBox="0 0 100 100" width="40" height="40">
-                    <rect x="10" y="10" width="80" height="80" rx="15" fill="#1a6ae4"/>
-                    <path d="M30,40 L50,60 L70,30" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <circle cx="50" cy="50" r="30" stroke="white" stroke-width="2" fill="none"/>
-                </svg>
-                <span class="logo-text">LearnHub</span>
+              
+                <span class="logo-text">Faiz Computer Institute</span>
             </div>
             <button class="back-btn" onclick="window.history.back()">
                 <i class="fas fa-arrow-left"></i> Back to Courses
