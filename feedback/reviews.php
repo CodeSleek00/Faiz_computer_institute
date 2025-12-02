@@ -3,6 +3,8 @@ include 'db.php';
 
 // Fetch all reviews
 $reviews = mysqli_query($conn, "SELECT * FROM reviews ORDER BY id DESC");
+$total_reviews = mysqli_num_rows($reviews);
+mysqli_data_seek($reviews, 0);
 ?>
 
 <!DOCTYPE html>
@@ -10,22 +12,8 @@ $reviews = mysqli_query($conn, "SELECT * FROM reviews ORDER BY id DESC");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Reviews | Feedback Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Student Reviews</title>
     <style>
-        :root {
-            --primary-color: #4a6bff;
-            --primary-light: #eef1ff;
-            --secondary-color: #6c757d;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --light-bg: #f8f9fa;
-            --white: #ffffff;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -33,8 +21,8 @@ $reviews = mysqli_query($conn, "SELECT * FROM reviews ORDER BY id DESC");
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7ff 0%, #f0f2ff 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #fafafa;
             color: #333;
             line-height: 1.6;
             padding: 20px;
@@ -42,302 +30,251 @@ $reviews = mysqli_query($conn, "SELECT * FROM reviews ORDER BY id DESC");
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 40px;
-            padding: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
         }
 
         .header h1 {
-            color: var(--primary-color);
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #4a6bff, #6a11cb);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 8px;
         }
 
         .header p {
-            color: var(--secondary-color);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
+            color: #666;
+            font-size: 1rem;
         }
 
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        @media (max-width: 900px) {
-            .content-wrapper {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .review-form-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
+        /* Review Form */
+        .form-container {
+            background: white;
+            border-radius: 8px;
             padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .review-form-container:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .form-title {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .form-title i {
-            color: var(--primary-color);
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
 
         .form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #444;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 500;
         }
 
-        .form-control {
+        .form-input {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             font-size: 1rem;
-            transition: var(--transition);
+            transition: border-color 0.2s;
+            font-family: inherit;
         }
 
-        .form-control:focus {
-            border-color: var(--primary-color);
+        .form-input:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+            border-color: #666;
         }
 
-        .star-rating {
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .rating-container {
             display: flex;
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-            gap: 5px;
-            margin: 10px 0 20px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
-        .star-rating input {
-            display: none;
+        .stars {
+            display: flex;
+            gap: 2px;
         }
 
-        .star-rating label {
-            font-size: 2.2rem;
+        .star {
+            font-size: 28px;
             color: #ddd;
             cursor: pointer;
-            transition: var(--transition);
+            transition: color 0.2s;
+            user-select: none;
         }
 
-        .star-rating label:hover,
-        .star-rating label:hover ~ label,
-        .star-rating input:checked ~ label {
-            color: var(--warning-color);
+        .star.selected {
+            color: #000;
         }
 
         .rating-text {
-            margin-top: 5px;
             font-size: 0.9rem;
-            color: var(--secondary-color);
+            color: #888;
         }
 
         .submit-btn {
-            background: linear-gradient(90deg, #4a6bff, #6a11cb);
+            width: 100%;
+            padding: 14px;
+            background: #000;
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 16px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            width: 100%;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            transition: background-color 0.2s;
         }
 
         .submit-btn:hover {
-            background: linear-gradient(90deg, #3a5bef, #5a0bcb);
-            transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(74, 107, 255, 0.3);
+            background: #333;
         }
 
-        .reviews-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            max-height: 700px;
-            overflow-y: auto;
-        }
-
+        /* Reviews Section */
         .reviews-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--primary-light);
         }
 
         .reviews-header h2 {
-            font-size: 1.8rem;
-            color: #333;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #222;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .reviews-count {
-            background: var(--primary-light);
-            color: var(--primary-color);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 600;
+        .review-count {
+            font-size: 0.9rem;
+            color: #888;
+            font-weight: normal;
         }
 
         .review-card {
-            padding: 20px;
-            border-radius: 10px;
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
             margin-bottom: 20px;
-            border-left: 5px solid var(--primary-color);
-            background: var(--light-bg);
-            transition: var(--transition);
-        }
-
-        .review-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
 
         .review-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            align-items: flex-start;
+            margin-bottom: 12px;
         }
 
-        .reviewer-name {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #333;
+        .reviewer-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .review-date {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            color: #888;
         }
 
         .review-rating {
-            color: var(--warning-color);
-            font-size: 1.3rem;
-            margin: 8px 0;
-            letter-spacing: 2px;
+            font-size: 20px;
+            color: #000;
         }
 
-        .review-text {
-            margin-top: 10px;
-            color: #555;
+        .review-content {
+            color: #444;
             line-height: 1.7;
+        }
+
+        .review-content p {
+            margin-top: 10px;
         }
 
         .no-reviews {
             text-align: center;
-            padding: 40px 20px;
-            color: var(--secondary-color);
+            padding: 60px 20px;
+            color: #888;
         }
 
-        .no-reviews i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #ddd;
+        .no-reviews p {
+            margin-top: 10px;
         }
 
-        /* Scrollbar styling */
-        .reviews-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .reviews-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .reviews-container::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            background: var(--white);
-            border-radius: var(--border-radius);
+        .average-rating {
+            background: white;
+            border-radius: 8px;
             padding: 20px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
         }
 
-        .stat-item {
-            text-align: center;
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        .stat-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
+        .average-number {
+            font-size: 3rem;
+            font-weight: 300;
         }
 
-        .stat-label {
-            color: var(--secondary-color);
+        .average-stars {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .total-reviews {
+            color: #888;
             font-size: 0.9rem;
-            margin-top: 5px;
         }
 
         .footer {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 50px;
             padding-top: 20px;
             border-top: 1px solid #eee;
-            color: var(--secondary-color);
+            color: #888;
             font-size: 0.9rem;
         }
 
+        /* Loading state for reviews */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success message */
         .success-message {
-            background: #d4edda;
-            color: #155724;
+            background: #f0f0f0;
+            border-radius: 6px;
             padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            margin-top: 15px;
             display: none;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.3s;
         }
 
         @keyframes fadeIn {
@@ -345,202 +282,226 @@ $reviews = mysqli_query($conn, "SELECT * FROM reviews ORDER BY id DESC");
             to { opacity: 1; }
         }
 
-        .pulse {
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 0;
+            }
+            
+            .form-container,
+            .review-card,
+            .average-rating {
+                padding: 20px;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                box-shadow: none;
+            }
+            
+            .review-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .rating-summary {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-comments"></i> Student Feedback Portal</h1>
-            <p>Share your learning experience and read reviews from fellow students. Your feedback helps us improve.</p>
+            <h1>Student Reviews</h1>
+            <p>Honest feedback from students</p>
         </div>
 
-        <!-- Stats Bar -->
+        <!-- Average Rating -->
         <?php
-        $total_reviews = mysqli_num_rows($reviews);
-        mysqli_data_seek($reviews, 0); // Reset pointer to calculate average
-        
         $total_rating = 0;
-        $rating_counts = [0, 0, 0, 0, 0]; // For counting each star rating
+        $rating_counts = [0, 0, 0, 0, 0];
         
         while ($row = mysqli_fetch_assoc($reviews)) {
             $total_rating += $row['rating'];
-            $rating_counts[$row['rating']-1]++; // Increment count for this rating
+            $rating_counts[$row['rating']-1]++;
         }
         
         $average_rating = $total_reviews > 0 ? round($total_rating / $total_reviews, 1) : 0;
-        mysqli_data_seek($reviews, 0); // Reset pointer again for displaying reviews
+        mysqli_data_seek($reviews, 0);
         ?>
         
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-value"><?php echo $total_reviews; ?></div>
-                <div class="stat-label">Total Reviews</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value"><?php echo $average_rating; ?> <span style="color: var(--warning-color); font-size: 1.5rem;">★</span></div>
-                <div class="stat-label">Average Rating</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value"><?php echo $rating_counts[4]; ?></div>
-                <div class="stat-label">5-Star Reviews</div>
+        <?php if ($total_reviews > 0): ?>
+        <div class="average-rating">
+            <div class="rating-summary">
+                <div>
+                    <div class="average-number"><?php echo $average_rating; ?></div>
+                    <div class="total-reviews"><?php echo $total_reviews; ?> reviews</div>
+                </div>
+                <div>
+                    <div class="average-stars">
+                        <?php 
+                        for ($i = 1; $i <= 5; $i++) {
+                            echo $i <= floor($average_rating) ? '★' : '☆';
+                        }
+                        ?>
+                    </div>
+                    <div class="rating-text">Average rating</div>
+                </div>
             </div>
         </div>
+        <?php endif; ?>
 
-        <div class="content-wrapper">
-            <!-- Review Form -->
-            <div class="review-form-container">
-                <h2 class="form-title"><i class="fas fa-pen-alt"></i> Write Your Review</h2>
+        <!-- Review Form -->
+        <div class="form-container">
+            <form action="submit_review.php" method="POST" id="reviewForm">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-input" placeholder="Your name" required>
+                </div>
                 
+                <div class="form-group">
+                    <label class="form-label">Rating</label>
+                    <div class="rating-container">
+                        <div class="stars" id="starSelect">
+                            <span class="star" data-value="1">☆</span>
+                            <span class="star" data-value="2">☆</span>
+                            <span class="star" data-value="3">☆</span>
+                            <span class="star" data-value="4">☆</span>
+                            <span class="star" data-value="5">☆</span>
+                        </div>
+                        <span class="rating-text" id="ratingText">Select rating</span>
+                    </div>
+                    <input type="hidden" name="rating" id="ratingValue" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Review</label>
+                    <textarea name="review" class="form-input" placeholder="Share your honest experience..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Review</button>
                 <div id="successMessage" class="success-message">
-                    <i class="fas fa-check-circle"></i> Thank you! Your review has been submitted successfully.
+                    Thank you for your review. It has been submitted successfully.
                 </div>
-                
-                <form action="submit_review.php" method="POST" id="reviewForm">
-                    <div class="form-group">
-                        <label for="name"><i class="fas fa-user"></i> Your Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-star"></i> Select Rating</label>
-                        <div class="star-rating">
-                            <input type="radio" id="star5" name="rating" value="5" required>
-                            <label for="star5" title="5 stars">★</label>
-                            <input type="radio" id="star4" name="rating" value="4">
-                            <label for="star4" title="4 stars">★</label>
-                            <input type="radio" id="star3" name="rating" value="3">
-                            <label for="star3" title="3 stars">★</label>
-                            <input type="radio" id="star2" name="rating" value="2">
-                            <label for="star2" title="2 stars">★</label>
-                            <input type="radio" id="star1" name="rating" value="1">
-                            <label for="star1" title="1 star">★</label>
-                        </div>
-                        <div class="rating-text" id="ratingText">Click on a star to rate</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="review"><i class="fas fa-comment-dots"></i> Your Review</label>
-                        <textarea id="review" name="review" class="form-control" rows="5" placeholder="Share your experience, what you liked, and suggestions for improvement..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn pulse">
-                        <i class="fas fa-paper-plane"></i> Submit Review
-                    </button>
-                </form>
-            </div>
-
-            <!-- Reviews List -->
-            <div class="reviews-container">
-                <div class="reviews-header">
-                    <h2><i class="fas fa-list-alt"></i> Student Reviews</h2>
-                    <div class="reviews-count"><?php echo $total_reviews; ?> Reviews</div>
-                </div>
-                
-                <?php if ($total_reviews > 0): ?>
-                    <?php while ($row = mysqli_fetch_assoc($reviews)): ?>
-                        <div class="review-card">
-                            <div class="review-header">
-                                <div class="reviewer-name"><?= htmlspecialchars($row['student_name']) ?></div>
-                                <div class="review-date"><?= date("M d, Y", strtotime($row['created_at'])) ?></div>
-                            </div>
-                            <div class="review-rating">
-                                <?= str_repeat("★", $row['rating']) . str_repeat("☆", 5 - $row['rating']) ?>
-                                <span style="color: #777; font-size: 0.9rem; margin-left: 5px;">(<?= $row['rating'] ?>/5)</span>
-                            </div>
-                            <div class="review-text">
-                                <?= htmlspecialchars($row['review_text']) ?>
-                            </div>
-                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <div class="no-reviews">
-                        <i class="far fa-comment-dots"></i>
-                        <h3>No Reviews Yet</h3>
-                        <p>Be the first to share your experience!</p>
-                    </div>
-                <?php endif; ?>
-            </div>
+            </form>
         </div>
-        
+
+        <!-- Reviews List -->
+        <div class="reviews-header">
+            <h2>
+                <span>Student Feedback</span>
+                <?php if ($total_reviews > 0): ?>
+                <span class="review-count">(<?php echo $total_reviews; ?>)</span>
+                <?php endif; ?>
+            </h2>
+        </div>
+
+        <?php if ($total_reviews > 0): ?>
+            <?php while ($row = mysqli_fetch_assoc($reviews)): ?>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <h4><?= htmlspecialchars($row['student_name']) ?></h4>
+                            <div class="review-date"><?= date("F j, Y", strtotime($row['created_at'])) ?></div>
+                        </div>
+                        <div class="review-rating">
+                            <?= str_repeat("★", $row['rating']) ?>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p><?= htmlspecialchars($row['review_text']) ?></p>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="no-reviews">
+                <p>No reviews yet. Be the first to share your experience.</p>
+            </div>
+        <?php endif; ?>
+
         <div class="footer">
-            <p>Student Feedback Portal &copy; <?php echo date('Y'); ?> | All reviews are moderated to ensure quality.</p>
+            <p>© <?php echo date('Y'); ?> Student Reviews</p>
         </div>
     </div>
 
     <script>
-        // Star rating interaction
-        const starInputs = document.querySelectorAll('.star-rating input');
+        // Simple star rating
+        const stars = document.querySelectorAll('.star');
+        const ratingValue = document.getElementById('ratingValue');
         const ratingText = document.getElementById('ratingText');
         
         // Rating descriptions
-        const ratingDescriptions = {
-            1: "Poor - Needs significant improvement",
-            2: "Fair - Has room for improvement",
-            3: "Good - Met expectations",
-            4: "Very Good - Exceeded expectations",
-            5: "Excellent - Outstanding experience"
+        const descriptions = {
+            1: 'Poor',
+            2: 'Fair', 
+            3: 'Good',
+            4: 'Very Good',
+            5: 'Excellent'
         };
         
-        starInputs.forEach(input => {
-            input.addEventListener('change', function() {
-                const ratingValue = this.value;
-                ratingText.textContent = ratingDescriptions[ratingValue];
-                ratingText.style.color = "#333";
-                ratingText.style.fontWeight = "600";
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = star.getAttribute('data-value');
+                ratingValue.value = value;
+                
+                // Update stars
+                stars.forEach(s => {
+                    const starValue = s.getAttribute('data-value');
+                    s.textContent = starValue <= value ? '★' : '☆';
+                    s.classList.toggle('selected', starValue <= value);
+                });
+                
+                // Update text
+                ratingText.textContent = descriptions[value] || 'Select rating';
             });
             
-            input.addEventListener('mouseover', function() {
-                const hoverValue = this.value;
-                ratingText.textContent = ratingDescriptions[hoverValue];
+            // Hover effect
+            star.addEventListener('mouseenter', () => {
+                const hoverValue = star.getAttribute('data-value');
+                stars.forEach(s => {
+                    const starValue = s.getAttribute('data-value');
+                    s.style.color = starValue <= hoverValue ? '#666' : '#ddd';
+                });
+            });
+            
+            star.addEventListener('mouseleave', () => {
+                const selectedValue = ratingValue.value;
+                stars.forEach(s => {
+                    const starValue = s.getAttribute('data-value');
+                    s.style.color = starValue <= selectedValue ? '#000' : '#ddd';
+                });
             });
         });
         
-        // Form submission simulation (for demo purposes)
-        const reviewForm = document.getElementById('reviewForm');
+        // Form submission feedback
+        const form = document.getElementById('reviewForm');
         const successMessage = document.getElementById('successMessage');
         
-        reviewForm.addEventListener('submit', function(e) {
-            // In a real application, this would be handled by submit_review.php
-            // This is just for visual feedback in the demo
+        form.addEventListener('submit', function(e) {
+            // In real implementation, remove this and let form submit normally
+            // This is just for visual feedback
             e.preventDefault();
             
             // Show success message
             successMessage.style.display = 'block';
             
             // Reset form
-            reviewForm.reset();
-            ratingText.textContent = "Click on a star to rate";
-            ratingText.style.color = "";
-            ratingText.style.fontWeight = "";
-            
-            // Hide success message after 5 seconds
             setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 5000);
-            
-            // In real implementation, remove the e.preventDefault() above
-            // and let the form submit normally to submit_review.php
-        });
-        
-        // Add some interactivity to review cards
-        const reviewCards = document.querySelectorAll('.review-card');
-        reviewCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.borderLeftColor = "#6a11cb";
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.borderLeftColor = "var(--primary-color)";
-            });
+                form.reset();
+                stars.forEach(s => {
+                    s.textContent = '☆';
+                    s.classList.remove('selected');
+                });
+                ratingText.textContent = 'Select rating';
+                ratingValue.value = '';
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            }, 500);
         });
     </script>
 </body>
